@@ -1,0 +1,102 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+    /* SVGs */
+    svg {
+        @apply h-6 w-6;
+    }
+
+    /* Form */
+    input, textarea, select {
+        @apply w-full border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm p-2;
+    }
+
+    /* Buttons */
+    input, textarea, select, button, .btn {
+        @apply focus:outline-none;
+    }
+    .btn {
+        @apply inline-flex items-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
+    }
+    .btn-primary {
+        @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+    }
+    .btn-secondary {
+        @apply border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500;
+    }
+    .btn-dark {
+        @apply bg-gray-800 text-white hover:bg-gray-700 focus:border-gray-900 focus:ring-gray-500;
+    }
+    .btn-danger {
+        @apply bg-red-600 font-medium text-white hover:bg-red-700 focus:ring-red-500;
+    }
+    .btn-lg {
+        @apply px-6 py-3 text-base rounded-lg;
+    }
+
+    /* Navbar */
+    .nav-icon-link {
+        @apply p-2 hover:bg-gray-100 rounded-full;
+    }
+
+    /* Links */
+    .link {
+        @apply text-blue-600 hover:text-blue-900 text-sm font-medium cursor-pointer;
+    }
+    .link-gray {
+        @apply link text-sm text-gray-500 hover:text-gray-800;
+    }
+
+    /* Tables */
+    table td {
+        @apply px-6 py-4 whitespace-nowrap;
+    }
+
+    /* Tags */
+    .tag {
+        @apply px-4 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-900;
+    }
+
+    /* Cards */
+    .person-card-btn {
+        @apply link text-xs flex-1 p-4 text-center group hover:bg-blue-50 hover:bg-opacity-25;
+    }
+}
+
+#sidebar {
+    @apply xl:block !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+/* CSS Grid */
+.c-grid-col-sm {
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+}
+
+/* Centering */
+.flex-center {
+    @apply flex justify-center items-center;
+}    
+
+/* Sidebar */
+.sidebar-link {
+    @apply px-4 py-3 text-white hover:bg-gray-700 rounded-lg flex;
+}
+.sidebar-link.active {
+    @apply bg-gray-900;
+}
+
+/* Forms */
+.required::after {
+    content: "*";
+    @apply text-red-500 font-medium text-sm ml-0.5;
+}
