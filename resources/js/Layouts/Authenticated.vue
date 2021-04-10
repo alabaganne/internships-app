@@ -4,7 +4,7 @@
         <div class="flex-1 text-gray-900">
             <header>
                 <Navbar />
-                <div class="px-6 lg:px-8 py-8 flex justify-between items-center mx-auto w-full">
+                <div v-if="title" class="px-6 lg:px-8 pt-8 flex justify-between items-center mx-auto w-full">
                     <div>
                         <span class="font-medium text-gray-500 text-sm">
                             {{ subtitle }}
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </header>
-            <div class="px-6 lg:px-8 pb-8 mx-auto">
+            <div class="px-6 lg:px-8 py-8 mx-auto">
                 <main>
                     <slot />
                 </main>

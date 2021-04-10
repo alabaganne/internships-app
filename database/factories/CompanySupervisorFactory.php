@@ -21,8 +21,9 @@ class CompanySupervisorFactory extends Factory
      */
     public function definition()
     {
+        // 10 Companies must be seeder before running this factory
         return [
-            //
+            'company_id' => rand(1, 10)
         ];
     }
 }

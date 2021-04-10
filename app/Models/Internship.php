@@ -12,6 +12,7 @@ class Internship extends Model
     protected $fillable = [
         'title',
         'description',
+        'company_id',
         'company_supervisor_id',
         'field_id',
         'remote',
@@ -29,12 +30,16 @@ class Internship extends Model
         return $this->belongsTo(Field::class);
     }
 
-    public function supervisor() {
+    public function company_supervisor() {
         return $this->belongsTo(CompanySupervisor::class);
     }
 
     public function skills() {
         return $this->belongsToMany(Skill::class);
+    }
+
+    public function city() {
+        return $this->company()->city();
     }
 
     public function student() {

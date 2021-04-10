@@ -1,90 +1,97 @@
 <template>
-	<Modal ref="modal" title="Add Internship" subtitle="Fill out the fields below and submit to create a new internhsip." widthClasses="sm:max-w-3xl">
-		<template v-slot:trigger>
-			<AddButton>Add Internship</AddButton>
-		</template>
-		<div class="p-6">
-			<form autocomplete="off" class="grid grid-cols-2 gap-4" action="#">
-				<div>
-					<breeze-label class="required" for="title" value="Title" />
-					<breeze-input class="mt-1 shadow-none" id="title" type="text" v-model="form.title" required />
+	<breeze-authenticated-layout>
+		<div class="max-w-2xl mx-auto">
+			<card title="Add Internship" subtitle="Fill out the form below to create a new internship.">
+				<div class="p-6">
+					<breeze-validation-errors class="mb-4" />
+					<form @submit.prevent="submit">
+						<div class="grid grid-cols-2 gap-4">
+							<div>
+								<breeze-label class="required" for="title" value="Title" />
+								<breeze-input class="mt-1" type="text" id="title" v-model="form.title" :class="{ 'input-error': errors.title }" />
+							</div>
+							<div>
+								<breeze-label class="required" for="field" value="Field of studies" />
+								<select class="mt-1" id="field" v-model="form.field_id" :class="{ 'input-error': errors.field_id }">
+									<option value="" default></option>
+									<option v-for="field in fields" :key="field.id" :value="field.id">{{ field.name }}</option> 
+								</select>
+							</div>
+							<div>
+								<breeze-label for="company_supervisor" value="Supervisor" />
+								<select class="mt-1" id="company_supervisor" v-model="form.company_supervisor_id">
+									<option value="" default></option>
+									<option v-for="supervisor in company_supervisors" :key="supervisor.id" :value="supervisor.id">{{ supervisor.name }}</option> 
+								</select>
+							</div>
+							<div>
+								<breeze-label class="required" for="closing_at" value="Closing at" />
+								<breeze-input class="mt-1" type="date" id="closing_at" v-model="form.closing_at" :class="{ 'input-error': errors.closing_at }" /> 
+							</div>
+							<div class="col-span-2">
+								<breeze-label class="required" for="description" value="Description" />
+								<textarea class="mt-1 resize-none" id="description" rows="9" v-model="form.description" :class="{ 'input-error': errors.description }" />
+							</div>
+							<div class="col-span-2">
+								<div class="flex items-center">
+									<breeze-checkbox id="remote" v-model="form.remote" />
+									<breeze-label class="ml-2" for="remote">Remote?</breeze-label>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4 flex items-center justify-between">
+							<inertia-link :href="route('internships.index')" class="link px-2">&#8592; Go back</inertia-link>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
 				</div>
-				<div>
-					<breeze-label class="required" for="field" value="Field of Studies" />
-					<select class="mt-1 shadow-none" id="field" v-model="form.field_id">
-						<option value="" selected></option>
-						<option v-for="field in fields" :key="field.id" :value="field.id">
-							{{ field.name }}
-						</option>
-					</select>
-				</div>
-				<div>
-					<breeze-label for="supervisor" value="Company Supervisor" />
-					<select class="mt-1 shadow-none" id="supervisor" v-model="form.company_supervisor_id">
-						<option value="" selected></option>
-						<option value="1">Ala Baganne</option>
-					</select>
-				</div>
-				<div>
-					<breeze-label class="required" for="closing_at" value="Closing At" />
-					<breeze-input class="mt-1 shadow-none" type="date" id="closing_at" v-model="form.closing_at" />
-				</div>
-				<div class="col-span-2">
-					<breeze-label class="required" for="description" value="Description" />
-					<textarea class="mt-1 shadow-none" id="description" placeholder="About the internship" rows="6" v-model="form.description" required />
-				</div>
-				<!-- TODO: skills, attachments -->
-				<div class="col-span-2">
-					<div class="flex items-center">
-						<breeze-checkbox id="remote" v-model:checked="form.remote" />
-						<breeze-label for="remote" class="ml-2 text-sm">
-							<span class="text-gray-600">Remote?</span>
-						</breeze-label>
-					</div>
-        </div>
-			</form>
+			</card>
 		</div>
-		<template v-slot:action-button>
-			<button type="button" @click="submit" class="btn btn-primary">Create</button>
-		</template>
-	</Modal>
+	</breeze-authenticated-layout>
 </template>
 
 <script>
-import Modal from "@/Components/Modal";
+import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import Card from "@/Components/Card";
 import BreezeLabel from "@/Components/Label";
 import BreezeInput from "@/Components/Input";
 import BreezeCheckbox from "@/Components/Checkbox";
-import AddButton from "@/Components/Buttons/Add";
+import BreezeValidationErrors from "@/Components/ValidationErrors";
 
 export default {
 	components: {
-		Modal,
+		BreezeAuthenticatedLayout,
+		Card,
 		BreezeLabel,
 		BreezeInput,
 		BreezeCheckbox,
-		AddButton
+		BreezeValidationErrors
 	},
 	props: {
 		fields: Array,
+		company_supervisors: Array,
 	},
 	data() {
 		return {
 			form: this.$inertia.form({
 				title: "",
 				description: "",
+				remore: false,
+				attachments: "",
+				closing_date: "",
 				field_id: null,
-				closing_at: "",
-				company_supervisor_id: "",
-				remote: false
+				company_supervisor_id: null,
 			})
+		}
+	},
+	computed: {
+		errors() {
+			return this.$page.props.errors
 		}
 	},
 	methods: {
 		submit() {
-			this.$inertia.post(this.route('internships.store'), this.form, {
-				onFinish: () => this.$refs['modal'].open = false
-			});
+			this.$inertia.post(route('internships.store'), this.form);
 		}
 	}
 }

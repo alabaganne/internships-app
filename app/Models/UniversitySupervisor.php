@@ -12,4 +12,8 @@ class UniversitySupervisor extends Model
     public function user() {
         return $this->morphOne(User::class, 'userable');
     }
+
+    public function field() {
+        return $this->belongsTo(Field::class);
+    }
 }

@@ -32,8 +32,8 @@
 						class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full"
 						:class="widthClasses"
 					>
-						<Card :title="title" :subtitle="subtitle">
-							<slot />
+						<card :title="title" :subtitle="subtitle">
+							<slot name="content" />
 							<template v-slot:footer>
 								<div class="flex justify-end">
 									<div class="space-x-2 px-4 py-3">
@@ -42,7 +42,7 @@
 									</div>
 								</div>
 							</template>
-						</Card>
+						</card>
 					</div>
 				</transition>
 			</div>

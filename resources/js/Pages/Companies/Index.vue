@@ -1,7 +1,7 @@
 <template>
 	<breeze-authenticated-layout title="Companies" subtitle="View">
 		<template v-slot:header-right>
-			<button class="btn btn-lg btn-primary">Add Company</button>
+			<inertia-link :href="route('companies.create')" class="btn btn-lg btn-primary">Add Company -></inertia-link>
 		</template>
 		<AppTable :fields="['Name', 'Telephone', 'Website', 'Registered at', 'Actions']">
 			<tr v-for="item in 10" :key="item">

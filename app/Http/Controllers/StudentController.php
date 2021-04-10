@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +16,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Students/Index');
+        return Inertia::render('Students/Index', [
+            'students' => StudentResource::collection(Student::paginate(12))
+        ]);
     }
 
     /**

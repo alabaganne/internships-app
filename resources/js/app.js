@@ -17,7 +17,7 @@ const app = createApp({
         h(InertiaApp, {
             initialPage: JSON.parse(el.dataset.page),
             resolveComponent: (name) => require(`./Pages/${name}`).default,
-            resolveErrors: page => (page.props.errors || {})
+            // resolveErrors: page => (page.props.errors || {}),
         }),
 })
     .mixin({ methods: { route } })
@@ -25,15 +25,11 @@ const app = createApp({
     .use(store);
 
 app.config.globalProperties.$filters = {
-    truncate(value, numWords) {
-        let wordsArray = value.split(" ");
-        if(wordsArray.length > numWords)
-            return wordsArray.splice(0, numWords).join(" ") + "...";
-        else
-            return value
+    truncate(value, numChars) {
+        return value.substring(0, numChars).trim() + "...";
     }
 }
 
-app.mount(el)
+app.mount(el);
 
 InertiaProgress.init({ color: "#4B5563" });

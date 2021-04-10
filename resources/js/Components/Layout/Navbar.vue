@@ -88,7 +88,7 @@
                     </div>
                 </template>
             </SlideOver>
-            <breeze-dropdown width="w-64">
+            <breeze-dropdown width="w-80">
                 <template v-slot:trigger>
                     <button class="px-2 flex items-center text-sm">
                         <img
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                     </div>
-                    <breeze-dropdown-link href="#">Your Profile</breeze-dropdown-link>
+                    <breeze-dropdown-link href="#">My Profile</breeze-dropdown-link>
                     <breeze-dropdown-link href="#">Settings</breeze-dropdown-link>
                     <breeze-dropdown-link :href="route('logout')" as="button" method="POST">Logout</breeze-dropdown-link>
                 </template>

@@ -2,88 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InternshipRequest;
-use App\Models\Field;
-use App\Models\Internship;
+use App\Http\Requests\InternshipRequest; // validations
+use App\Http\Resources\InternshipResource; // formatting the response
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
-class InternshipController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+use App\Models\City;
+use App\Models\Field;
+use App\Models\Company;
+use App\Models\Internship;
+
+class InternshipController extends Controller {
+
+    public function index() {
         return Inertia::render('Internships/Index', [
-            'internships' => Internship::latest()->with('field')->paginate(5),
-            'fields' => Field::all()
+            'internships' => InternshipResource::collection(Internship::latest()->paginate(10)),
+            'cities' => City::all(),
+            'fields' => Field::select('id', 'name')->get(),
+            'companies' => Company::all()->transform(function($company) {
+                return [
+                    'id' => $company->id,
+                    'name' => $company->user->name
+                ];
+            })
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(InternshipRequest $request)
-    {
-        Internship::create($request);
+    public function create() {
+        return Inertia::render('Internships/Create', [
+            'fields' => Field::all(),
+            'company_supervisors' => Company::find(auth()->user()->userable->id)->company_supervisors()->get()
+                ->map(function($supervisor) {
+                    return [
+                        'id' => $supervisor->id,
+                        'name' => $supervisor->user->name,
+                    ];
+                }),
+        ]);
+    }
+    
+    public function store(InternshipRequest $request) {
+        $data = $request->validated();
+        $data['company_id'] = auth()->user()->userable->id;
 
-        return Redirect::back()->with('success', 'Internship created.');
+        Internship::create($data);
+
+        return redirect()->route('internships.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Internship  $internship
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Internship $internship)
-    {
-        $internship['field'] = $internship->field;
-        $internship['company'] = $internship->company;
-
+    public function show(Internship $internship) {
         return Inertia::render('Internships/Show', [
-            'internship' => $internship
+            'internship' => new InternshipResource($internship)
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Internship  $internship
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Internship $internship)
-    {
+    public function edit(Internship $internship) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Internship  $internship
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Internship $internship)
-    {
+    public function update(Request $request, Internship $internship) {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Internship  $internship
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Internship $internship)
-    {
-        //
+
+    public function destroy(Internship $internship) {
+        $internship->delete();
+
+        return redirect()->route('internships.index');
     }
 }

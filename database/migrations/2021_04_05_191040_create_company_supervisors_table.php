@@ -15,6 +15,7 @@ class CreateCompanySupervisorsTable extends Migration
     {
         Schema::create('company_supervisors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('company_id')->constrained();
         });
     }
 

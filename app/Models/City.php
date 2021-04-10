@@ -14,4 +14,8 @@ class City extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function internships() {
+        return $this->hasMany(Company::class);
+    }
 }

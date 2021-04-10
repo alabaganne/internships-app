@@ -15,7 +15,9 @@ class FieldController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Fields/Index');
+        return Inertia::render('Fields/Index', [
+            'fields' => Field::all()
+        ]);
     }
 
     /**
@@ -25,7 +27,7 @@ class FieldController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Fields/Create');
     }
 
     /**

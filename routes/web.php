@@ -6,6 +6,8 @@ use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UniversitySupervisorController;
+use App\Http\Resources\InternshipResource;
+use App\Models\Internship;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

@@ -17,7 +17,19 @@ class Company extends Model
         'city_id'
     ];
 
+    public function company_supervisors() {
+        return $this->hasMany(CompanySupervisor::class);
+    }
+
     public function user() {
         return $this->morphOne(User::class, 'userable');
+    }
+
+    public function internships() {
+        return $this->hasMany(Internship::class);
+    }
+
+    public function city() {
+        return $this->belongsTo(City::class);
     }
 }

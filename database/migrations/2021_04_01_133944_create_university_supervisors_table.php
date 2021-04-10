@@ -15,6 +15,7 @@ class CreateUniversitySupervisorsTable extends Migration
     {
         Schema::create('university_supervisors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('field_id')->constrained();
         });
     }
 

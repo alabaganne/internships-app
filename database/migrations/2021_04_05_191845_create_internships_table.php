@@ -17,12 +17,12 @@ class CreateInternshipsTable extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->boolean('remote')->default(false);
+            $table->string('attachments')->nullable();
+            $table->date('closing_at');
             $table->foreignId('field_id')->constrained('fields');
             $table->foreignId('company_id')->constrained();
             $table->foreignId('company_supervisor_id')->nullable()->constrained('company_supervisors');
-            $table->date('closing_at');
-            $table->boolean('remote')->default(false);
-            $table->string('attachments')->nullable();
             $table->timestamps();
         });
     }

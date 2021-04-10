@@ -16,6 +16,12 @@ class InternshipRequest extends FormRequest
         return true;
     }
 
+    public function messages() {
+        return [
+            'field_id.required' => 'You must select a field of studies.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,7 +33,6 @@ class InternshipRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'field_id' => 'required',
-            'company_id' => 'required',
             'company_supervisor_id' => 'nullable',
             'closing_at' => 'required|date',
             'remote' => 'boolean',

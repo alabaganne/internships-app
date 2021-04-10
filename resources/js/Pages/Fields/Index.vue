@@ -1,10 +1,10 @@
 <template>
 	<breeze-authenticated-layout title="Fields" subtitle="View">
 		<template v-slot:header-right>
-			<CreateModal />
+			<inertia-link :href="route('fields.create')" class="btn btn-lg btn-primary">Add Field of Studies -></inertia-link>
 		</template>
-		<AppTable :fields="['Name', 'Description', 'Actions']">
-			<tr v-for="item in 10" :key="item">
+		<app-table :fields="['Name', 'Description', 'Actions']">
+			<tr v-for="field in fields" :key="field.id">
 				<td>
 					<div class="flex items-center">
 						<svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -12,29 +12,32 @@
 						</svg>
 						<div class="ml-4">
 							<div class="text-sm font-medium text-gray-900">
-								Computer Science
+								{{ field.name }}
 							</div>
 						</div>
 					</div>
 				</td>
-				<td class="text-gray-700">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
+				<td class="text-gray-700">
+					<p>{{ $filters.truncate(field.description, 120) }}</p>
+				</td>
 				<td class="text-right">
 					<inertia-link href="#" class="link">View -></inertia-link>
 				</td>
 			</tr>
-		</AppTable>
+		</app-table>
 	</breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
 import Table from "@/Components/Table";
-import CreateModal from "./Create";
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
-		AppTable: Table,
-		CreateModal
+		'app-table': Table,
+	},
+	props: {
+		fields: Array
 	}
 }
 </script>
