@@ -22,6 +22,8 @@ class Internship extends Model
         'closing_at'
     ];
 
+    protected $dates = ['created_at', 'updated_at', 'closing_at'];
+
     public function company() {
         return $this->belongsTo(Company::class);
     }

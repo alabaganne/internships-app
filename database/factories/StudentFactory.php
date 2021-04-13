@@ -22,7 +22,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'about' => $this->faker->paragraph(),
+            'about' => $this->faker->paragraph(18),
             'field_id' => rand(1, 10)
         ];
     }

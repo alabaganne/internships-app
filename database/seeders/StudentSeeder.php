@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Field;
-
 class StudentSeeder extends Seeder
 {
     /**

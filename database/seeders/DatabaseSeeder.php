@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CompanySupervisorSeeder::class,
             StudentSeeder::class,
-            InternshipSeeder::class
+            InternshipSeeder::class,
+            UniversitySupervisorSeeder::class,
         ]);
 
         $password = bcrypt('password');
@@ -29,15 +30,24 @@ class DatabaseSeeder extends Seeder
                 'name' => 'John Doe',
                 'username' => 'johndoe',
                 'email' => 'student@example.com',
-                'password' => $password
+                'password' => $password,
+                'phone_number' => '+216 50 101 959'
             ]));
         
-        \App\Models\Company::factory()->create()
-            ->user()->save(User::create([
-                'name' => 'Realinflo',
-                'username' => 'realinflo',
-                'email' => 'company@example.com',
-                'password' => $password
-            ]));
+        $company = \App\Models\Company::factory()->create();
+        $company->user()->save(User::create([
+            'name' => 'Realinflo',
+            'username' => 'realinflo',
+            'email' => 'company@example.com',
+            'password' => $password,
+            'phone_number' => '+216 50 101 959'
+        ]));
+        $company->supervisors()->saveMany(
+            \App\Models\CompanySupervisor::factory(5)->create()->map(function($supervisor) {
+                $supervisor->user()->save(User::factory()->create());
+
+                return $supervisor;
+            })
+        );
     }
 }

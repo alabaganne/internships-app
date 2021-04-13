@@ -28,16 +28,20 @@ class InternshipController extends Controller {
         ]);
     }
 
+    public function get_company_supervisors() {
+        return Company::find(auth()->user()->userable->id)->company_supervisors()->get()
+            ->map(function($supervisor) {
+                return [
+                    'id' => $supervisor->id,
+                    'name' => $supervisor->user->name,
+                ];
+            });
+    }
+
     public function create() {
-        return Inertia::render('Internships/Create', [
+        return Inertia::render('Internships/Edit', [
             'fields' => Field::all(),
-            'company_supervisors' => Company::find(auth()->user()->userable->id)->company_supervisors()->get()
-                ->map(function($supervisor) {
-                    return [
-                        'id' => $supervisor->id,
-                        'name' => $supervisor->user->name,
-                    ];
-                }),
+            'company_supervisors' => $this->get_company_supervisors()
         ]);
     }
     
@@ -57,11 +61,17 @@ class InternshipController extends Controller {
     }
 
     public function edit(Internship $internship) {
-        //
+        return Inertia::render('Internships/Edit', [
+            'internship' => $internship,
+            'fields' => Field::all(),
+            'company_supervisors' => $this->get_company_supervisors()
+        ]);
     }
 
-    public function update(Request $request, Internship $internship) {
-        //
+    public function update(InternshipRequest $request, Internship $internship) {
+        $internship->update($request->validated());
+
+        return redirect()->route('internships.show', $internship->id);
     }
 
 

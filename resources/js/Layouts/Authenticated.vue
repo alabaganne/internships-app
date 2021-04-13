@@ -6,10 +6,10 @@
                 <Navbar />
                 <div v-if="title" class="px-6 lg:px-8 pt-8 flex justify-between items-center mx-auto w-full">
                     <div>
-                        <span class="font-medium text-gray-500 text-sm">
+                        <span class="text-sm text-gray-500 font-medium uppercase">
                             {{ subtitle }}
                         </span>
-                        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold">{{ title }}</h3>
+                        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold">{{ title }}</h3>
                     </div>
                     <div class="flex items-center space-x-1">
                         <slot name="header-right" />

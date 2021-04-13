@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FieldRequest;
+use App\Http\Resources\FieldResource;
 use App\Models\Field;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,7 +18,7 @@ class FieldController extends Controller
     public function index()
     {
         return Inertia::render('Fields/Index', [
-            'fields' => Field::all()
+            'fields' => FieldResource::collection(Field::latest()->paginate(12)),
         ]);
     }
 
@@ -27,7 +29,7 @@ class FieldController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Fields/Create');
+        return Inertia::render('Fields/Edit');
     }
 
     /**
@@ -36,9 +38,11 @@ class FieldController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FieldRequest $request)
     {
-        //
+        Field::create($request->validated());
+
+        return redirect()->route('fields.index');
     }
 
     /**
@@ -60,7 +64,9 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        //
+        return Inertia::render('Fields/Edit', [
+            'field' => $field
+        ]);
     }
 
     /**
@@ -70,9 +76,11 @@ class FieldController extends Controller
      * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Field $field)
+    public function update(FieldRequest $request, Field $field)
     {
-        //
+        $field->update($request->validated());
+
+        return redirect()->route('fields.index');
     }
 
     /**
@@ -83,6 +91,8 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        //
+        $field->delete();
+
+        return redirect()->route('fields.index');
     }
 }

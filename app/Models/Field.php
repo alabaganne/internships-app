@@ -9,8 +9,6 @@ class Field extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'name',
         'description'
@@ -18,5 +16,9 @@ class Field extends Model
 
     public function students() {
         return $this->belongsToMany(Student::class);
+    }
+
+    public function internships() {
+        return $this->belongsToMany(Internship::class);
     }
 }

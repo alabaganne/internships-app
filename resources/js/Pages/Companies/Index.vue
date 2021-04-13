@@ -3,8 +3,8 @@
 		<template v-slot:header-right>
 			<inertia-link :href="route('companies.create')" class="btn btn-lg btn-primary">Add Company -></inertia-link>
 		</template>
-		<AppTable :fields="['Name', 'Telephone', 'Website', 'Registered at', 'Actions']">
-			<tr v-for="item in 10" :key="item">
+		<app-table :fields="['Name', 'Telephone', 'Website', 'Registered at', 'Actions']">
+			<tr v-for="company in companies.data" :key="company.id">
 				<td>
 					<div class="flex items-center">
 						<svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -12,34 +12,40 @@
 						</svg>
 						<div class="ml-4">
 							<div class="text-sm font-medium text-gray-900">
-								Realinflo
+								{{ company.name }}
 							</div>
 							<div class="text-sm text-gray-500">
-								contact@realinflo.com
+								{{ company.email }}
 							</div>
 						</div>
 					</div>
 				</td>
-				<td>50 101 959</td>
+				<td>{{ company.phone_number }}</td>
 				<td>
-					<a href="#" target="_blank" class="link">Visit website -></a>
+					<a :href="company.website" target="_blank" class="link">Visit website -></a>
 				</td>
-				<td>January 11, 2020</td>
+				<td>{{ company.created_at }}</td>
 				<td class="text-right">
 					<inertia-link href="#" class="link">View -></inertia-link>
 				</td>
 			</tr>
-		</AppTable>
+		</app-table>
+		<pagination class="mt-3" :data="companies" />
 	</breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Table from "@/Components/Table";
+import AppTable from "@/Components/Table";
+import Pagination from "@/Components/Pagination";
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
-		AppTable: Table
+		AppTable,
+		Pagination
+	},
+	props: {
+		companies: Object
 	}
 }
 </script>

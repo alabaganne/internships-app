@@ -32,17 +32,17 @@
 						class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full"
 						:class="widthClasses"
 					>
-						<card :title="title" :subtitle="subtitle">
+						<Card :title="title" :subtitle="subtitle">
 							<slot name="content" />
 							<template v-slot:footer>
 								<div class="flex justify-end">
 									<div class="space-x-2 px-4 py-3">
-										<button @click="toggle" class="btn btn-secondary">Close</button>
+										<button type="button" @click="toggle" class="btn btn-secondary">Close</button>
 										<slot name="action-button" />
 									</div>
 								</div>
 							</template>
-						</card>
+						</Card>
 					</div>
 				</transition>
 			</div>

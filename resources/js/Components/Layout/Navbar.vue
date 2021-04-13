@@ -128,7 +128,7 @@
 <script>
 import BreezeDropdown from "@/Components/Dropdown";
 import BreezeDropdownLink from "@/Components/DropdownLink";
-import SlideOver from "@/Components/Slide-over";
+import SlideOver from "@/Components/SlideOver";
 
 import { mapActions, mapGetters } from "vuex";
 

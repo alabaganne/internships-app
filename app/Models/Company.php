@@ -32,4 +32,8 @@ class Company extends Model
     public function city() {
         return $this->belongsTo(City::class);
     }
+
+    public function supervisors() {
+        return $this->hasMany(CompanySupervisor::class);
+    }
 }

@@ -50,7 +50,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return Inertia::render('Students/Show', [
+            'student' => new StudentResource($student)
+        ]);
     }
 
     /**

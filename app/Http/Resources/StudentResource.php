@@ -21,6 +21,7 @@ class StudentResource extends JsonResource
             'email' => $this->user->email,
             'phone_number' => $this->user->phone_number,
             'linkedin_profile_url' => $this->user->linkedin_profile_url,
+            'image' => $this->user->image,
             'field' => $this->field->name,
             // 'skills' => $this->skills
         ];

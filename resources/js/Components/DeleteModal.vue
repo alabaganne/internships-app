@@ -26,7 +26,7 @@
 			</div>
 		</template>
 		<template v-slot:action-button>
-			<button @click="$emit('delete')" class="btn btn-danger">Delete</button>
+			<button @click="onDelete" type="button" class="btn btn-danger">Delete</button>
 		</template>
 	</modal>
 </template>
@@ -35,10 +35,7 @@
 import Modal from "./Modal";
 
 export default {
-	components: {
-		Modal
-	},
-	emits: ['delete'],
+	components: { Modal },
 	props: {
 		title: {
 			type: String,
@@ -47,6 +44,12 @@ export default {
 		paragraph: {
 			type: String,
 			required: true
+		},
+		url: String,
+	},
+	methods: {
+		onDelete() {
+			this.$inertia.delete(this.url);
 		}
 	}
 }

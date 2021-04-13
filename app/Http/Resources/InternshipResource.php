@@ -33,6 +33,7 @@ class InternshipResource extends JsonResource
             ],
             'remote' => $this->remote,
             'attachments' => $this->attachments,
+            'closing_at' => $this->closing_at->toFormattedDateString(),
             'created_at' => $this->created_at->diffForHumans(),
         ];
         if($this->company_supervisor)

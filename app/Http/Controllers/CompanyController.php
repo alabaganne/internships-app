@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +16,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Companies/Index');
+        return Inertia::render('Companies/Index', [
+            'companies' => CompanyResource::collection(Company::paginate(12))
+        ]);
     }
 
     /**
@@ -25,7 +28,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Companies/Create');
+        return Inertia::render('Companies/Edit');
     }
 
     /**

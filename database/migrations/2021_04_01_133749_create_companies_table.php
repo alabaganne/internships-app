@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('website');
             $table->longText('about');
-            $table->foreignId('city_id')->constrained();
+            $table->foreignId('city_id')->nullable()->constrained();
         });
     }
 

@@ -4,7 +4,7 @@
 			<inertia-link :href="route('fields.create')" class="btn btn-lg btn-primary">Add Field of Studies -></inertia-link>
 		</template>
 		<app-table :fields="['Name', 'Description', 'Actions']">
-			<tr v-for="field in fields" :key="field.id">
+			<tr v-for="field in fields.data" :key="field.id">
 				<td>
 					<div class="flex items-center">
 						<svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -21,23 +21,27 @@
 					<p>{{ $filters.truncate(field.description, 120) }}</p>
 				</td>
 				<td class="text-right">
-					<inertia-link href="#" class="link">View -></inertia-link>
+					<inertia-link :href="route('fields.edit', field.id)" class="link">Edit -></inertia-link>
 				</td>
 			</tr>
 		</app-table>
+		<pagination class="mt-3" :data="fields" />
 	</breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Table from "@/Components/Table";
+import AppTable from "@/Components/Table";
+import Pagination from "@/Components/Pagination";
+
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
-		'app-table': Table,
+		AppTable,
+		Pagination
 	},
 	props: {
-		fields: Array
+		fields: Object
 	}
 }
 </script>

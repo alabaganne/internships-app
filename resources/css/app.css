@@ -24,7 +24,7 @@
         @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
     }
     .btn-secondary {
-        @apply border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500;
+        @apply border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500 shadow-sm;
     }
     .btn-dark {
         @apply bg-gray-800 text-white hover:bg-gray-700 focus:border-gray-900 focus:ring-gray-500;
@@ -101,5 +101,12 @@
     @apply text-red-500 font-medium text-sm ml-0.5;
 }
 .input-error {
-    @apply border-red-400 focus:border-red-300 focus:ring-red-200;
+    @apply border-red-500 focus:border-red-300 focus:ring-red-200;
+}
+
+/* Links */
+.arrow-left::before {
+    font-family: "Inter";
+    content: '<-';
+    margin-right: 4px;
 }
