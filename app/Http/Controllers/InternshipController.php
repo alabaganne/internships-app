@@ -12,9 +12,10 @@ use App\Models\Field;
 use App\Models\Company;
 use App\Models\Internship;
 
-class InternshipController extends Controller {
-
-    public function index() {
+class InternshipController extends Controller
+{
+    public function index()
+    {
         return Inertia::render('Internships/Index', [
             'internships' => InternshipResource::collection(Internship::latest()->paginate(10)),
             'cities' => City::all(),
@@ -28,7 +29,8 @@ class InternshipController extends Controller {
         ]);
     }
 
-    public function get_company_supervisors() {
+    public function get_company_supervisors()
+    {
         return Company::find(auth()->user()->userable->id)->company_supervisors()->get()
             ->map(function($supervisor) {
                 return [
@@ -38,14 +40,16 @@ class InternshipController extends Controller {
             });
     }
 
-    public function create() {
+    public function create()
+    {
         return Inertia::render('Internships/Edit', [
             'fields' => Field::all(),
             'company_supervisors' => $this->get_company_supervisors()
         ]);
     }
     
-    public function store(InternshipRequest $request) {
+    public function store(InternshipRequest $request)
+    {
         $data = $request->validated();
         $data['company_id'] = auth()->user()->userable->id;
 
@@ -60,7 +64,8 @@ class InternshipController extends Controller {
         ]);
     }
 
-    public function edit(Internship $internship) {
+    public function edit(Internship $internship)
+    {
         return Inertia::render('Internships/Edit', [
             'internship' => $internship,
             'fields' => Field::all(),
@@ -68,14 +73,16 @@ class InternshipController extends Controller {
         ]);
     }
 
-    public function update(InternshipRequest $request, Internship $internship) {
+    public function update(InternshipRequest $request, Internship $internship)
+    {
         $internship->update($request->validated());
 
         return redirect()->route('internships.show', $internship->id);
     }
 
 
-    public function destroy(Internship $internship) {
+    public function destroy(Internship $internship)
+    {
         $internship->delete();
 
         return redirect()->route('internships.index');

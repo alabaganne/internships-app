@@ -60,10 +60,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <p class="mt-3 text-gray-700 prose max-w-none">
+                                    <p class="mt-4 text-gray-700 leading-7">
                                         {{ $filters.truncate(internship.description, 350) }}
                                     </p>
-                                    <required-skills class="mt-2" />
+                                    <skills class="mt-2" />
                                 </div>
                             </card>
                         </inertia-link>
@@ -83,7 +83,7 @@ import BreezeCheckbox from "@/Components/Checkbox";
 import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
 import InternshipHeader from "./Shared/Header";
-import RequiredSkills from "@/Components/DisplaySkills";
+import Skills from "@/Components/ShowSkills";
 
 export default {
     components: {
@@ -93,7 +93,7 @@ export default {
         Card,
         Pagination,
         InternshipHeader,
-        RequiredSkills
+        Skills
     },
     props: {
         internships: Object,

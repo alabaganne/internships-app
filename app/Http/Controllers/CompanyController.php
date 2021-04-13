@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CompanyResource;
+use App\Http\Resources\UserResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +17,7 @@ class CompanyController extends Controller
     public function index()
     {
         return Inertia::render('Companies/Index', [
-            'companies' => CompanyResource::collection(Company::paginate(12))
+            'companies' => UserResource::collection(Company::paginate(12))
         ]);
     }
 
@@ -84,6 +84,9 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->user()->delete();
+        $company->delete();
+
+        return redirect()->route('companies.index');
     }
 }

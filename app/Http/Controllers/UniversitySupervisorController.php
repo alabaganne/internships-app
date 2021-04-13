@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UniversitySupervisorResource;
+use App\Http\Resources\UserResource;
 use App\Models\UniversitySupervisor;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +17,7 @@ class UniversitySupervisorController extends Controller
     public function index()
     {
         return Inertia::render('UniversitySupervisors/Index', [
-            'university_supervisors' => UniversitySupervisorResource::collection(UniversitySupervisor::paginate(12)),
+            'university_supervisors' => UserResource::collection(UniversitySupervisor::paginate(12)),
         ]);
     }
 

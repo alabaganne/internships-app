@@ -18,7 +18,7 @@
 					</div>
 				</td>
 				<td class="text-gray-700">
-					<p>{{ $filters.truncate(field.description, 120) }}</p>
+					<p>{{ $filters.truncate(field.description, 100) }}</p>
 				</td>
 				<td class="text-right">
 					<inertia-link :href="route('fields.edit', field.id)" class="link">Edit -></inertia-link>

@@ -2,6 +2,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.flex-center {
+    @apply flex justify-center items-center;
+}
+
 @layer components {
     /* SVGs */
     svg {
@@ -18,7 +22,7 @@
         @apply focus:outline-none;
     }
     .btn {
-        @apply inline-flex items-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
+        @apply text-center inline-flex justify-center items-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
     }
     .btn-primary {
         @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
@@ -33,7 +37,7 @@
         @apply bg-red-600 font-medium text-white hover:bg-red-700 focus:ring-red-500;
     }
     .btn-lg {
-        @apply px-6 py-3 text-base rounded-lg;
+        @apply px-6 py-3 text-base;
     }
 
     /* Navbar */
@@ -80,12 +84,7 @@
 /* CSS Grid */
 .c-grid-col-sm {
     grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-}
-
-/* Centering */
-.flex-center {
-    @apply flex justify-center items-center;
-}    
+}  
 
 /* Sidebar */
 .sidebar-link {

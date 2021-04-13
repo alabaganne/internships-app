@@ -22,7 +22,7 @@ class InternshipFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->paragraph(1),
+            'title' => ucfirst($this->faker->words(5, true)),
             'description' => $this->faker->text(2400),
             'company_id' => rand(1, 10),
             'company_supervisor_id' => rand(1, 10),

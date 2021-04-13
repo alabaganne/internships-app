@@ -23,8 +23,9 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('image')->nullable();
             $table->string('linkedin_profile_url')->nullable();
-            $table->boolean('is_admin')->default(false);
             $table->nullableMorphs('userable'); // userable_id, userable_type
+            // $table->boolean('active')->default(false);
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

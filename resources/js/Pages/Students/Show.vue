@@ -14,8 +14,8 @@
 		</template>
 		<card>
 			<img
-				class="h-56 w-full object-cover"
-				src="https://images.unsplash.com/photo-1445112098124-3e76dd67983c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1347&q=80"
+				class="h-60 w-full object-cover"
+				src="https://images.unsplash.com/photo-1588392382834-a891154bca4d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
 				alt="cover photo"
 			>
 			<div class="max-w-7xl mx-auto px-8 pb-12">
@@ -39,38 +39,37 @@
 					</div>
 				</div>
 				<!-- about -->
-				<div class="mt-16">
-					<div>
-						<div class="text-xl font-bold uppercase text-gray-800">About</div>
-						<div class="mt-2 2xl:flex 2xl:space-x-8">
-							<div class="prose-lg max-w-none">
-								<p class="text-gray-600">{{ student.about }}</p>
+				<div class="mt-16 grid grid-cols-7 gap-8">
+					<div class="col-span-5">
+						<div class="text-xl font-bold text-gray-800">About</div>
+						<p class="mt-3 text-lg text-gray-600 leading-8" v-html="student.about" />
+					</div>
+					<div class="col-span-2">
+						<div class="text-xl font-bold text-gray-800">Contact details</div>
+						<div class="mt-3 space-y-3">
+							<div class="flex items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+								</svg>
+								{{ student.email }}
 							</div>
-							<div class="w-64 flex-shrink-0 space-y-3 mt-8 2xl:mt-0">
-								<div class="flex items-center">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-									</svg>
-									{{ student.email }}
-								</div>
-								<div class="flex items-center">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /> 
-									</svg>
-									{{ student.phone_number }}
-								</div>
-								<div class="flex items-center">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-									</svg>
-									<a :href="student.linkedin_profile_url" target="_blank" class="link text-base text-blue-500">Linkedin profile -></a>
-								</div>
+							<div class="flex items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /> 
+								</svg>
+								{{ student.phone_number }}
+							</div>
+							<div class="flex items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+								</svg>
+								<a :href="student.linkedin_profile_url" target="_blank" class="link text-base text-blue-500">Linkedin profile -></a>
 							</div>
 						</div>
 					</div>
-					<div class="mt-8">
-						<div class="text-xl font-bold uppercase text-gray-800">Skills</div>
-						<display-skills class="mt-2" />
+					<div class="col-span-auto col-span-7">
+						<div class="text-xl font-bold text-gray-800">Skills</div>
+						<skills class="mt-2" />
 					</div>
 				</div>
 			</div>
@@ -81,14 +80,14 @@
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
 import Card from "@/Components/Card";
-import DisplaySkills from "@/Components/DisplaySkills";
+import Skills from "@/Components/ShowSkills";
 import DeleteModal from "@/Components/DeleteModal"
 
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
 		Card,
-		DisplaySkills,
+		Skills,
 		DeleteModal
 	},
 	props: {

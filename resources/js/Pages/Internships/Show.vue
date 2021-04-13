@@ -1,28 +1,13 @@
 <template>
 	<breeze-authenticated-layout title="Internship" subtitle="Details">
-		<template v-slot:header-right>
-			<button class="btn btn-secondary">
-				Applications ->
-			</button>
-			<inertia-link :href="route('internships.edit', internship.id)" class="btn btn-dark">
-				Edit ->
-			</inertia-link>
-			<DeleteModal
-				title="Delete Internship"
-				paragraph="Are you sure you want to delete this internship? This action cannot be undone."
-				:url="route('internships.destroy', internship.id)"
-			>
-				<button class="btn btn-danger">Delete</button>
-			</DeleteModal>
-		</template>
 		<card>
 			<div class="flex divide-x">
 				<div class="flex-1">
 					<div class="p-6">
 						<internship-header :internship="internship" />
 					</div>
-					<div class="p-6 border-t prose-lg">
-						<p>{{ internship.description }}</p>
+					<div class="p-6 border-t">
+						<p class="text-lg leading-8">{{ internship.description }}</p>
 					</div>
 					<div class="p-6 border-t">
 						<div class="font-semibold">Attachments</div>
@@ -41,16 +26,29 @@
 					</div>
 				</div>
 				<div class="w-80 2xl:w-96 flex-shrink-0">
-					<div class="p-6">
-						<button class="btn btn-lg btn-primary w-full justify-center">Submit application</button>
-						<button class="mt-2 btn btn-lg btn-secondary w-full justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-								<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-							</svg>
-							Add to favorites
-						</button>
+					<div v-if="user.userable_type.includes('Supervisor') === false" class="p-6 border-b"> <!-- HIDE for Supervisors -->
+						<template v-if="user.userable_type.includes('Student')"> <!-- SHOW for Students -->
+							<button class="btn btn-lg btn-primary w-full">Submit Application -></button>
+							<button class="mt-1.5 btn btn-lg btn-dark w-full shadow-none">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+								</svg>
+								Add to Favorites
+							</button>
+						</template>
+						<template v-if="user.userable_type.includes('Company')" > <!-- SHOW for Companies -->
+							<button class="btn btn-lg btn-primary block w-full shadow-none">View Applications -></button>
+							<inertia-link :href="route('internships.edit', internship.id)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
+							<DeleteModal
+								title="Delete Internship"
+								paragraph="Are you sure you want to delete this internship? This action cannot be undone."
+								:url="route('internships.destroy', internship.id)"
+							>
+								<button class="mt-1.5 btn btn-lg btn-danger block w-full">Delete</button>
+							</DeleteModal>
+						</template>
 					</div>
-					<div class="p-6 border-t">
+					<div class="p-6">
 						<div class="font-semibold">Supervisor</div>
 						<div class="mt-4 space-y-3">
 							<div class="flex items-center">
@@ -132,5 +130,10 @@ export default {
 	props: {
 		internship: Object
 	},
+	computed: {
+		user() {
+			return this.$page.props.auth.user
+		}
+	}
 }
 </script>

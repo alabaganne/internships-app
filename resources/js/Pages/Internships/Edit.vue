@@ -10,7 +10,7 @@
 					<breeze-validation-errors class="mb-4" />
 					<form @submit.prevent="onSubmit">
 						<div class="grid grid-cols-2 gap-4">
-							<div>
+							<div class="col-span-2">
 								<breeze-label class="required" for="title" value="Title" />
 								<breeze-input class="mt-1" type="text" id="title" v-model="form.title" :class="{ 'input-error': errors.title }" />
 							</div>
@@ -47,7 +47,7 @@
 							<inertia-link :href="editing ? route('internships.show', internship.id) : route('internships.index')" class="link-gray arrow-left px-2">Go back</inertia-link>
 							<div class="flex">
 								<reset-button :form="form" :originalData="internship" />
-								<button type="submit" class="ml-1 btn btn-dark">{{ editing ? 'Edit' : 'Create' }}</button>
+								<button type="submit" class="ml-1 btn btn-dark">{{ editing ? 'Update' : 'Create' }}</button>
 							</div>
 						</div>
 					</form>
@@ -77,8 +77,14 @@ export default {
 		ResetButton
 	},
 	props: {
-		fields: Array,
-		company_supervisors: Array,
+		fields: {
+			type: Array,
+			required: true
+		},
+		company_supervisors: {
+			type: Array,
+			required: true
+		},
 		internship: {
 			type: Object,
 			required: false

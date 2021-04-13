@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StudentResource;
+use App\Http\Resources\UserResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +17,7 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('Students/Index', [
-            'students' => StudentResource::collection(Student::paginate(12))
+            'students' => UserResource::collection(Student::paginate(12))
         ]);
     }
 
@@ -51,7 +51,7 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         return Inertia::render('Students/Show', [
-            'student' => new StudentResource($student)
+            'student' => new UserResource($student)
         ]);
     }
 
@@ -86,6 +86,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->user()->delete();
+        $student->delete();
+
+        return redirect()->route('students.index');
     }
 }

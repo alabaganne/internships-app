@@ -26,6 +26,8 @@ const app = createApp({
 
 app.config.globalProperties.$filters = {
     truncate(value, numChars) {
+        if(!value) return "";
+
         let str = value.substring(0, numChars).trim();
         if(numChars > value.length) {
             return str;

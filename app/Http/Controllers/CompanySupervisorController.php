@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanySupervisor;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CompanySupervisorController extends Controller
 {
@@ -14,7 +15,7 @@ class CompanySupervisorController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('CompanySupervisors/Index');
     }
 
     /**

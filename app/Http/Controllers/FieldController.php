@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FieldRequest;
 use App\Http\Resources\FieldResource;
 use App\Models\Field;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class FieldController extends Controller

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanySupervisorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\InternshipController;
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('internships', InternshipController::class);
     Route::resource('companies', CompanyController::class);
+    Route::resource('company_supervisors', CompanySupervisorController::class);
     Route::resource('students', StudentController::class);
     Route::resource('university_supervisors', UniversitySupervisorController::class);
     Route::resource('fields', FieldController::class);
