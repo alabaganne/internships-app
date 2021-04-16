@@ -13,7 +13,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
-                    <input id="navbar-search" placeholder="Search internships" class="focus:placeholder-transparent focus:ring-0 border-none shadow-none" type="text" />
+                    <input id="navbar-search" placeholder="Search internships" class="focus:placeholder-transparent focus:ring-0 border-none shadow-none text-base" />
                 </label>
             </form>
         </div>

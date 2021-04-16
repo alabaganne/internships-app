@@ -13,7 +13,7 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Student::factory(10)->create()->map(function($student) {
+        \App\Models\Student::factory(15)->create()->map(function($student) {
             $student->user()->save(\App\Models\User::factory()->create());
         });
     }

@@ -14,8 +14,8 @@ class CreateSkillStudentTable extends Migration
     public function up()
     {
         Schema::create('skill_student', function (Blueprint $table) {
-            $table->foreignId('skill_id')->constrained();
-            $table->foreignId('student_id')->constrained();
+            $table->foreignId('skill_id')->constrained()->onDelete('cascade');
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
         });
     }
 

@@ -1,10 +1,10 @@
 <template>
   <div class="py-3 flex items-center justify-between">
     <div class="flex-1 flex justify-between sm:hidden">
-      <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+      <a v-if="data.links.prev" :href="data.links.prev" class="mr-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
         Previous
       </a>
-      <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+      <a v-if="data.links.next" :href="data.links.next" class="ml-auto relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
         Next
       </a>
     </div>

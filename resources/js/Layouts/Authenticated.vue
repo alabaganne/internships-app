@@ -1,9 +1,9 @@
 <template>
     <div class="lg:flex min-h-screen bg-gray-100">
-        <Sidebar />
+        <sidebar />
         <div class="flex-1 text-gray-900">
             <header>
-                <Navbar />
+                <navbar />
                 <div v-if="title" class="px-6 lg:px-8 pt-8 flex justify-between items-center mx-auto w-full">
                     <div>
                         <span class="text-sm text-gray-500 font-medium uppercase">
@@ -20,7 +20,7 @@
                 <main>
                     <slot />
                 </main>
-                <footer class="pt-8 text-center">
+                <footer class="px-8 pt-8 text-center">
                     <span class="font-medium text-gray-500 text-sm">Designed & Developped By <a class="link hover:underline" target="_blank" href="#">Ala Baganne</a></span>
                 </footer>
             </div>

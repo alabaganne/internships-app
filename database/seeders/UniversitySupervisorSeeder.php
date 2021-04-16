@@ -13,7 +13,7 @@ class UniversitySupervisorSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\UniversitySupervisor::factory(16)->create()->map(function($university_supervisor) {
+        \App\Models\UniversitySupervisor::factory(15)->create()->map(function($university_supervisor) {
             $university_supervisor->user()->save(
                 \App\Models\User::factory()->create()
             );

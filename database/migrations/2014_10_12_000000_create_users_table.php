@@ -16,7 +16,6 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->default('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); // default password: "password"
@@ -24,8 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->string('linkedin_profile_url')->nullable();
             $table->nullableMorphs('userable'); // userable_id, userable_type
-            // $table->boolean('active')->default(false);
-            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,5 +1,5 @@
 <template>
-	<button type="button" @click="reset" class="btn btn-secondary">Reset</button>
+	<button type="button" @click="reset" class="btn btn-dark">Reset</button>
 </template>
 
 <script>

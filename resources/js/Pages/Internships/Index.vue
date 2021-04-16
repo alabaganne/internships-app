@@ -1,13 +1,13 @@
 <template>
     <breeze-authenticated-layout title="Internships" subtitle="View">
         <template v-slot:header-right>
-            <inertia-link :href="route('internships.create')" class="btn btn-lg btn-primary">Add Internship -></inertia-link>
+            <inertia-link v-if="user.userable_type.includes('Company')" :href="route('internships.create')" class="btn btn-lg btn-primary">Add Internship -></inertia-link>
         </template>
         <div v-if="internships.meta.total > 0">
             <div class="flex items-start flex-col 2xl:flex-row gap-4">
                 <!-- Filters -->
                 <div class="flex-shrink-0 w-full 2xl:w-96 order-2 2xl:order-first mt-4 2xl:mt-0">
-                    <card title="Filters" subtitle="Filter internships by City, Field of Studies or Company.">
+                    <card title="Filters" subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit.">
                         <div class="sm:flex flex-wrap">
                             <div class="p-6 sm:w-1/2 xl:w-1/3 2xl:w-full sm:border-b sm:border-r xl:border-b-0 2xl:border-b 2xl:border-r-0">
                                 <div class="font-medium text-gray-700">Cities</div>
@@ -47,8 +47,8 @@
                 <!-- Items -->
                 <div>
                     <div class="space-y-4 w-full">
-                        <inertia-link v-for="internship in internships.data" :key="internship.id" :href="route('internships.show', internship.id)" class="block group">
-                            <card class="group-hover:bg-gray-50">
+                        <inertia-link v-for="internship in internships.data" :key="internship.id" :href="route('internships.show', internship.id)" class="block">
+                            <card class="hover:bg-gray-50">
                                 <div class="p-6 lg:p-8">
                                     <div class="flex justify-between">
                                         <internship-header :internship="internship" truncate />
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <card v-else class="p-6">No records found.</card>
+        <div v-else class="p-6 rounded-lg shadow">No records found.</div>
     </breeze-authenticated-layout>
 </template>
 
@@ -80,26 +80,31 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
 import BreezeLabel from "@/Components/Label";
 import BreezeCheckbox from "@/Components/Checkbox";
-import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
 import InternshipHeader from "./Shared/Header";
 import Skills from "@/Components/ShowSkills";
+import Card from "@/Components/Card";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         BreezeLabel,
         BreezeCheckbox,
-        Card,
         Pagination,
         InternshipHeader,
-        Skills
+        Skills,
+        Card
     },
     props: {
         internships: Object,
         cities: Array,
         fields: Array,
         companies: Array
+    },
+    computed: {
+        user() {
+            return this.$page.props.auth.user;
+        }
     },
     methods: {
         like() {

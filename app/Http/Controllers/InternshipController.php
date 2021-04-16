@@ -40,10 +40,14 @@ class InternshipController extends Controller
             });
     }
 
+    public function get_fields() {
+        return Field::select('id', 'name')->get();
+    }
+
     public function create()
     {
         return Inertia::render('Internships/Edit', [
-            'fields' => Field::all(),
+            'fields' => $this->get_fields(),
             'company_supervisors' => $this->get_company_supervisors()
         ]);
     }
@@ -68,7 +72,7 @@ class InternshipController extends Controller
     {
         return Inertia::render('Internships/Edit', [
             'internship' => $internship,
-            'fields' => Field::all(),
+            'fields' => $this->get_fields(),
             'company_supervisors' => $this->get_company_supervisors()
         ]);
     }

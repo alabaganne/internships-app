@@ -6,15 +6,21 @@
     @apply flex justify-center items-center;
 }
 
-@layer components {
+@layer base {
     /* SVGs */
     svg {
         @apply h-6 w-6;
     }
 
     /* Form */
-    input, textarea, select {
-        @apply w-full border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm p-2;
+    label {
+        @apply block text-sm font-medium text-gray-700;
+    }
+    input, input[type="text"], input[type="email"], input[type="password"], input[type="date"], textarea, select {
+        @apply block w-full px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md;
+    }
+    input[type="checkbox"] {
+        @apply focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded;
     }
 
     /* Buttons */
@@ -22,7 +28,7 @@
         @apply focus:outline-none;
     }
     .btn {
-        @apply text-center inline-flex justify-center items-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
+        @apply text-center inline-flex justify-center items-center px-4 py-2 text-sm font-medium border border-transparent rounded focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
     }
     .btn-primary {
         @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
@@ -37,7 +43,7 @@
         @apply bg-red-600 font-medium text-white hover:bg-red-700 focus:ring-red-500;
     }
     .btn-lg {
-        @apply px-6 py-3 text-base;
+        @apply px-6 py-3 text-base rounded-md;
     }
 
     /* Navbar */
@@ -83,7 +89,7 @@
 
 /* CSS Grid */
 .c-grid-col-sm {
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
 }  
 
 /* Sidebar */
@@ -100,7 +106,7 @@
     @apply text-red-500 font-medium text-sm ml-0.5;
 }
 .input-error {
-    @apply border-red-500 focus:border-red-300 focus:ring-red-200;
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500;
 }
 
 /* Links */

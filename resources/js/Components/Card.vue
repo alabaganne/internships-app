@@ -1,29 +1,21 @@
 <template>
-    <div class="bg-white overflow-hidden rounded-lg shadow-sm">
-        <div v-if="title" class="p-8" :class="[dark ? 'bg-gray-800' : 'bg-blue-600']">
-            <h2 class="text-3xl text-white font-bold">
-                {{ title }}
-            </h2>
-            <p class="mt-1" :class="[dark ? 'text-gray-400' : 'text-blue-200']">{{ subtitle }}</p>
-        </div>
-        <div>
-            <slot />
-        </div>
-        <div v-if="$slots['footer']" class="border-t border-gray-100 bg-gray-50">
-            <slot name="footer" />
-        </div>
-    </div>
+	<div class="bg-white rounded-lg shadow overflow-hidden">
+		<div v-if="title" class="p-6 border-b">
+				<div class="text-xl font-medium">{{ title }}</div>
+				<p v-if="subtitle" class="mt-0.5 text-sm text-gray-500">{{ subtitle }}</p>
+		</div>
+		<slot />
+		<div v-if="$slots['footer']" class="border-t px-6 py-4">
+			<slot name="footer" />
+		</div>
+	</div>
 </template>
 
 <script>
 export default {
-    props: {
-        title: String,
-        subtitle: String,
-        dark: {
-            type: Boolean,
-            default: false
-        }
-    },
-};
+	props: {
+		title: String,
+		subtitle: String,
+	}
+}
 </script>

@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Student::factory()->create()
             ->user()->save(User::create([
                 'name' => 'John Doe',
-                'username' => 'johndoe',
+                // 'username' => 'johndoe',
                 'email' => 'student@example.com',
                 'password' => $password,
                 'phone_number' => '+216 50 101 959'
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $company = \App\Models\Company::factory()->create();
         $company->user()->save(User::create([
             'name' => 'Realinflo',
-            'username' => 'realinflo',
+            // 'username' => 'realinflo',
             'email' => 'company@example.com',
             'password' => $password,
             'phone_number' => '+216 50 101 959'

@@ -1,9 +1,13 @@
 <template>
     <breeze-authenticated-layout title="Supervisors" subtitle="Contact">
+        <template v-slot:header-right>
+            <inertia-link :href="route('university_supervisors.create')" class="btn btn-lg btn-primary">Add University Supervisor -></inertia-link>
+        </template>
         <div class="grid c-grid-col-sm gap-4">
-            <card
+            <div
                 v-for="supervisor in university_supervisors.data"
                 :key="supervisor.id"
+                class="bg-white rounded-lg shadow"
             >
                 <div class="px-6 py-10 flex-center flex-col">
                     <img
@@ -14,12 +18,12 @@
                     <div class="mt-6 text-lg font-medium">{{ supervisor.name }}</div>
                     <div class="text-sm text-gray-500">{{ supervisor.field }} teacher</div>
                 </div>
-                <template v-slot:footer>
+                <div class="border-t bg-gray-50 bg-opacity-50">
                     <div class="flex divide-x">
                         <inertia-link href="#" class="person-card-btn">Contact -></inertia-link>
                     </div>
-                </template>
-            </card>
+                </div>
+            </div>
         </div>
         <pagination class="mt-3" :data="university_supervisors" />
     </breeze-authenticated-layout>
@@ -27,13 +31,11 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Card from "@/Components/Card";
 import Pagination from '@/Components/Pagination';
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
-        Card,
         Pagination,
     },
     props: {

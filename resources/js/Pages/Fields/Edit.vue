@@ -1,54 +1,46 @@
 <template>
 	<breeze-authenticated-layout>
-		<div class="max-w-xl mx-auto pt-8">
-			<card
-				title="Field"
-				:subtitle="editing ? 'You missed something? No problem, edit it here.' : 'Fill out the form below to create a new field of studies.'"
-				dark
-			>
-				<div class="p-6">
-					<breeze-validation-errors class="mb-4" />
-					<form @submit.prevent="onSubmit">
-						<div class="grid grid-cols-3 gap-4">
-							<div class="col-span-2">
-								<breeze-label class="required" for="name" value="Name" />
-								<breeze-input class="mt-1" type="text" id="name" v-model="form.name" :class="{ 'input-error': errors.name }" />
+		<div class="max-w-xl mx-auto mt-6">
+			<form spellcheck="false" @submit.prevent="onSubmit">
+				<div class="shadow overflow-hidden bg-white sm:rounded-md">
+					<div class="p-6 border-b">
+						<div class="text-xl font-medium">Field of studies</div>
+						<p class="mt-0.5 text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, exercitationem explicabo.</p>
+					</div>
+					<div class="px-4 py-5 sm:p-6">
+						<breeze-validation-errors class="mb-6" />
+						<div class="grid grid-cols-6 gap-x-4 gap-y-6">
+							<div class="col-span-6 sm:col-span-4">
+								<label for="name" class="required">Name</label>
+								<input v-model="form.name" type="text" name="name" id="name" autocomplete="given-name" class="mt-1.5" placeholder="e.g. Computer Science" />
 							</div>
-							<div class="col-span-3">
-								<breeze-label for="description" value="Description" />
-								<textarea class="mt-1 resize-none" id="description" rows="9" v-model="form.description" :class="{ 'input-error': errors.description }" />
-							</div>
-						</div>
-						<div class="mt-4 flex items-center justify-between">
-							<div class="flex items-center">
-								<inertia-link :href="editing ? route('fields.index', field.id) : route('fields.index')" class="link-gray arrow-left px-2">Go back</inertia-link>
-							</div>
-							<div class="flex">
-								<reset-button class="ml-1" :form="form" :originalData="field" />
-								<button type="submit" class="ml-1 btn btn-dark">{{ editing ? 'Update' : 'Create' }}</button>
+
+							<div class="col-span-6">
+								<label for="description">Description</label>
+								<textarea v-model="form.description" name="description" id="description" rows="8" class="mt-1.5"></textarea>
 							</div>
 						</div>
-					</form>
+					</div>
+					<div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+						<reset-button :form="form" :originalData="field" />
+						<button type="submit" class="ml-1.5 btn btn-primary">
+							{{ editing ? 'Update' : 'Create' }}
+						</button>
+					</div>
 				</div>
-			</card>
+			</form>
 		</div>
 	</breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Card from "@/Components/Card";
-import BreezeLabel from "@/Components/Label";
-import BreezeInput from "@/Components/Input";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import ResetButton from "@/Components/ResetButton";
 
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
-		Card,
-		BreezeLabel,
-		BreezeInput,
 		BreezeValidationErrors,
 		ResetButton
 	},

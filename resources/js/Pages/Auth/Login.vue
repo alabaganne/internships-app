@@ -5,7 +5,7 @@
         {{ status }}
     </div>
 
-    <form autocomplete="off" @submit.prevent="submit">
+    <form spellcheck="false" autocomplete="off" @submit.prevent="submit">
         <div>
             <breeze-label for="email" value="Email" />
             <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />

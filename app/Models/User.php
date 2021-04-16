@@ -18,13 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
         'email',
         'password',
         'phone_number',
         'image',
         'linkedin_profile_url',
-        'is_admin',
         'userable_id',
         'userable_type'
     ];
@@ -47,6 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function setUsernameAttribute($value) {
+    //     if($value === "") {
+    //         $this->attributes['username'] = NULL;
+    //     } else {
+    //         $this->attributes['username'] = strtolower($value);
+    //     }
+    // }
 
     public function userable() {
         return $this->morphTo();

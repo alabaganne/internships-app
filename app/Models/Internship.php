@@ -24,6 +24,10 @@ class Internship extends Model
 
     protected $dates = ['created_at', 'updated_at', 'closing_at'];
 
+    protected $casts = [
+        'remote' => 'boolean'
+    ];
+
     public function company() {
         return $this->belongsTo(Company::class);
     }

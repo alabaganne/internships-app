@@ -11,7 +11,11 @@ class Student extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['about'];
+    protected $fillable = [
+        'about',
+        'field_id',
+        'city_id'
+    ];
 
     public function user() {
         return $this->morphOne(User::class, 'userable');
@@ -19,6 +23,10 @@ class Student extends Model
 
     public function field() {
         return $this->belongsTo(Field::class);
+    }
+
+    public function city() {
+        return $this->belongsTo(City::class);
     }
 
     public function internships() {

@@ -1,6 +1,6 @@
 <template>
 	<breeze-authenticated-layout title="Internship" subtitle="Details">
-		<card>
+		<div class="bg-white rounded-lg shadow">
 			<div class="flex divide-x">
 				<div class="flex-1">
 					<div class="p-6">
@@ -21,14 +21,14 @@
 						</div>
 					</div>
 					<div class="p-6 border-t">
-						<div class="font-semibold">Required Skills</div>
+						<div class="font-semibold">Skills and expertise</div>
 						<skills class="mt-3" />
 					</div>
 				</div>
 				<div class="w-80 2xl:w-96 flex-shrink-0">
 					<div v-if="user.userable_type.includes('Supervisor') === false" class="p-6 border-b"> <!-- HIDE for Supervisors -->
 						<template v-if="user.userable_type.includes('Student')"> <!-- SHOW for Students -->
-							<button class="btn btn-lg btn-primary w-full">Submit Application -></button>
+							<inertia-link :href="route('applications.create', internship.id)" class="btn btn-lg btn-primary w-full">Submit Application -></inertia-link>
 							<button class="mt-1.5 btn btn-lg btn-dark w-full shadow-none">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
@@ -39,13 +39,13 @@
 						<template v-if="user.userable_type.includes('Company')" > <!-- SHOW for Companies -->
 							<button class="btn btn-lg btn-primary block w-full shadow-none">View Applications -></button>
 							<inertia-link :href="route('internships.edit', internship.id)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
-							<DeleteModal
+							<delete-modal
 								title="Delete Internship"
 								paragraph="Are you sure you want to delete this internship? This action cannot be undone."
 								:url="route('internships.destroy', internship.id)"
 							>
 								<button class="mt-1.5 btn btn-lg btn-danger block w-full">Delete</button>
-							</DeleteModal>
+							</delete-modal>
 						</template>
 					</div>
 					<div class="p-6">
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-6 border-t border-b">
+					<div class="p-6 border-t">
 						<div class="font-semibold">Company</div>
 						<div class="mt-4 space-y-3">
 							<div class="flex items-center">
@@ -98,6 +98,13 @@
 								</svg>
 								{{ internship.company.phone_number }}
 							</div>
+							<div v-if="internship.company.phone_number" class="flex items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+								</svg>
+								{{ internship.company.city.name }}
+							</div>
 							<div class="flex items-center">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
@@ -108,23 +115,21 @@
 					</div>
 				</div>
 			</div>
-		</card>
+		</div>
 	</breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Card from "@/Components/Card";
-import DeleteModal from "@/Components/DeleteModal";
 import InternshipHeader from "./Shared/Header"
+import DeleteModal from "@/Components/Modals/Delete";
 import skills from "@/Components/ShowSkills"
 
 export default {
 	components: {
 		BreezeAuthenticatedLayout,
-		Card,
-		DeleteModal,
 		InternshipHeader,
+		DeleteModal,
 		skills,
 	},
 	props: {

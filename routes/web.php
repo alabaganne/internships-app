@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Applications\ApplyController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanySupervisorController;
 use App\Http\Controllers\DashboardController;
@@ -51,4 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('university_supervisors', UniversitySupervisorController::class);
     Route::resource('fields', FieldController::class);
     Route::resource('skills', SkillController::class);
+
+
+    Route::get('/internships/{internship}/apply', [ApplicationController::class, 'create'])->name('applications.create');
 });

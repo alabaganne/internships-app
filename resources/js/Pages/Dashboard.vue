@@ -2,7 +2,7 @@
     <breeze-authenticated-layout subtitle="Overview" title="Dashboard">
         <div class="grid c-grid-col-sm gap-4">
             <div
-                class="bg-white rounded-lg shadow-sm overflow-hidden"
+                class="bg-white rounded-lg shadow overflow-hidden"
                 v-for="card in cards"
                 :key="card.label"
             >
