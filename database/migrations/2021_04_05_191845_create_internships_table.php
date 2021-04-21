@@ -21,8 +21,8 @@ class CreateInternshipsTable extends Migration
             $table->string('attachments')->nullable();
             $table->date('closing_at');
             $table->foreignId('field_id')->constrained()->onDelete('cascade');
-            $table->foreignId('company_id')->constrained();
-            $table->foreignId('company_supervisor_id')->nullable()->constrained('company_supervisors');
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('company_supervisor_id')->nullable()->constrained('company_supervisors')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Illuminate\Support\Str;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -27,6 +29,8 @@ class User extends Authenticatable
         'userable_type'
     ];
 
+    public $timestamps = false;
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -46,15 +50,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function setUsernameAttribute($value) {
-    //     if($value === "") {
-    //         $this->attributes['username'] = NULL;
-    //     } else {
-    //         $this->attributes['username'] = strtolower($value);
-    //     }
-    // }
-
     public function userable() {
         return $this->morphTo();
+    }
+
+    public function isCompany() {
+        return Str::contains($this->userable_type, 'Company');
+    }
+
+    public function isStudent() {
+        return Str::contains($this->userable_type, 'Student');
+    }
+
+    public function isUniversitySupervisor() {
+        return Str::contains($this->userable_type, 'UniversitySupervisor');
+    }
+
+    public function isAdmin() {
+        return false; // TODO: add is admin column to the users table to check whether a user is admin or not
     }
 }

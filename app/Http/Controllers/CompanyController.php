@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyRequest;
+use App\Http\Resources\InternshipResource;
 use App\Http\Resources\UserResource;
+
+use App\Models\City;
 use App\Models\Company;
+use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
@@ -28,7 +35,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Companies/Edit');
+        return Inertia::render('Companies/Edit', [
+            'cities' => City::all(),
+        ]);
     }
 
     /**
@@ -37,9 +46,13 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
-        //
+        Company::create($request->only('about', 'website', 'city_id'))->user()->save(
+            User::create($request->only('name', 'email', 'phone_number'))
+        );
+
+        return Redirect::route('companies.index');
     }
 
     /**
@@ -50,7 +63,10 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return Inertia::render('Companies/Show', [
+            'company' => new UserResource($company),
+            'internships' => InternshipResource::collection($company->internships()->latest()->paginate(10))
+        ]);
     }
 
     /**
@@ -61,7 +77,10 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return Inertia::render('Companies/Edit', [
+            'company' => new UserResource($company),
+            'cities' => City::all(),
+        ]);
     }
 
     /**
@@ -71,9 +90,13 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
-        //
+        $company->update($request->only('about', 'website', 'city_id'));
+
+        $company->user()->update($request->only('name', 'email', 'phone_number'));
+
+        return Redirect::route('companies.show', $company);
     }
 
     /**
@@ -87,6 +110,6 @@ class CompanyController extends Controller
         $company->user()->delete();
         $company->delete();
 
-        return redirect()->route('companies.index');
+        return Redirect::route('companies.index');
     }
 }

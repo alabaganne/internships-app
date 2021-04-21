@@ -8,11 +8,11 @@
             >
                 <div class="py-6 flex items-center">
                     <div class="px-8">
-                        <svg class="text-gray-500" v-html="card.icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" />
+                        <svg class="text-blue-400" v-html="card.icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" />
                     </div>
                     <div>
                         <div class="text-gray-500 font-medium text-sm">{{ card.label }}</div>
-                        <div class="text-2xl font-semibold text-gray-700">{{ card.value }}</div>
+                        <div class="mt-0.5 text-2xl font-semibold text-gray-700">{{ card.value }}</div>
                     </div>
                 </div>
                 <div class="px-6 py-4 bg-gray-50">
@@ -20,60 +20,46 @@
                 </div>
             </div>
         </div>
-        <div class="mt-8">
-            <h3 class="text-lg font-semibold">Recent Applications</h3>
-            <app-table class="mt-4" :fields="['Internship', 'Company', 'Application Date', 'Status', 'Actions']">
-                <tr v-for="application in applications" :key="application.id">
-                    <td class="flex items-center">
-                        <svg class="text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <div class="ml-4 font-medium">Online recruitment application</div>
-                    </td>
-                    <td>
-                        <inertia-link class="link" href="#">Realinflo -></inertia-link>
-                    </td>
-                    <td>July 11, 2020</td>
-                    <td>
-                        <span
-                            class="tag px-2 py-0"
-                            :class="{
-                                'bg-green-100 text-green-900': application.status === true,
-                                'bg-red-100 text-red-900': application.status === false,
-                                'bg-yellow-100 text-yellow-900': application.status === null,
-                            }"
-                        >
-                            <span v-if="application.status === true">Approved</span>
-                            <span v-if="application.status === false">Rejected</span>
-                            <span v-if="application.status === null">Pending</span>
-                        </span>
-                    </td>
-                    <td class="text-right">
-                        <inertia-link href="#" class="link">View -></inertia-link>
-                    </td>
-                </tr>
-            </app-table>
-            <div class="flex justify-end mt-4 mx-4">
-                <inertia-link href="#" class="link">View all -></inertia-link>
-            </div>
+        <div 
+            v-if="
+                $page.props.auth.user.userable_type.includes('Student')
+            "
+            class="mt-5 max-w-5xl"
+        >
+            <card v-if="applications && applications.length > 0" title="Recent Applications" subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry.">
+                <div class="divide-y">
+                    <application-card v-for="application in applications" :key="application.id" :application="application" />
+                </div>
+                <template v-slot:footer>
+                    <div class="flex justify-end">
+                        <inertia-link :href="route('applications.index')" class="btn btn-primary rounded-lg">View all -></inertia-link>
+                    </div>
+                </template>
+            </card>
+            <card v-else class="p-6">You didn't apply to any internship!</card>
         </div>
     </breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Table from "@/Components/Table";
+import ApplicationCard from "@/Components/Application/Card";
+import AppTable from "@/Components/Table";
+import Card from "@/Components/Card";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
-        AppTable: Table,
+        ApplicationCard,
+        AppTable,
+        Card
     },
     props: {
         internships_count: Number,
         university_supervisors_count: Number,
         companies_count: Number,
-        student_applications_count: Number,
+        applications_count: Number,
+        applications: Array,
     },
     data() {
         return {
@@ -98,29 +84,9 @@ export default {
                 },
                 {
                     label: "Pending Applications",
-                    value: this.student_applications_count,
+                    value: this.applications_count,
                     icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />`,
                     link: "#",
-                },
-            ],
-            applications: [
-                {
-                    status: null,
-                },
-                {
-                    status: true,
-                },
-                {
-                    status: null,
-                },
-                {
-                    status: false,
-                },
-                {
-                    status: false,
-                },
-                {
-                    status: true,
                 },
             ],
         };

@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UniversitySupervisorRequest;
 use App\Http\Resources\UserResource;
+
 use App\Models\UniversitySupervisor;
+use App\Models\User;
+use App\Models\Field;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class UniversitySupervisorController extends Controller
@@ -28,7 +34,9 @@ class UniversitySupervisorController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('UniversitySupervisors/Edit', [
+            'fields' => Field::all()
+        ]);
     }
 
     /**
@@ -37,9 +45,14 @@ class UniversitySupervisorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UniversitySupervisorRequest $request)
     {
-        //
+        UniversitySupervisor::create($request->only('field_id'))
+            ->user()->save(
+                User::create($request->only('name', 'email', 'phone_number'))
+            );
+
+        return Redirect::route('university_supervisors.index');
     }
 
     /**
@@ -61,7 +74,10 @@ class UniversitySupervisorController extends Controller
      */
     public function edit(UniversitySupervisor $universitySupervisor)
     {
-        //
+        return Inertia::render('UniversitySupervisors/Edit', [
+            'university_supervisor' => new UserResource($universitySupervisor),
+            'fields' => Field::all(),
+        ]);
     }
 
     /**
@@ -71,9 +87,15 @@ class UniversitySupervisorController extends Controller
      * @param  \App\Models\UniversitySupervisor  $universitySupervisor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UniversitySupervisor $universitySupervisor)
+    public function update(UniversitySupervisorRequest $request, UniversitySupervisor $universitySupervisor)
     {
-        //
+        $universitySupervisor->user()->update(
+            $request->only('name', 'email', 'phone_number')
+        );
+
+        $universitySupervisor->update($request->only('field_id'));
+
+        return Redirect::route('university_supervisors.index');
     }
 
     /**
@@ -84,6 +106,9 @@ class UniversitySupervisorController extends Controller
      */
     public function destroy(UniversitySupervisor $universitySupervisor)
     {
-        //
+        $universitySupervisor->user()->delete();
+        $universitySupervisor->delete();
+
+        return Redirect::route('university_supervisors.index');
     }
 }

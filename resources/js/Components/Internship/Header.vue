@@ -2,7 +2,7 @@
 	<div>
 		<h2 class="text-2xl font-extrabold leading-7 text-gray-900 sm:text-3xl">{{ truncate ? $filters.truncate(internship.title, 50): internship.title }}</h2>
 		<div class="mt-2 flex flex-col sm:flex-row sm:flex-wrap sm:mt-1 sm:space-x-5">
-			<div class="mt-2 flex items-center text-sm font-medium text-gray-500">
+			<div v-if="full" class="mt-2 flex items-center text-sm font-medium text-gray-500">
 				<!-- Heroicon name: solid/briefcase -->
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -24,7 +24,7 @@
 				</svg>
 				{{ internship.field.name }}
 			</div>
-			<div class="mt-2 flex items-center text-sm font-medium text-gray-500">
+			<div v-if="full" class="mt-2 flex items-center text-sm font-medium text-gray-500">
 				<!-- Heroicon name: solid/clock -->
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -36,7 +36,7 @@
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 				</svg>
-				Closing at {{ internship.closing_at }}
+				Closing on {{ internship.closing_at }}
 			</div>
 		</div>
 	</div>
@@ -52,6 +52,10 @@ export default {
 		truncate: {
 			type: Boolean,
 			default: false
+		},
+		full: {
+			type: Boolean,
+			default: true,
 		}
 	}
 }

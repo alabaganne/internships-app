@@ -44,31 +44,12 @@
                         </div>
                     </card>
                 </div>
-                <!-- Items -->
-                <div>
-                    <div class="space-y-4 w-full">
-                        <inertia-link v-for="internship in internships.data" :key="internship.id" :href="route('internships.show', internship.id)" class="block">
-                            <card class="hover:bg-gray-50">
-                                <div class="p-6 lg:p-8">
-                                    <div class="flex justify-between">
-                                        <internship-header :internship="internship" truncate />
-                                        <div class="flex-shrink-0">
-                                            <button @click.prevent="like" type="button" class="bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white rounded-full p-2 ml-6">
-                                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <p class="mt-4 text-gray-700 leading-7">
-                                        {{ $filters.truncate(internship.description, 350) }}
-                                    </p>
-                                    <skills class="mt-2" />
-                                </div>
-                            </card>
-                        </inertia-link>
+                <!-- Items with Pagination -->
+                <div class="space-y-4 w-full">
+                    <div v-for="internship in internships.data" :key="internship.id">
+                        <internship-card :internship="internship" />
                     </div>
-                    <pagination class="mt-3" :data="internships" />
+                    <pagination :data="internships" />
                 </div>
             </div>
         </div>
@@ -78,20 +59,20 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import BreezeLabel from "@/Components/Label";
+import InternshipCard from "@/Components/Internship/Card";
 import BreezeCheckbox from "@/Components/Checkbox";
+import BreezeLabel from "@/Components/Label";
 import Pagination from "@/Components/Pagination";
-import InternshipHeader from "./Shared/Header";
 import Skills from "@/Components/ShowSkills";
 import Card from "@/Components/Card";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
-        BreezeLabel,
+        InternshipCard,
         BreezeCheckbox,
+        BreezeLabel,
         Pagination,
-        InternshipHeader,
         Skills,
         Card
     },

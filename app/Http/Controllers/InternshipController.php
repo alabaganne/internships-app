@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InternshipRequest; // validations
 use App\Http\Resources\InternshipResource; // formatting the response
+use App\Models\Application;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,6 +12,7 @@ use App\Models\City;
 use App\Models\Field;
 use App\Models\Company;
 use App\Models\Internship;
+use Illuminate\Support\Facades\Redirect;
 
 class InternshipController extends Controller
 {
@@ -59,13 +61,24 @@ class InternshipController extends Controller
 
         Internship::create($data);
 
-        return redirect()->route('internships.index');
+        return Redirect::route('internships.index');
+    }
+
+    public function getStudentApplication($internship) {
+        return Application::where('student_id', auth()->user()->userable->id)
+            ->where('internship_id', $internship->id)
+            ->first();
     }
 
     public function show(Internship $internship) {
-        return Inertia::render('Internships/Show', [
+        $props = [
             'internship' => new InternshipResource($internship)
-        ]);
+        ];
+
+        if(auth()->user()->isStudent())
+            $props['application'] = $this->getStudentApplication($internship);
+
+        return Inertia::render('Internships/Show', $props);
     }
 
     public function edit(Internship $internship)
@@ -81,7 +94,7 @@ class InternshipController extends Controller
     {
         $internship->update($request->validated());
 
-        return redirect()->route('internships.show', $internship->id);
+        return Redirect::route('internships.show', $internship->id);
     }
 
 
@@ -89,6 +102,6 @@ class InternshipController extends Controller
     {
         $internship->delete();
 
-        return redirect()->route('internships.index');
+        return Redirect::route('internships.index');
     }
 }

@@ -1,0 +1,28 @@
+button {
+	@apply focus:outline-none;
+}
+
+/* Base */
+.btn {
+	@apply text-center inline-flex justify-center items-center px-4 py-2 text-sm font-medium border border-transparent rounded focus:ring-2 focus:ring-offset-2 cursor-pointer transition ease-in-out duration-150 ;
+}
+/* Colors */
+.btn-primary {
+	@apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+}
+.btn-secondary {
+	@apply border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500 shadow-sm;
+}
+.btn-dark {
+	@apply bg-gray-800 text-white hover:bg-gray-700 focus:border-gray-900 focus:ring-gray-500;
+}
+.btn-danger {
+	@apply bg-red-600 font-medium text-white hover:bg-red-700 focus:ring-red-500;
+}
+/* Sizes */
+.btn-lg {
+	@apply px-6 py-3 text-base rounded-md;
+}
+.btn-sm {
+	@apply px-2 py-1 text-xs;
+}

@@ -15,12 +15,13 @@ class CreateApplicationsTable extends Migration
     {
         // intermediate table between student and internship (Many to Many Relationship)
         Schema::create('applications', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('student_id')->constrained();
             $table->foreignId('internship_id')->constrained();
-            $table->id();
-            $table->text('content');
-            $table->string('resume');
-            $table->string('cover_letter');
+            $table->longText('cover_letter');
+            $table->text('message')->nullable();
+            $table->string('attachments')->nullable();
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

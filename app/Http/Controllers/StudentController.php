@@ -11,6 +11,7 @@ use App\Models\Field;
 use App\Models\City;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -23,7 +24,7 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('Students/Index', [
-            'students' => UserResource::collection(Student::paginate(12))
+            'students' => UserResource::collection(Student::latest()->paginate(12))
         ]);
     }
 
@@ -52,7 +53,7 @@ class StudentController extends Controller
             User::create($request->only('name', 'email', 'phone_number'))
         );
 
-        return redirect()->route('students.index');
+        return Redirect::route('students.index');
     }
 
     /**
@@ -96,7 +97,7 @@ class StudentController extends Controller
 
         $student->user()->update($request->only('name', 'email', 'phone_number'));
 
-        return redirect()->route('students.show', $student);
+        return Redirect::route('students.show', $student);
     }
 
     /**
@@ -110,6 +111,6 @@ class StudentController extends Controller
         $student->user()->delete();
         $student->delete();
 
-        return redirect()->route('students.index');
+        return Redirect::route('students.index');
     }
 }

@@ -28,26 +28,29 @@ class DatabaseSeeder extends Seeder
         \App\Models\Student::factory()->create()
             ->user()->save(User::create([
                 'name' => 'John Doe',
-                // 'username' => 'johndoe',
                 'email' => 'student@example.com',
                 'password' => $password,
-                'phone_number' => '+216 50 101 959'
+                'phone_number' => '+216 50 101 959',
+                'is_admin' => true
             ]));
         
         $company = \App\Models\Company::factory()->create();
         $company->user()->save(User::create([
             'name' => 'Realinflo',
-            // 'username' => 'realinflo',
             'email' => 'company@example.com',
             'password' => $password,
-            'phone_number' => '+216 50 101 959'
+            'phone_number' => '+216 50 101 959',
+            'is_admin' => true
         ]));
-        $company->supervisors()->saveMany(
+        $company->company_supervisors()->saveMany(
             \App\Models\CompanySupervisor::factory(5)->create()->map(function($supervisor) {
                 $supervisor->user()->save(User::factory()->create());
 
                 return $supervisor;
             })
+        );
+        $company->internships()->saveMany(
+            \App\Models\Internship::factory(5)->create()
         );
     }
 }

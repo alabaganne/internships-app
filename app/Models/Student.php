@@ -9,8 +9,6 @@ class Student extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'about',
         'field_id',
@@ -29,10 +27,13 @@ class Student extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function internships() {
+    public function internshipApplications() { // internships that the user has applied to
         return $this->belongsToMany(Internship::class, 'applications')
-            ->as('application')
-            ->withPivot(['content', 'resume', 'cover_letter'])
+            ->withPivot(['cover_letter', 'message', 'attachments', 'status'])
             ->withTimestamps();
+    }
+
+    public function likesInternships() {
+        return $this->belongsToMany(Internship::class, 'likes');
     }
 }

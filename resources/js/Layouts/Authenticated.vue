@@ -1,22 +1,20 @@
 <template>
     <div class="lg:flex min-h-screen bg-gray-100">
         <sidebar />
-        <div class="flex-1 text-gray-900">
-            <header>
-                <navbar />
-                <div v-if="title" class="px-6 lg:px-8 pt-8 flex justify-between items-center mx-auto w-full">
+        <div class="flex-1 text-gray-700">
+            <navbar />
+            <div class="px-6 lg:px-8 py-8 mx-auto" :class="maxWidthClass">
+                <header v-if="title" class="pb-8 flex justify-between items-center mx-auto w-full">
                     <div>
                         <span class="text-sm text-gray-500 font-medium uppercase">
                             {{ subtitle }}
                         </span>
-                        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold">{{ title }}</h3>
+                        <h3 class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-extrabold">{{ title }}</h3>
                     </div>
                     <div class="flex items-center space-x-1">
                         <slot name="header-right" />
                     </div>
-                </div>
-            </header>
-            <div class="px-6 lg:px-8 py-8 mx-auto">
+                </header>
                 <main>
                     <slot />
                 </main>
@@ -52,6 +50,10 @@ export default {
             type: String,
             default: "Page",
         },
+        maxWidthClass: {
+            type: String,
+            default: "",
+        }
     },
 
     computed: {

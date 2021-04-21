@@ -11,6 +11,10 @@ class UniversitySupervisor extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'field_id'
+    ];
+
     public function user() {
         return $this->morphOne(User::class, 'userable');
     }

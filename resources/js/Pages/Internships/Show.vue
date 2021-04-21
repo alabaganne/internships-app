@@ -28,8 +28,9 @@
 				<div class="w-80 2xl:w-96 flex-shrink-0">
 					<div v-if="user.userable_type.includes('Supervisor') === false" class="p-6 border-b"> <!-- HIDE for Supervisors -->
 						<template v-if="user.userable_type.includes('Student')"> <!-- SHOW for Students -->
-							<inertia-link :href="route('applications.create', internship.id)" class="btn btn-lg btn-primary w-full">Submit Application -></inertia-link>
-							<button class="mt-1.5 btn btn-lg btn-dark w-full shadow-none">
+							<inertia-link v-if="application" :href="route('applications.show', application)" class="btn btn-lg btn-primary w-full">Application details -></inertia-link>
+							<inertia-link v-else :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
+							<button class="mt-1.5 btn btn-lg btn-dark w-full">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								</svg>
@@ -37,20 +38,20 @@
 							</button>
 						</template>
 						<template v-if="user.userable_type.includes('Company')" > <!-- SHOW for Companies -->
-							<button class="btn btn-lg btn-primary block w-full shadow-none">View Applications -></button>
+							<button class="btn btn-lg btn-primary block w-full">View Applications -></button>
 							<inertia-link :href="route('internships.edit', internship.id)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
 							<delete-modal
 								title="Delete Internship"
-								paragraph="Are you sure you want to delete this internship? This action cannot be undone."
-								:url="route('internships.destroy', internship.id)"
+								message="Are you sure you want to delete this internship? This action cannot be undone."
+								:url="route('internships.destroy', internship)"
 							>
 								<button class="mt-1.5 btn btn-lg btn-danger block w-full">Delete</button>
 							</delete-modal>
 						</template>
 					</div>
-					<div class="p-6">
+					<div v-if="internship.company_supervisor" class="p-6 border-b">
 						<div class="font-semibold">Supervisor</div>
-						<div class="mt-4 space-y-3">
+						<div class="mt-4 space-y-4">
 							<div class="flex items-center">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -77,9 +78,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-6 border-t">
+					<div class="p-6">
 						<div class="font-semibold">Company</div>
-						<div class="mt-4 space-y-3">
+						<div class="mt-4 space-y-4">
 							<div class="flex items-center">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -121,7 +122,7 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import InternshipHeader from "./Shared/Header"
+import InternshipHeader from "@/Components/Internship/Header"
 import DeleteModal from "@/Components/Modals/Delete";
 import skills from "@/Components/ShowSkills"
 
@@ -133,7 +134,11 @@ export default {
 		skills,
 	},
 	props: {
-		internship: Object
+		internship: {
+			type: Object,
+			required: true
+		},
+		application: Object
 	},
 	computed: {
 		user() {

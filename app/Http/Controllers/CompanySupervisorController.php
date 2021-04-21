@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanySupervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CompanySupervisorController extends Controller
@@ -81,6 +82,11 @@ class CompanySupervisorController extends Controller
      */
     public function destroy(CompanySupervisor $companySupervisor)
     {
-        //
+        $company_id = $companySupervisor->company_id;
+
+        $companySupervisor->user()->delete();
+        $companySupervisor->delete();
+
+        return Redirect::route('companies.show', $company_id);
     }
 }

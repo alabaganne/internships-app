@@ -9,11 +9,11 @@
             <form class="ml-4 xl:ml-0 hidden lg:block" action="#" autocomplete="off">
                 <label for="navbar-search" class="flex items-center w-full">
                     <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
-                    <input id="navbar-search" placeholder="Search internships" class="focus:placeholder-transparent focus:ring-0 border-none shadow-none text-base" />
+                    <input id="navbar-search" placeholder="Search internships" class="ml-2 focus:placeholder-transparent focus:ring-0 border-none shadow-none text-base" />
                 </label>
             </form>
         </div>
@@ -26,7 +26,7 @@
                     </svg>
                 </button>
             </inertia-link>
-            <SlideOver title="Messages">
+            <slide-over title="Messages">
                 <template v-slot:trigger>
                     <button class="nav-icon-link">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,8 +53,8 @@
                         <inertia-link href="#" class="link">View all -></inertia-link>
                     </div>
                 </template>
-            </SlideOver>
-            <SlideOver title="Notifications">
+            </slide-over>
+            <slide-over title="Notifications">
                 <template v-slot:trigger>
                     <!-- apply those styles only when there's a new notification/message: bg-gray-600 text-white -->
                     <button class="nav-icon-link">
@@ -87,7 +87,7 @@
                         <inertia-link href="#" class="link">View all -></inertia-link>
                     </div>
                 </template>
-            </SlideOver>
+            </slide-over>
             <breeze-dropdown width="w-80">
                 <template v-slot:trigger>
                     <button class="px-2 flex items-center text-sm">
@@ -146,3 +146,9 @@ export default {
     },
 };
 </script>
+
+<style>
+    .nav-icon-link {
+        @apply p-2 hover:bg-gray-100 rounded-full;
+    }
+</style>

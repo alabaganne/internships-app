@@ -31,7 +31,7 @@
 						</inertia-link>
 						<delete-modal
 							title="Delete Student"
-							paragraph="Are you sure you want to delete this student? All the data related to him will be permanently deleted. This action cannot be undone."
+							message="Are you sure you want to delete this student? All the data related to him will be permanently deleted. This action cannot be undone."
 							:url="route('students.destroy', student.id)"
 						>
 							<button class="btn btn-danger">Delete</button>

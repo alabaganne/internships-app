@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FieldRequest;
 use App\Http\Resources\FieldResource;
 use App\Models\Field;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class FieldController extends Controller
@@ -41,7 +42,7 @@ class FieldController extends Controller
     {
         Field::create($request->validated());
 
-        return redirect()->route('fields.index');
+        return Redirect::route('fields.index');
     }
 
     /**
@@ -79,7 +80,7 @@ class FieldController extends Controller
     {
         $field->update($request->validated());
 
-        return redirect()->route('fields.index');
+        return Redirect::route('fields.index');
     }
 
     /**
@@ -92,6 +93,6 @@ class FieldController extends Controller
     {
         $field->delete();
 
-        return redirect()->route('fields.index');
+        return Redirect::route('fields.index');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Support\Str;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +14,8 @@ class InternshipRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->isCompany() ||
+            auth()->user()->isAdmin(); // can be used when the admin is adding an internship for a company
     }
 
     public function messages() {

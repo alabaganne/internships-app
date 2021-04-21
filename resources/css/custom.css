@@ -1,0 +1,33 @@
+svg {
+	@apply h-6 w-6;
+}
+
+.flex-center {
+	@apply flex justify-center items-center;
+}
+
+.tag {
+	@apply px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded bg-gray-200 text-gray-900;
+}
+.tag-sm {
+	@apply px-2 py-0;
+}
+.tag-primary {
+	@apply bg-blue-100 text-blue-600;
+}
+.tag-success {
+	@apply bg-green-100 text-green-900;
+}
+.tag-danger {
+	@apply bg-red-100 text-red-900;
+}
+.tag-warning {
+	@apply bg-yellow-100 text-yellow-900;
+}
+.tag-indigo {
+	@apply bg-indigo-100 text-indigo-600;
+}
+
+.c-grid-col-sm {
+	grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+}

@@ -13,7 +13,7 @@ class StudentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->isAdmin() || true;
     }
 
     /**
@@ -23,11 +23,10 @@ class StudentRequest extends FormRequest
      */
     public function rules()
     {
-        $student = \App\Models\Student::find($this->id);
-        if($student) {
-            $user_id = $student->user->id;
+        if($this->student) {
+            $user_id = $this->student->user->id;
         } else {
-            $user_id = NULL;
+            $user_id = "";
         }
         return [
             'name' => 'required',

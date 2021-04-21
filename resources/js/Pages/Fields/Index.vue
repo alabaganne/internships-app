@@ -21,11 +21,11 @@
 					<p>{{ $filters.truncate(field.description, 100) }}</p>
 				</td>
 				<td class="text-right">
-					<inertia-link :href="route('fields.edit', field.id)" class="link">Edit -></inertia-link>
+					<inertia-link :href="route('fields.edit', field.id)" class="btn btn-sm btn-dark">Edit -></inertia-link>
 				</td>
 			</tr>
 		</app-table>
-		<pagination class="mt-3" :data="fields" />
+		<pagination class="mt-4" :data="fields" />
 	</breeze-authenticated-layout>
 </template>
 

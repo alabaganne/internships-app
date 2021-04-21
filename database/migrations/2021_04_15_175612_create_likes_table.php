@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInternshipStudentTable extends Migration
+class CreateLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class CreateInternshipStudentTable extends Migration
      */
     public function up()
     {
-        // likes table
-        Schema::create('internship_student', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->foreignId('internship_id')->constrained()->onDelete('cascade');
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
         });
@@ -27,6 +26,6 @@ class CreateInternshipStudentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('internship_student');
+        Schema::dropIfExists('likes');
     }
 }

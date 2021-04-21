@@ -18,13 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->default('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); // default password: "password"
+            $table->string('password')->default(bcrypt('password'));
             $table->string('phone_number')->nullable();
             $table->string('image')->nullable();
             $table->string('linkedin_profile_url')->nullable();
-            $table->nullableMorphs('userable'); // userable_id, userable_type
+            $table->nullableMorphs('userable');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
-            $table->timestamps();
         });
     }
 

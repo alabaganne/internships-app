@@ -14,4 +14,8 @@ class CompanySupervisor extends Model
     public function user() {
         return $this->morphOne(User::class, 'userable');
     }
+
+    public function company() {
+        return $this->belongsTo(Company::class);
+    }
 }

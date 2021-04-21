@@ -1,0 +1,7 @@
+.link {
+	@apply text-blue-600 hover:text-blue-900 text-sm font-medium cursor-pointer;
+}
+
+.link-gray {
+	@apply link text-sm text-gray-500 hover:text-gray-800;
+}

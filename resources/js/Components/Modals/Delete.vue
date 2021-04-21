@@ -13,12 +13,12 @@
             </svg>
           </div>
           <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
               {{ title }}
             </h3>
             <div class="mt-2">
               <p class="text-sm text-gray-500">
-								{{ paragraph }}
+								{{ message }}
               </p>
             </div>
           </div>
@@ -41,11 +41,14 @@ export default {
 			type: String,
 			required: true,
 		},
-		paragraph: {
+		message: {
 			type: String,
 			required: true
 		},
-		url: String,
+		url: {
+			type: String,
+			required: true,
+		},
 	},
 	methods: {
 		onDelete() {

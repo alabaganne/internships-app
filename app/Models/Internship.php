@@ -25,7 +25,8 @@ class Internship extends Model
     protected $dates = ['created_at', 'updated_at', 'closing_at'];
 
     protected $casts = [
-        'remote' => 'boolean'
+        'remote' => 'boolean',
+        'closing_at' => 'datetime:Y-m-d'
     ];
 
     public function company() {
@@ -48,10 +49,10 @@ class Internship extends Model
         return $this->company()->city();
     }
 
-    public function student() {
-        return $this->belongsToMany(Student::class)
-            ->as('application')
-            ->withPivot(['content', 'resume', 'cover_letter'])
+    public function applications() { // students who applied for this internship
+        return $this->belongsToMany(Student::class, 'applications')
+            ->using(Internship::class)
+            ->withPivot(['cover_letter', 'message', 'attachments'])
             ->withTimestamps();
     }
 }
