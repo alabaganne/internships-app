@@ -19,7 +19,11 @@ class InternshipController extends Controller
     public function index()
     {
         return Inertia::render('Internships/Index', [
-            'internships' => InternshipResource::collection(Internship::latest()->paginate(10)),
+            'internships' => InternshipResource::collection(
+                Internship::with('company', 'company.user', 'field')
+                    ->latest()
+                    ->paginate(10)
+            ),
             'cities' => City::all(),
             'fields' => Field::select('id', 'name')->get(),
             'companies' => Company::all()->transform(function($company) {
@@ -31,9 +35,9 @@ class InternshipController extends Controller
         ]);
     }
 
-    public function get_company_supervisors()
+    public function getCompanySupervisors() // Authenticated user must be a Company
     {
-        return Company::find(auth()->user()->userable->id)->company_supervisors()->get()
+        return Company::find(auth()->user()->userable->id)->companySupervisors()->get()
             ->map(function($supervisor) {
                 return [
                     'id' => $supervisor->id,
@@ -50,7 +54,7 @@ class InternshipController extends Controller
     {
         return Inertia::render('Internships/Edit', [
             'fields' => $this->get_fields(),
-            'company_supervisors' => $this->get_company_supervisors()
+            'company_supervisors' => $this->getCompanySupervisors()
         ]);
     }
     
@@ -86,7 +90,7 @@ class InternshipController extends Controller
         return Inertia::render('Internships/Edit', [
             'internship' => $internship,
             'fields' => $this->get_fields(),
-            'company_supervisors' => $this->get_company_supervisors()
+            'company_supervisors' => $this->getCompanySupervisors()
         ]);
     }
 

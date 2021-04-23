@@ -1,51 +1,55 @@
 <template>
-	<inertia-link :href="route('applications.show', application)" class="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-150 group">
-		<div class="flex-1">
-			<div class="text-lg font-medium">
-				{{ application.internship.title }}
+	<inertia-link :href="route('applications.show', application)" class="px-6 py-4 flex justify-between items-center group hover:bg-gray-50">
+		<div v-if="$page.props.auth.user.userable_type.includes('Company')" class="flex-1 flex items-center">
+			<img 
+				class="h-14 w-14 rounded-full object-cover"
+				src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+				alt=""
+			>
+			<div class="ml-4">
+				<div class="text-blue-500">{{ application.student.name }}</div>
+				<div class="mt-1 text-sm text-gray-500 flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+						<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+						<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+					</svg>
+					{{ application.student.email }}
+				</div>
 			</div>
-			<div class="mt-1.5 flex items-center space-x-4 text-sm text-gray-600 font-medium">
-				<!-- <div class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+		</div>
+		<div v-else class="flex-1">
+			<div class="text-blue-500">{{ application.internship.title }}</div>
+			<div class="mt-2 text-sm text-gray-500 flex items-center space-x-4">
+				<div class="flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
 					</svg>
 					{{ application.internship.company }}
-				</div> -->
-				<div class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-					</svg>
-					{{ application.internship.remote ? 'Remote' : application.internship.city }}
 				</div>
-				<!-- <div class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+				<div class="flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
 					</svg>
-					{{ application.internship.field }}
-				</div> -->
+					{{ application.internship.city }}
+				</div>
 			</div>
 		</div>
-		<div class="flex-1 text-sm font-medium">
-			<div class="flex items-center">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+		<div class="flex-1 text-sm">
+			<div>Applied on {{ application.created_at }}</div>
+			<div class="mt-2 text-gray-500 flex items-center capitalize">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor"
+					:class="{
+						'text-gray-400': application.status === 'pending',
+						'text-green-400': application.status === 'accepted',
+						'text-red-400': application.status === 'rejected',
+					}"
+				>
 					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
 				</svg>
-				<span class="ml-1 text-gray-600">Applied on {{ application.created_at }}</span>
-			</div>
-			<div class="mt-2">
-				<span
-					v-text="application.status"
-					class="tag capitalize"
-					:class="{
-						'': application.status === 'pending',
-						'tag-success': application.status === 'accepted',
-						'tag-danger': application.status === 'rejected'
-					}"
-				/>
+				{{ application.status }}
 			</div>
 		</div>
-		<div class="font-medium text-lg text-gray-700 transform group-hover:translate-x-1 transition duration-150 w-6 flex-shrink-0">
+		<div class="text-lg transform group-hover:translate-x-1 transition duration-150">
 			->
 		</div>
 	</inertia-link>

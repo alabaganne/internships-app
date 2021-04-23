@@ -23,7 +23,7 @@ class UniversitySupervisorController extends Controller
     public function index()
     {
         return Inertia::render('UniversitySupervisors/Index', [
-            'university_supervisors' => UserResource::collection(UniversitySupervisor::paginate(12)),
+            'university_supervisors' => UserResource::collection(UniversitySupervisor::with('field')->paginate(12)),
         ]);
     }
 

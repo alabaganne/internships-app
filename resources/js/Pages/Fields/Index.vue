@@ -3,7 +3,7 @@
 		<template v-slot:header-right>
 			<inertia-link :href="route('fields.create')" class="btn btn-lg btn-primary">Add Field of Studies -></inertia-link>
 		</template>
-		<app-table :fields="['Name', 'Description', 'Actions']">
+		<app-table :fields="['Name', 'Number of Internships', 'Number of Students', 'Actions']">
 			<tr v-for="field in fields.data" :key="field.id">
 				<td>
 					<div class="flex items-center">
@@ -17,9 +17,8 @@
 						</div>
 					</div>
 				</td>
-				<td class="text-gray-700">
-					<p>{{ $filters.truncate(field.description, 100) }}</p>
-				</td>
+				<td>{{ field.internships_count }}</td>
+				<td>{{ field.students_count }}</td>
 				<td class="text-right">
 					<inertia-link :href="route('fields.edit', field.id)" class="btn btn-sm btn-dark">Edit -></inertia-link>
 				</td>

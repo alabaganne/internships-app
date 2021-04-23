@@ -86,7 +86,7 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import Skills from "@/Components/ShowSkills";
+import Skills from "@/Components/Skills";
 import DeleteModal from "@/Components/Modals/Delete"
 
 export default {

@@ -16,6 +16,9 @@ button {
 .btn-dark {
 	@apply bg-gray-800 text-white hover:bg-gray-700 focus:border-gray-900 focus:ring-gray-500;
 }
+.btn-success {
+	@apply bg-green-600 font-medium text-white hover:bg-green-700 focus:ring-green-500;
+}
 .btn-danger {
 	@apply bg-red-600 font-medium text-white hover:bg-red-700 focus:ring-red-500;
 }

@@ -15,7 +15,7 @@ class Company extends Model
         'city_id'
     ];
 
-    public function company_supervisors() {
+    public function companySupervisors() {
         return $this->hasMany(CompanySupervisor::class);
     }
 

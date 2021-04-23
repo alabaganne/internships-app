@@ -37,7 +37,7 @@ class Internship extends Model
         return $this->belongsTo(Field::class);
     }
 
-    public function company_supervisor() {
+    public function companySupervisor() {
         return $this->belongsTo(CompanySupervisor::class);
     }
 
@@ -51,7 +51,6 @@ class Internship extends Model
 
     public function applications() { // students who applied for this internship
         return $this->belongsToMany(Student::class, 'applications')
-            ->using(Internship::class)
             ->withPivot(['cover_letter', 'message', 'attachments'])
             ->withTimestamps();
     }

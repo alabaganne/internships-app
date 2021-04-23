@@ -26,10 +26,10 @@
 </template>
 
 <script>
-    import BreezeButton from '@/Components/Button'
+    import BreezeButton from '@/Components/Breeze/Button'
     import BreezeGuestLayout from "@/Layouts/Guest"
-    import BreezeInput from '@/Components/Input'
-    import BreezeLabel from '@/Components/Label'
+    import BreezeInput from '@/Components/Breeze/Input'
+    import BreezeLabel from '@/Components/Breeze/Label'
     import BreezeValidationErrors from '@/Components/ValidationErrors'
 
     export default {

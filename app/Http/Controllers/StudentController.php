@@ -24,7 +24,9 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('Students/Index', [
-            'students' => UserResource::collection(Student::latest()->paginate(12))
+            'students' => UserResource::collection(
+                Student::with('city', 'field', 'user')->latest()->paginate(12)
+            )
         ]);
     }
 

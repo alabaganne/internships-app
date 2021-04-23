@@ -1,13 +1,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
-/* Custom CSS */
-@import "buttons";
 @import "custom";
-@import "form";
-@import "links";
-@import "navbar";
-@import "sidebar";
-@import "table";
 
 @import "tailwindcss/utilities";

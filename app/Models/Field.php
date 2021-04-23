@@ -15,10 +15,10 @@ class Field extends Model
     ];
 
     public function students() {
-        return $this->belongsToMany(Student::class);
+        return $this->hasMany(Student::class);
     }
 
     public function internships() {
-        return $this->belongsToMany(Internship::class);
+        return $this->hasMany(Internship::class);
     }
 }

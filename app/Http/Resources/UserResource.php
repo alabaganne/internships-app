@@ -25,6 +25,7 @@ class UserResource extends JsonResource
         ];
         if(Str::contains($this->user->userable_type, 'Company')) {
             $data['website'] = $this->website;
+            $data['internships_count'] = $this->internships->count();
         }
         if(Str::contains($this->user->userable_type, 'Student')) {
             // in case you want to add more fields to the student

@@ -18,6 +18,8 @@ class FieldResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'internships_count' => $this->internships->count(),
+            'students_count' => $this->students->count(),
         ];
     }
 }

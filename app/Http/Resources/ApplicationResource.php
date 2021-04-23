@@ -23,22 +23,19 @@ class ApplicationResource extends JsonResource
             'internship' => [
                 'id' => $this->internship->id,
                 'title' => $this->internship->title,
+                'company' => $this->internship->company->user->name,
                 'field' => $this->internship->field->name,
+                'closing_at' => $this->internship->closing_at->format('F d, Y'),
             ],
-            'created_at' => $this->created_at,
-        ];
-
-        $user = auth()->user();
-        if($user->isCompany()) {
-            $data['student'] = [
+            'student' => [
                 'id' => $this->student->id,
+                'user_id' => $this->student->user->id,
                 'name' => $this->student->user->name,
                 'email' => $this->student->user->email,
-            ];
-        }
-        if($user->isStudent()) {
-            $data['internship']['company'] = $this->internship->company->user->name;
-        }
+                'image' => $this->student->user->image,
+            ],
+            'created_at' => $this->created_at->format('F d, Y'),
+        ];
         
         return $data;
     }

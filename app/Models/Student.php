@@ -33,7 +33,7 @@ class Student extends Model
             ->withTimestamps();
     }
 
-    public function likesInternships() {
+    public function likes() {
         return $this->belongsToMany(Internship::class, 'likes');
     }
 }

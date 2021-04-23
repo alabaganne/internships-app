@@ -28,9 +28,12 @@ class DashboardController extends Controller
                 Application::with('internship', 'internship.company', 'internship.company.user', 'internship.company.city', 'internship.field')
                     ->where('student_id', $user->userable->id)
                     ->latest()
-                    ->take(5)
+                    ->take(4)
                     ->get()
             );
+        }
+        if($user->isCompany()) {
+            $props['applications'] = [];
         }
 
         return \Inertia\Inertia::render('Dashboard', $props);

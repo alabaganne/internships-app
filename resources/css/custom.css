@@ -1,3 +1,7 @@
+@import "buttons";
+@import "form";
+@import "sidebar";
+
 svg {
 	@apply h-6 w-6;
 }
@@ -30,4 +34,15 @@ svg {
 
 .c-grid-col-sm {
 	grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+}
+
+.link {
+	@apply text-blue-600 hover:text-blue-900 text-sm font-medium cursor-pointer;
+}
+.link-gray {
+	@apply link text-sm text-gray-500 hover:text-gray-800;
+}
+
+table td {
+	@apply px-6 py-4 whitespace-nowrap;
 }

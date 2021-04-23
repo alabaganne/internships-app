@@ -11,7 +11,7 @@
 						<delete-modal
 							v-if="withDelete && editing"
 							:title="`Delete ${modelName }`"
-							:message="`Are you sure you want to perform this ${modelName.toLowerCase()}? All data related to it will be permanently deleted. This action cannot be undone!`"
+							:message="`Are you sure you want to perform this ${modelName.toLowerCase()}? All data related to it will be permanently deleted. This action cannot be undone.`"
 							:url="route(`${routeName}.destroy`, routeParams)"
 						>
 							<button type="button" class="btn btn-danger">Delete</button>
@@ -19,7 +19,7 @@
 					</div>
 					<div>
 						<button type="button" @click="reset" class="btn btn-dark">Reset</button>
-						<button type="submit" class="ml-1 btn btn-primary">{{ editing ? 'Update' : 'Create' }}</button>
+						<button type="submit" class="ml-1.5 btn btn-primary">{{ editing ? 'Update' : 'Create' }}</button>
 					</div>
 				</div>
 			</template>

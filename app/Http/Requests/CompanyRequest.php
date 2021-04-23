@@ -13,8 +13,7 @@ class CompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->isAdmin() ||
-            true; // check if the request is coming from a registration route
+        return true;
     }
 
     public function messages() {

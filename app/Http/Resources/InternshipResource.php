@@ -36,14 +36,21 @@ class InternshipResource extends JsonResource
             'closing_at' => $this->closing_at->format('F d, Y'),
             'created_at' => $this->created_at->diffForHumans(),
         ];
-        if($this->company_supervisor)
+
+        if($this->companySupervisor)
             $data['company_supervisor'] = [
-                'id' => $this->company_supervisor->id,
-                'name' => $this->company_supervisor->user->name,
-                'email' => $this->company_supervisor->user->email,
-                'phone_number' => $this->company_supervisor->user->phone_number,
-                'linkedin_profile_url' => $this->company_supervisor->user->linkedin_profile_url,
+                'id' => $this->companySupervisor->id,
+                'name' => $this->companySupervisor->user->name,
+                'email' => $this->companySupervisor->user->email,
+                'phone_number' => $this->companySupervisor->user->phone_number,
+                'linkedin_profile_url' => $this->companySupervisor->user->linkedin_profile_url,
             ];
+
+        $user = auth()->user();
+        if($user->isStudent()) {
+            $data['liked'] = $user->userable->likes->contains($this->id);
+        }
+
         return $data;
     }
 }

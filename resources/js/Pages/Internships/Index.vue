@@ -13,11 +13,11 @@
                                 <div class="font-medium text-gray-700">Cities</div>
                                 <div class="mt-4 space-y-3">
                                     <div v-for="city in cities" :key="city.id" class="flex items-center">
-                                        <breeze-checkbox :value="false" />
+                                        <input type="checkbox" />
                                         <span class="ml-2">{{ city.name }}</span>
                                     </div>
                                     <div class="flex items-center">
-                                        <breeze-checkbox :value="false" />
+                                        <input type="checkbox" />
                                         <span class="ml-2">Remote</span>
                                     </div>
                                 </div>
@@ -26,7 +26,7 @@
                                 <div class="font-medium text-gray-700">Fields of Study</div>
                                 <div class="mt-4 space-y-3">
                                     <div v-for="field in fields" :key="field.id" class="flex items-center">
-                                        <breeze-checkbox :value="false" />
+                                        <input type="checkbox" />
                                         <span class="ml-2">{{ field.name }}</span>
                                     </div>
                                 </div>
@@ -35,7 +35,7 @@
                                 <div class="font-medium text-gray-700">Companies</div>
                                 <div class="mt-4 space-y-3">
                                     <div v-for="company in companies" :key="company.id" class="flex items-center">
-                                        <breeze-checkbox :value="false" />
+                                        <input type="checkbox" :value="false" />
                                         <span class="ml-2">{{ company.name }}</span>
                                     </div>
                                 </div>
@@ -60,18 +60,14 @@
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
 import InternshipCard from "@/Components/Internship/Card";
-import BreezeCheckbox from "@/Components/Checkbox";
-import BreezeLabel from "@/Components/Label";
 import Pagination from "@/Components/Pagination";
-import Skills from "@/Components/ShowSkills";
+import Skills from "@/Components/Skills";
 import Card from "@/Components/Card";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         InternshipCard,
-        BreezeCheckbox,
-        BreezeLabel,
         Pagination,
         Skills,
         Card

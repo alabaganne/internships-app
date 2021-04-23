@@ -67,6 +67,6 @@ class User extends Authenticatable
     }
 
     public function isAdmin() {
-        return false; // TODO: add is admin column to the users table to check whether a user is admin or not
+        return $this->is_admin; // TODO: add is admin column to the users table to check whether a user is admin or not
     }
 }

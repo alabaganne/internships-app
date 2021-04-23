@@ -6,9 +6,7 @@
             <div class="px-6 lg:px-8 py-8 mx-auto" :class="maxWidthClass">
                 <header v-if="title" class="pb-8 flex justify-between items-center mx-auto w-full">
                     <div>
-                        <span class="text-sm text-gray-500 font-medium uppercase">
-                            {{ subtitle }}
-                        </span>
+                        <span class="text-sm text-gray-500 font-medium uppercase">{{ subtitle }}</span>
                         <h3 class="text-2xl sm:text-3xl lg:text-4xl text-gray-900 font-extrabold">{{ title }}</h3>
                     </div>
                     <div class="flex items-center space-x-1">
@@ -27,17 +25,11 @@
 </template>
 
 <script>
-import BreezeApplicationLogo from "@/Components/ApplicationLogo";
-import BreezeDropdown from "@/Components/Dropdown";
-import BreezeDropdownLink from "@/Components/DropdownLink";
 import Sidebar from "@/Components/Layout/Sidebar";
 import Navbar from "@/Components/Layout/Navbar";
 
 export default {
     components: {
-        BreezeApplicationLogo,
-        BreezeDropdown,
-        BreezeDropdownLink,
         Sidebar,
         Navbar,
     },

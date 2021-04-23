@@ -11,7 +11,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 text-sm font-medium">
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
                             <slot />
                         </tbody>
                     </table>
