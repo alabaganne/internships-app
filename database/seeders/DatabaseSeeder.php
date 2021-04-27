@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
 
         $password = bcrypt('password');
         \App\Models\Student::factory()->create()
-            ->user()->save(User::create([
+            ->user()
+            ->save(User::create([
                 'name' => 'John Doe',
                 'email' => 'student@example.com',
                 'password' => $password,
@@ -42,8 +43,8 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '+216 50 101 959',
             'is_admin' => true
         ]));
-        $company->company_supervisors()->saveMany(
-            \App\Models\CompanySupervisor::factory(5)->create()->map(function($supervisor) {
+        $company->companySupervisors()->saveMany(
+            \App\Models\CompanySupervisor::factory(5)->create()->each(function($supervisor) {
                 $supervisor->user()->save(User::factory()->create());
 
                 return $supervisor;

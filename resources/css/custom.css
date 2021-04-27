@@ -11,7 +11,7 @@ svg {
 }
 
 .tag {
-	@apply px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded bg-gray-200 text-gray-900;
+	@apply px-3 py-1 inline-flex text-xs leading-5 font-medium rounded bg-gray-200 text-gray-900;
 }
 .tag-sm {
 	@apply px-2 py-0;

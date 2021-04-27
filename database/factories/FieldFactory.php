@@ -23,7 +23,6 @@ class FieldFactory extends Factory
     {
         return [
             'name' => ucfirst($this->faker->words(3, true)),
-            'description' => $this->faker->paragraph()
         ];
     }
 }

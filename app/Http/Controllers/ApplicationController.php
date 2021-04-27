@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Resources\ApplicationResource;
-use App\Http\Resources\InternshipApplicationResource;
 use App\Http\Resources\InternshipResource;
 use App\Models\Application;
 use App\Models\Internship;
-use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -17,10 +16,12 @@ class ApplicationController extends Controller
 {
     public function index() // TODO: only students are authorized to access this route
     {
+        $field_name = Auth::user()->isStudent() ? 'student_id' : 'company_id';
+
         return Inertia::render('Applications/Index', [
-            'applications' => InternshipApplicationResource::collection(
+            'applications' => ApplicationResource::collection(
                 Application::with('internship', 'internship.company', 'internship.company.user', 'internship.company.city', 'internship.field')
-                    ->where('student_id', auth()->user()->userable->id)
+                    ->where($field_name, Auth::user()->userable->id)
                     ->paginate(10)
             )
         ]);
@@ -38,6 +39,7 @@ class ApplicationController extends Controller
         auth()->user()->userable->internshipApplications()->attach($internship, [
             'cover_letter' => $request->input('cover_letter'),
             'message' => $request->input('message'),
+            'company_id' => $internship->company_id,
             // TODO: handle attachments upload and store the path to them.
         ]);
 

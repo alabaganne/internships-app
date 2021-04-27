@@ -35,7 +35,7 @@
 						<div class="bg-white" :title="title" :subtitle="subtitle">
 							<slot name="content" />
 							<div class="flex justify-end bg-gray-50">
-								<div class="space-x-2 px-4 py-3">
+								<div class="space-x-1.5 px-4 py-3">
 									<button type="button" @click="toggle" class="btn btn-secondary">Close</button>
 									<slot name="action-button" />
 								</div>

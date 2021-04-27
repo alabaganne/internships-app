@@ -23,11 +23,11 @@ class UserResource extends JsonResource
             'linkedin_profile_url' => $this->user->linkedin_profile_url,
             'image' => $this->user->image,
         ];
-        if(Str::contains($this->user->userable_type, 'Company')) {
+        if($this->user->isCompany()) {
             $data['website'] = $this->website;
             $data['internships_count'] = $this->internships->count();
         }
-        if(Str::contains($this->user->userable_type, 'Student')) {
+        if($this->user->isStudent()) {
             // in case you want to add more fields to the student
         }
         

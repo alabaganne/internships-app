@@ -10,7 +10,7 @@
 				</div>
 		</div>
 		<slot />
-		<div v-if="$slots['footer']" class="border-t px-6 py-4">
+		<div v-if="$slots['footer']" class="px-4 py-3 bg-gray-50 text-right sm:px-6">
 			<slot name="footer" />
 		</div>
 	</div>

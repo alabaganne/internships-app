@@ -16,11 +16,10 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        Company::factory(15)->create()
-            ->map(function($company) {
-                $company->user()->save(
-                    User::factory()->create()
-                );
-            });
+        Company::factory(5)->create()->each(function($company) {
+            $company->user()->save(
+                User::factory()->create()
+            );
+        });
     }
 }

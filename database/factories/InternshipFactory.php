@@ -24,7 +24,7 @@ class InternshipFactory extends Factory
         return [
             'title' => ucfirst($this->faker->words(5, true)),
             'description' => $this->faker->text(2400),
-            'company_id' => rand(1, 10),
+            'company_id' => rand(1, 5),
             'company_supervisor_id' => rand(1, 10),
             'field_id' => rand(1, 10),
             'remote' => rand(0, 1),

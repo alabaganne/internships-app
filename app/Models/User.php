@@ -26,7 +26,8 @@ class User extends Authenticatable
         'image',
         'linkedin_profile_url',
         'userable_id',
-        'userable_type'
+        'userable_type',
+        'is_admin'
     ];
 
     public $timestamps = false;
@@ -55,18 +56,18 @@ class User extends Authenticatable
     }
 
     public function isCompany() {
-        return Str::contains($this->userable_type, 'Company');
+        return $this->userable_type === 'company';
     }
 
     public function isStudent() {
-        return Str::contains($this->userable_type, 'Student');
+        return $this->userable_type === 'student';
     }
 
     public function isUniversitySupervisor() {
-        return Str::contains($this->userable_type, 'UniversitySupervisor');
+        return $this->userable_type === 'usniversity_supervisor';
     }
 
     public function isAdmin() {
-        return $this->is_admin; // TODO: add is admin column to the users table to check whether a user is admin or not
+        return $this->is_admin;
     }
 }

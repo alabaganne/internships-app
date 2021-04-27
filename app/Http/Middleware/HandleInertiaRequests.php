@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -43,6 +44,8 @@ class HandleInertiaRequests extends Middleware
         if($student) {
             $shared['likes_count'] = $student->likes->count();
         }
+
+        $shared['session'] = Session::get('session');
 
         return array_merge(parent::share($request), $shared);
     }

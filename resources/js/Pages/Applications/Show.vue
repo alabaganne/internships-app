@@ -1,6 +1,6 @@
 <template>
 	<breeze-authenticated-layout title="Application" subtitle="Details" maxWidthClass="max-w-4xl">
-		<template v-if="user.userable_type.includes('Student') && application.status === 'pending' && user.id === application.student.user_id" v-slot:header-right>
+		<template v-if="user.userable_type === 'Student' && application.status === 'pending' && user.id === application.student.user_id" v-slot:header-right>
 			<inertia-link :href="route('applications.edit', application)" class="btn btn-dark">Edit -></inertia-link>
 			<delete-modal
 				title="Delete Application"
@@ -13,9 +13,9 @@
 		<card title="Applicant Information" subtitle="Personal details and application.">
 			<template v-slot:header-right>
 				<div
-					v-if="user.userable_type.includes('Student')"
+					v-if="user.userable_type ===  'student'"
 					v-text="application.status"
-					class="tag capitalize"
+					class="capitalize tag"
 					:class="{
 						'': application.status === 'pending',
 						'tag-success': application.status === 'accepted',
@@ -23,10 +23,10 @@
 					}"
 				/>
 				<div v-else class="flex items-center space-x-1">
-					<button class="btn btn-primary text-xs uppercase">
+					<button class="btn btn-primary px-3 text-xs uppercase">
 						Accept
 					</button>
-					<button class="btn btn-dark text-xs uppercase">
+					<button class="btn btn-dark px-3 text-xs uppercase">
 						Reject
 					</button>
 				</div>
@@ -41,10 +41,20 @@
 							Application for
 						</dt>
 						<dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-							<inertia-link :href="route('internships.show', application)" class="link font-normal">{{ application.internship.title }} -></inertia-link>
+							<inertia-link :href="route('internships.show', application)" class="link">{{ application.internship.title }} -></inertia-link>
 						</dd>
 					</div>
-					<div v-if="user.userable_type.includes('Student')" class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+					<div v-if="user.userable_type === 'student'" :href="route('students.show', application.student)"
+						class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+					>
+						<dt class="text-sm font-medium text-gray-500">
+							Company name
+						</dt>
+						<dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+							<inertia-link :href="route('companies.show', application.company)" class="link">{{ application.company.name }} -></inertia-link>
+						</dd>
+					</div>
+					<div v-if="user.userable_type === 'student'" class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 						<dt class="text-sm font-medium text-gray-500">
 							Field of studies
 						</dt>
@@ -52,17 +62,17 @@
 							{{ application.internship.field }}
 						</dd>
 					</div>
-					<div v-if="user.userable_type.includes('Company')" :href="route('students.show', application.student)"
+					<div v-if="user.userable_type === 'company'" :href="route('students.show', application.student)"
 						class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
 					>
 						<dt class="text-sm font-medium text-gray-500">
 							Full name
 						</dt>
 						<dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-							<inertia-link :href="route('students.show', application.student)" class="link font-normal">{{ application.student.name }} -></inertia-link>
+							<inertia-link :href="route('students.show', application.student)" class="link">{{ application.student.name }} -></inertia-link>
 						</dd>
 					</div>
-					<div v-if="user.userable_type.includes('Company')" class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+					<div v-if="user.userable_type === 'company'" class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 						<dt class="text-sm font-medium text-gray-500">
 							Email address
 						</dt>
@@ -106,7 +116,7 @@
 										</span>
 									</div>
 									<div class="ml-4 flex-shrink-0">
-										<a href="#" class="text-blue-600 hover:text-blue-500">
+										<a href="#" class="link">
 											Download
 										</a>
 									</div>

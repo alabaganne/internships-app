@@ -5,7 +5,7 @@
 				<div class="p-6" :class="{ 'lg:px-7 lg:pb-7': full }">
 					<div class="flex justify-between">
 						<internship-header :internship="internship" :full="full" truncate />
-						<div v-if="$page.props.auth.user.userable_type.includes('Student')" class="flex-shrink-0">
+						<div v-if="$page.props.auth.user.userable_type === 'student'" class="flex-shrink-0">
 							<button type="button" @click.prevent="like(internship)"
 								class="text-red-600 hover:bg-red-100 p-2 text-sm font-medium rounded-lg transition-colors duration-200 flex items-center"
 							>

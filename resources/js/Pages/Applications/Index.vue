@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout title="My Applications" subtitle="View" maxWidthClass="max-w-6xl">
+	<breeze-authenticated-layout title="Applications" subtitle="View" maxWidthClass="max-w-6xl">
 		<card v-if="applications.data.length > 0" class="divide-y">
 			<template v-for="application in applications.data" :key="application.id">
 				<application-card :application="application" />
@@ -9,7 +9,7 @@
 			</template>
 		</card>
 		<card v-else class="p-6">
-			You didn't apply to any internship!
+			No records found.
 		</card>
 	</breeze-authenticated-layout>
 </template>

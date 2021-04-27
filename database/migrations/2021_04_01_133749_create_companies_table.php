@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('website')->nullable();
             $table->longText('about')->nullable();
-            $table->foreignId('city_id')->constrained();
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

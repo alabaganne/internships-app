@@ -15,7 +15,8 @@ class Application extends Model
         'cover_letter',
         'message',
         'attachments',
-        'status'
+        'status',
+        'company_id'
     ];
 
     public function student() {
@@ -24,5 +25,9 @@ class Application extends Model
 
     public function internship() {
         return $this->belongsTo(Internship::class);
+    }
+
+    public function company() {
+        return $this->belongsTo(Company::class);
     }
 }

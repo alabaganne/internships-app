@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class InternshipResource extends JsonResource
 {
@@ -46,7 +47,7 @@ class InternshipResource extends JsonResource
                 'linkedin_profile_url' => $this->companySupervisor->user->linkedin_profile_url,
             ];
 
-        $user = auth()->user();
+        $user = Auth::user();
         if($user->isStudent()) {
             $data['liked'] = $user->userable->likes->contains($this->id);
         }

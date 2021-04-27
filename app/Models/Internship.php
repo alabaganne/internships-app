@@ -42,7 +42,7 @@ class Internship extends Model
     }
 
     public function skills() {
-        return $this->belongsToMany(Skill::class);
+        return $this->morphToMany(Skill::class, 'skillable');
     }
 
     public function city() {

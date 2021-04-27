@@ -7,7 +7,7 @@
 						<internship-header :internship="internship" />
 					</div>
 					<div class="p-6 border-t">
-						<p class="text-lg leading-8">{{ internship.description }}</p>
+						<p class="text-lg leading-8" v-html="internship.description"></p>
 					</div>
 					<div class="p-6 border-t">
 						<div class="font-semibold">Attachments</div>
@@ -26,26 +26,26 @@
 					</div>
 				</div>
 				<div class="w-80 2xl:w-96 flex-shrink-0">
-					<div v-if="! user.userable_type.includes('Supervisor')" class="p-6 border-b"> <!-- hide for supervisors -->
-						<template v-if="user.userable_type.includes('Student')"> <!-- show for students -->
+					<div v-if="! user.userable_type.includes('supervisor')" class="p-6 border-b"> <!-- hide for supervisors -->
+						<template v-if="user.userable_type === 'student'"> <!-- show for students -->
 							<inertia-link v-if="application" :href="route('applications.show', application)" class="btn btn-lg btn-primary w-full">Application details -></inertia-link>
 							<inertia-link v-else :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
-							<button @click="like(internship)" class="mt-1.5 btn btn-lg btn-dark w-full">
+							<button @click="like(internship)" class="mt-1 btn btn-lg btn-dark w-full">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								</svg>
 								{{ internship.liked ? 'Dislike' : 'Like' }}
 							</button>
 						</template>
-						<template v-if="user.userable_type.includes('Company')" > <!-- show for companies -->
+						<template v-if="user.userable_type === 'company'" > <!-- show for companies -->
 							<inertia-link :href="route('internships.applications.index', internship)" class="btn btn-lg btn-primary block w-full">View Applications -></inertia-link>
-							<inertia-link :href="route('internships.edit', internship)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
+							<inertia-link :href="route('internships.edit', internship)" class="mt-1 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
 							<delete-modal
 								title="Delete Internship"
-								message="Are you sure you want to delete this internship? This action cannot be undone."
+								message="Are you sure you want to delete this internship? All the data related to this record will be removed permanently removed. This action cannot be undone."
 								:url="route('internships.destroy', internship)"
 							>
-								<button class="mt-1.5 btn btn-lg btn-danger block w-full">Delete</button>
+								<button class="mt-1 btn btn-lg btn-danger block w-full">Delete</button>
 							</delete-modal>
 						</template>
 					</div>
@@ -78,7 +78,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-6">
+					<inertia-link :href="route('companies.show', internship.company)" class="p-6 border-b hover:bg-gray-50 cursor-pointer block">
 						<div class="font-semibold">Company</div>
 						<div class="mt-4 space-y-4">
 							<div class="flex items-center">
@@ -113,7 +113,7 @@
 								<a :href="internship.company.website" target="_blank" class="link text-base">Visit website -></a>
 							</div>
 						</div>
-					</div>
+					</inertia-link>
 				</div>
 			</div>
 		</div>

@@ -14,4 +14,12 @@ class Skill extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function internships() {
+        return $this->morphedByMany(Internship::class, 'skillable');
+    }
+
+    public function students() {
+        return $this->morphedByMany(Student::class, 'skillable');
+    }
 }

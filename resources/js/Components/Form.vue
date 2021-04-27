@@ -1,7 +1,7 @@
 <template>
-	<form spellcheck="false" @submit.prevent="submit">
+	<form spellcheck="false" autocomplete="off" @submit.prevent="submit">
 		<card :title="title" :subtitle="subtitle">
-			<div class="p-6">
+			<div>
 				<breeze-validation-errors class="mb-4" />
 				<slot />
 			</div>
@@ -19,7 +19,7 @@
 					</div>
 					<div>
 						<button type="button" @click="reset" class="btn btn-dark">Reset</button>
-						<button type="submit" class="ml-1.5 btn btn-primary">{{ editing ? 'Update' : 'Create' }}</button>
+						<button type="submit" class="ml-1.5 btn btn-primary">Save</button>
 					</div>
 				</div>
 			</template>

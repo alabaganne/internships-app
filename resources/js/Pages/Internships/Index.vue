@@ -1,7 +1,7 @@
 <template>
     <breeze-authenticated-layout title="Internships" subtitle="View">
         <template v-slot:header-right>
-            <inertia-link v-if="user.userable_type.includes('Company')" :href="route('internships.create')" class="btn btn-lg btn-primary">Add Internship -></inertia-link>
+            <inertia-link v-if="user.userable_type === 'company'" :href="route('internships.create')" class="btn btn-lg btn-primary">Add Internship -></inertia-link>
         </template>
         <div v-if="internships.meta.total > 0">
             <div class="flex items-start flex-col 2xl:flex-row gap-4">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="p-6 rounded-lg shadow">No records found.</div>
+        <card v-else class="p-6">No records found.</card>
     </breeze-authenticated-layout>
 </template>
 

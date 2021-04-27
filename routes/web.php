@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Applications\ApplyController;
 use App\Http\Controllers\CompanyController;
@@ -45,9 +45,9 @@ Route::inertia('/contact', 'Contact')->name('contact');
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');
-    Route::put('/account', [AccountController::class, 'update'])->name('account.update');
-    Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::resource('internships', InternshipController::class);
     Route::resource('companies', CompanyController::class);

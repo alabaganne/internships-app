@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
 use App\Http\Resources\UserResource;
-
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Field;
 use App\Models\City;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -25,7 +23,14 @@ class StudentController extends Controller
     {
         return Inertia::render('Students/Index', [
             'students' => UserResource::collection(
-                Student::with('city', 'field', 'user')->latest()->paginate(12)
+                Student::with('city', 'field', 'user')
+                    ->latest()
+                    ->where(function ($query) {
+                        if (auth()->user()->isStudent()) {
+                            $query->where('id', '<>', auth()->user()->userable->id);
+                        }
+                    })
+                    ->paginate(12)
             )
         ]);
     }

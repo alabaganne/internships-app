@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSkillStudentTable extends Migration
+class CreateSkillablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSkillStudentTable extends Migration
      */
     public function up()
     {
-        Schema::create('skill_student', function (Blueprint $table) {
+        Schema::create('skillables', function (Blueprint $table) {
             $table->foreignId('skill_id')->constrained()->onDelete('cascade');
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->morphs('skillable');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSkillStudentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skill_student');
+        Schema::dropIfExists('internship_skill');
     }
 }

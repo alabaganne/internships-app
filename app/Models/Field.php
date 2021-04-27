@@ -9,10 +9,7 @@ class Field extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description'
-    ];
+    protected $fillable = ['name'];
 
     public function students() {
         return $this->hasMany(Student::class);

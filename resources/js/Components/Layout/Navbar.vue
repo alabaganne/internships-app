@@ -3,7 +3,7 @@
         <div class="flex items-center">
             <button class="nav-icon-link xl:hidden" @click="toggleSidebar">
                 <!-- Heroicon name: solid/menu -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -15,13 +15,13 @@
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <input placeholder="Search for an internships" class="ml-2 placeholder-gray-400 focus:placeholder-transparent focus:ring-0 border-none shadow-none text-base" />
+                    <input placeholder="Search for internships" class="ml-2 placeholder-gray-400 focus:ring-0 border-none shadow-none text-base" />
                 </label>
             </form>
         </div>
         <div class="flex items-center space-x-2">
             <inertia-link
-                v-if="$page.props.auth.user.userable_type.includes('Student')"
+                v-if="$page.props.auth.user.userable_type === 'student'"
                 :href="route('likes.index')"
                 class="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors duration-100 block"
                 :class="{ 'text-red-600 hover:bg-red-50': $page.props.likes_count > 0 }"
@@ -100,7 +100,7 @@
                     <button class="px-2 flex items-center text-sm">
                         <img
                             class="h-9 w-9 rounded-full object-cover"
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
                             alt=""
                         />
                     </button>
@@ -110,7 +110,7 @@
                         <div class="flex-shrink-0">
                             <img
                                 class="h-12 w-12 rounded-full"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
                                 alt=""
                             />
                         </div>
@@ -123,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <breeze-dropdown-link href="#">My Profile</breeze-dropdown-link>
+                    <breeze-dropdown-link :href="route('profile.edit')">My Profile</breeze-dropdown-link>
                     <breeze-dropdown-link :href="route('logout')" as="button" method="POST">Logout</breeze-dropdown-link>
                 </template>
             </breeze-dropdown>
@@ -157,5 +157,8 @@ export default {
     ::placeholder {
         transition: .25s;
         font-weight: 400;
+    }
+    :focus::placeholder {
+        color: transparent;
     }
 </style>

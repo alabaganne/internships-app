@@ -23,7 +23,6 @@ class ApplicationResource extends JsonResource
             'internship' => [
                 'id' => $this->internship->id,
                 'title' => $this->internship->title,
-                'company' => $this->internship->company->user->name,
                 'field' => $this->internship->field->name,
                 'closing_at' => $this->internship->closing_at->format('F d, Y'),
             ],
@@ -33,6 +32,11 @@ class ApplicationResource extends JsonResource
                 'name' => $this->student->user->name,
                 'email' => $this->student->user->email,
                 'image' => $this->student->user->image,
+            ],
+            'company' => [
+                'id' => $this->company->id,
+                'name' => $this->company->user->name,
+                'city' => $this->company->city->name
             ],
             'created_at' => $this->created_at->format('F d, Y'),
         ];

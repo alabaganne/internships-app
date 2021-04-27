@@ -20,7 +20,7 @@ class InternshipController extends Controller
     {
         return Inertia::render('Internships/Index', [
             'internships' => InternshipResource::collection(
-                Internship::with('company', 'company.user', 'field')
+                Internship::with('company', 'company.user', 'company.city', 'field')
                     ->latest()
                     ->paginate(10)
             ),
@@ -65,7 +65,10 @@ class InternshipController extends Controller
 
         Internship::create($data);
 
-        return Redirect::route('internships.index');
+        return Redirect::route('internships.index')->with('session', [
+            'action' => 'store',
+            'message' => 'Internship created successfully.'
+        ]);
     }
 
     public function getStudentApplication($internship) {
@@ -98,7 +101,10 @@ class InternshipController extends Controller
     {
         $internship->update($request->validated());
 
-        return Redirect::route('internships.show', $internship->id);
+        return Redirect::route('internships.show', $internship->id)->with('session', [
+            'action' => 'update',
+            'message' => 'Internship updated successfully.'
+        ]);
     }
 
 
@@ -106,6 +112,9 @@ class InternshipController extends Controller
     {
         $internship->delete();
 
-        return Redirect::route('internships.index');
+        return Redirect::route('internships.index')->with('session', [
+            'action' => 'destroy',
+            'message' => 'Internship deleted successully.'
+        ]);
     }
 }

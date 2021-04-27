@@ -27,6 +27,10 @@ class Student extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function skills() {
+        return $this->morphToMany(Skill::class, 'skillable');
+    }
+
     public function internshipApplications() { // internships that the user has applied to
         return $this->belongsToMany(Internship::class, 'applications')
             ->withPivot(['cover_letter', 'message', 'attachments', 'status'])

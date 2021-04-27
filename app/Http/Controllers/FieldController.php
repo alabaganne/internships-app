@@ -42,7 +42,10 @@ class FieldController extends Controller
     {
         Field::create($request->validated());
 
-        return Redirect::route('fields.index');
+        return Redirect::route('fields.index')->with('session', [
+            'action' => 'store',
+            'message' => 'Field created successfully.'
+        ]);
     }
 
     /**
@@ -80,7 +83,10 @@ class FieldController extends Controller
     {
         $field->update($request->validated());
 
-        return Redirect::route('fields.index');
+        return Redirect::route('fields.index')->with('session', [
+            'action' => 'update',
+            'message' => 'Field updated successfully.'
+        ]);
     }
 
     /**
@@ -93,6 +99,9 @@ class FieldController extends Controller
     {
         $field->delete();
 
-        return Redirect::route('fields.index');
+        return Redirect::route('fields.index')->with('session', [
+            'action' => 'destroy',
+            'message' => 'Field deleted successfully.'
+        ]);
     }
 }
