@@ -1,11 +1,11 @@
 <template>
-	<breeze-authenticated-layout title="Companies" subtitle="View">
+	<main-layout title="Companies" subtitle="View">
 		<template v-slot:header-right>
 			<inertia-link :href="route('companies.create')" class="btn btn-lg btn-primary">Add Company -></inertia-link>
 		</template>
 		<app-table :fields="['Name', 'Email', 'City', 'Number of Internships', 'Actions']">
 			<tr v-for="company in companies.data" :key="company.id">
-				<td class="font-medium text-gray-900">{{ company.name }}</td>
+				<td class="font-medium">{{ company.name }}</td>
 				<td>{{ company.email }}</td>
 				<td>{{ company.city }}</td>
 				<td>{{ company.internships_count }}</td>
@@ -18,17 +18,17 @@
 			</tr>
 		</app-table>
 		<pagination class="mt-4" :data="companies" />
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import Pagination from "@/Components/Pagination";
 import AppTable from "@/Components/Table";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		Pagination,
 		AppTable,
 	},

@@ -13,6 +13,6 @@ class FieldSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Field::factory(10)->create();
+        \App\Models\Field::factory(5)->create();
     }
 }

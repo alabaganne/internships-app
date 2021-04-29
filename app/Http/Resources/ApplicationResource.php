@@ -31,7 +31,9 @@ class ApplicationResource extends JsonResource
                 'user_id' => $this->student->user->id,
                 'name' => $this->student->user->name,
                 'email' => $this->student->user->email,
+                'phone_number' => $this->student->user->phone_number,
                 'image' => $this->student->user->image,
+                'about' => $this->student->about,
             ],
             'company' => [
                 'id' => $this->company->id,

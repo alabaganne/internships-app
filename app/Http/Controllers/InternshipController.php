@@ -65,9 +65,9 @@ class InternshipController extends Controller
 
         Internship::create($data);
 
-        return Redirect::route('internships.index')->with('session', [
+        return Redirect::route('internships.index')->with('toast', [
             'action' => 'store',
-            'message' => 'Internship created successfully.'
+            'message' => 'A new internship has been added.'
         ]);
     }
 
@@ -101,7 +101,7 @@ class InternshipController extends Controller
     {
         $internship->update($request->validated());
 
-        return Redirect::route('internships.show', $internship->id)->with('session', [
+        return Redirect::route('internships.show', $internship->id)->with('toast', [
             'action' => 'update',
             'message' => 'Internship updated successfully.'
         ]);
@@ -112,7 +112,7 @@ class InternshipController extends Controller
     {
         $internship->delete();
 
-        return Redirect::route('internships.index')->with('session', [
+        return Redirect::route('internships.index')->with('toast', [
             'action' => 'destroy',
             'message' => 'Internship deleted successully.'
         ]);

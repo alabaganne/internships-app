@@ -8,6 +8,8 @@ import {
 } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
+import AuthenticatedLayout from "./Layouts/Authenticated";
+
 const el = document.getElementById("app");
 
 import store from "./store";
@@ -16,7 +18,15 @@ const app = createApp({
     render: () =>
         h(InertiaApp, {
             initialPage: JSON.parse(el.dataset.page),
-            resolveComponent: (name) => require(`./Pages/${name}`).default,
+            resolveComponent: (name) => {
+                const module = require(`./Pages/${name}`);
+
+                if(!module.default.layout) {
+                    module.default.layout = AuthenticatedLayout;
+                }
+
+                return module.default;
+            },
             resolveErrors: page => (page.props.errors || {}),
         }),
 })
@@ -36,6 +46,9 @@ app.config.globalProperties.$filters = {
         }
     }
 }
+
+import Icon from "./Shared/Icon";
+app.component('Icon', Icon);
 
 app.mount(el);
 

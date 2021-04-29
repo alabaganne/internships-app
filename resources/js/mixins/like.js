@@ -2,10 +2,11 @@ export default {
 	emits: ['like', 'dislike'],
 	methods: {
 		like(internship) {
-			axios.post(route('likes.store', internship)).then(() => {
+			axios.post(route('likes.store', internship)).then(res => {
 				if(internship.liked) {
 					internship.liked = false;
 					this.$page.props.likes_count--;
+
 					this.$emit('dislike');
 				} else {
 					internship.liked = true;

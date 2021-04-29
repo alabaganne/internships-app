@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout>
+	<main-layout>
 		<div class="max-w-xl mx-auto mt-6">
 			<app-form
 				title="Field of Studies"
@@ -17,16 +17,16 @@
 				</div>
 			</app-form>
 		</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import AppForm from "@/Components/Form";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		AppForm
 	},
 	props: {

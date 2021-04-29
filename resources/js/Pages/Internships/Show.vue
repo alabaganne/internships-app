@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout title="Internship" subtitle="Details">
+	<main-layout title="Internship" subtitle="Details">
 		<div class="bg-white rounded-lg shadow">
 			<div class="flex divide-x">
 				<div class="flex-1">
@@ -30,7 +30,7 @@
 						<template v-if="user.userable_type === 'student'"> <!-- show for students -->
 							<inertia-link v-if="application" :href="route('applications.show', application)" class="btn btn-lg btn-primary w-full">Application details -></inertia-link>
 							<inertia-link v-else :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
-							<button @click="like(internship)" class="mt-1 btn btn-lg btn-dark w-full">
+							<button @click="like(internship)" class="mt-1 btn btn-lg btn-dark focus:ring-0 w-full">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								</svg>
@@ -117,11 +117,11 @@
 				</div>
 			</div>
 		</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import InternshipHeader from "@/Components/Internship/Header"
 import DeleteModal from "@/Components/Modals/Delete";
 import skills from "@/Components/Skills"
@@ -130,7 +130,7 @@ import Like from "@/mixins/like"
 export default {
 	mixins: [Like],
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		InternshipHeader,
 		DeleteModal,
 		skills,

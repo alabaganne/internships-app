@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout title="Application" subtitle="Submit" maxWidthClass="max-w-4xl">
+	<main-layout title="Application" subtitle="Submit" maxWidthClass="max-w-4xl">
 		<internship-card :internship="internship" :full="false" />
 		<app-form 
 			class="mt-6"
@@ -37,11 +37,11 @@
 				</div>
 			</div>
 		</app-form>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import InternshipCard from "@/Components/Internship/Card";
 import FilesUpload from "@/Components/FilesUpload";
 import AppForm from "@/Components/Form";
@@ -49,7 +49,7 @@ import Card from "@/Components/Card";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		InternshipCard,
 		FilesUpload,
 		AppForm,

@@ -32,7 +32,11 @@ class DashboardController extends Controller
                     ->take(4)
                     ->get()
             );
-            $props['applications_count'] = Application::where($query_field, $user->userable->id)->get()->count();
+            
+            $props['applications_count'] = Application::where($query_field, $user->userable->id)
+                ->where('status', null)
+                ->get()
+                ->count();
         }
 
         return \Inertia\Inertia::render('Dashboard', $props);

@@ -1,6 +1,5 @@
 @import "buttons";
 @import "form";
-@import "sidebar";
 
 svg {
 	@apply h-6 w-6;

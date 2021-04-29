@@ -22,7 +22,7 @@ class CreateApplicationsTable extends Migration
             $table->longText('cover_letter');
             $table->text('message')->nullable();
             $table->string('attachments')->nullable();
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

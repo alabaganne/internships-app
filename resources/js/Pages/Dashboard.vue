@@ -1,5 +1,5 @@
 <template>
-    <breeze-authenticated-layout subtitle="Overview" title="Dashboard">
+    <main-layout subtitle="Overview" title="Dashboard">
         <div class="grid c-grid-col-sm gap-4">
             <template
                 v-for="card in cards"
@@ -12,7 +12,7 @@
                         </div>
                         <div>
                             <div class="text-gray-500 text-sm uppercase">{{ card.label }}</div>
-                            <div class="mt-0.5 text-3xl font-extrabold text-gray-900">{{ card.value }}</div>
+                            <div class="mt-0.5 text-3xl font-extrabold">{{ card.value }}</div>
                         </div>
                     </div>
                     <div class="px-6 py-4 bg-gray-50">
@@ -37,18 +37,18 @@
                 <div v-if="applications.length === 0" class="p-6">No records found.</div>
             </card>
         </div>
-    </breeze-authenticated-layout>
+    </main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import ApplicationCard from "@/Components/Application/Card";
 import AppTable from "@/Components/Table";
 import Card from "@/Components/Card";
 
 export default {
     components: {
-        BreezeAuthenticatedLayout,
+        MainLayout,
         ApplicationCard,
         AppTable,
         Card

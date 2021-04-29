@@ -23,6 +23,7 @@ module.exports = {
                 '100': '400px',
             },
             minWidth: {
+                '4': '1rem',
                 '96': '24rem'
             }
         },

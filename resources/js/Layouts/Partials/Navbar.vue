@@ -1,44 +1,31 @@
 <template>
-    <nav class="bg-white h-20 flex justify-between items-center px-4 md:px-6 shadow-sm">
+    <nav class="bg-white text-gray-700 h-20 flex justify-between items-center px-4 md:px-6 shadow-sm">
         <div class="flex items-center">
             <button class="nav-icon-link xl:hidden" @click="toggleSidebar">
-                <!-- Heroicon name: solid/menu -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                </svg>
+                <icon name="menu" solid />
             </button>
             <form class="ml-4 xl:ml-0 hidden lg:block" action="#" autocomplete="off">
                 <label for="navbar-search" class="flex items-center w-full">
                     <button>
-                        <!-- Heroicon name: solid/search -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                        </svg>
+                        <icon name="search" solid />
                     </button>
-                    <input placeholder="Search for internships" class="ml-2 placeholder-gray-400 focus:ring-0 border-none shadow-none text-base" />
+                    <input placeholder="Search for internships" class="ml-2 placeholder-gray-500 focus:ring-0 border-none shadow-none text-base" />
                 </label>
             </form>
         </div>
         <div class="flex items-center space-x-2">
             <inertia-link
-                v-if="$page.props.auth.user.userable_type === 'student'"
+                v-if="user.userable_type === 'student'"
                 :href="route('likes.index')"
-                class="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors duration-100 block"
+                class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100 block"
                 :class="{ 'text-red-600 hover:bg-red-50': $page.props.likes_count > 0 }"
             >
-                <!-- Heroicon name: solid/heart -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                </svg>
+                <icon name="heart" solid />
             </inertia-link>
             <slide-over title="Messages">
                 <template v-slot:trigger>
                     <button class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100">
-                        <!-- Heroicon name: solid/chat-alt-2 -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-                            <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-                        </svg>
+                        <icon name="chat-alt-2" solid />
                     </button>
                 </template>
                 <template v-slot:content>
@@ -61,38 +48,38 @@
                     </div>
                 </template>
             </slide-over>
-            <slide-over title="Notifications">
+            <slide-over ref="notificationsSlideOver" v-if="$page.props.notifications" title="Unread notifications">
                 <template v-slot:trigger>
                     <button class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100">
-                        <!-- Heroicon name: solid/bell -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                        </svg>
+                        <icon name="bell" solid />
                     </button>
                 </template>
                 <template v-slot:content>
-                    <div class="border-b border-gray-200">
-                        <inertia-link v-for="(notification, index) in 5" :key="notification" class="border-t border-gray-200 hover:bg-gray-50 p-4 flex" href="#">
+                    <div v-if="$page.props.notifications.length > 0">
+                        <inertia-link 
+                            v-for="(notification, index) in $page.props.notifications"
+                            :key="notification.id"
+                            :href="notification.data.action"
+                            @click="toggleNotificationsSlideOver"
+                            class="p-4 border-b border-gray-100 hover:bg-gray-50 flex"
+                        >
                             <div 
                                 class="h-16 w-16 flex-shrink-0 flex-center rounded-full"
-                                :class="index > 2 ?
-                                    'bg-gray-200 text-gray-800':
-                                    'bg-blue-100 text-blue-600'"
+                                :class="index % 2 === 0 ?
+                                    'bg-blue-100 text-blue-600':
+                                    'bg-gray-200 text-gray-800'
+                                "
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                                </svg>
+                                <icon name="bell" solid />
                             </div>
                             <div class="ml-5">
-                                <div class="font-medium">Webspect</div>
-                                <p class="text-gray-500 text-sm mt-1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <span class="mt-1 text-xs text-blue-400 font-medium">4 hours ago</span>
+                                <div class="font-medium">{{ notification.data.title }}</div>
+                                <p class="text-gray-500 text-sm mt-1" v-html="notification.data.body" />
+                                <span class="mt-1 text-xs text-blue-400 font-medium">{{ notification.created_at }}</span>
                             </div>
                         </inertia-link>
                     </div>
-                    <div class="mt-4 text-center">
-                        <inertia-link href="#" class="link">View all -></inertia-link>
-                    </div>
+                    <div v-else class="p-6 text-center text-gray-500">You have no unread notifications.</div>
                 </template>
             </slide-over>
             <breeze-dropdown width="w-80">
@@ -146,9 +133,15 @@ export default {
     },
     computed: {
         ...mapGetters(["sidebarActive"]),
+        user() {
+            return this.$page.props.auth.user;
+        }
     },
     methods: {
         ...mapActions(["toggleSidebar"]),
+        toggleNotificationsSlideOver() {
+            this.$refs.notificationsSlideOver.toggle();
+        }
     },
 };
 </script>

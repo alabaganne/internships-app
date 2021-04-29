@@ -21,11 +21,8 @@ class LikeController extends Controller // only students are authorized to acces
 
     public function store(Internship $internship)
     {
-        $student = auth()->user()->userable;
-        if (! $student->likes->contains($internship)) {
-            $student->likes()->attach($internship);
-        } else {
-            $student->likes()->detach($internship);
-        }
+        $response = auth()->user()->userable->likes()->toggle($internship);
+
+        return $response;
     }
 }

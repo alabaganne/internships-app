@@ -52,7 +52,10 @@ class UniversitySupervisorController extends Controller
                 User::create($request->only('name', 'email', 'phone_number'))
             );
 
-        return Redirect::route('university_supervisors.index');
+        return Redirect::route('university_supervisors.index')->with('toast', [
+            'action' => 'store',
+            'message' => 'A new university supervisor has been added.'
+        ]);
     }
 
     /**
@@ -95,7 +98,10 @@ class UniversitySupervisorController extends Controller
 
         $universitySupervisor->update($request->only('field_id'));
 
-        return Redirect::route('university_supervisors.index');
+        return Redirect::route('university_supervisors.index')->with('toast', [
+            'action' => 'update',
+            'message' => 'University supervisor updated successfully.'
+        ]);
     }
 
     /**
@@ -109,6 +115,9 @@ class UniversitySupervisorController extends Controller
         $universitySupervisor->user()->delete();
         $universitySupervisor->delete();
 
-        return Redirect::route('university_supervisors.index');
+        return Redirect::route('university_supervisors.index')->with('toast', [
+            'action' => 'destroy',
+            'message' => 'University supervisor deleted successfully.'
+        ]);
     }
 }

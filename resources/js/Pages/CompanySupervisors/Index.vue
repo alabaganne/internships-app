@@ -1,16 +1,16 @@
 <template>
-	<breeze-authenticated-layout title="Company Supervisors" subtitle="Manage">
+	<main-layout title="Company Supervisors" subtitle="Manage">
 		<div>Content</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import AppTable from "@/Components/Table";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		AppTable
 	}
 }

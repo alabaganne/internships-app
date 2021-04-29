@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout>
+	<main-layout>
 		<div class="bg-white rounded-lg shadow overflow-hidden max-w-7xl mx-auto mt-4">
 			<img
 				class="h-60 w-full object-cover"
@@ -81,17 +81,17 @@
 				</div>
 			</div>
 		</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import Skills from "@/Components/Skills";
 import DeleteModal from "@/Components/Modals/Delete"
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		Skills,
 		DeleteModal
 	},

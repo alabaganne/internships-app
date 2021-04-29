@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('fields', FieldController::class);
     Route::resource('skills', SkillController::class);
     
+    Route::post('/applications/{application}', [ApplicationController::class, 'reply'])->name('applications.reply');
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('/internships/{internship}/apply', [ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/internship/{internship}/apply', [ApplicationController::class, 'store'])->name('applications.store');

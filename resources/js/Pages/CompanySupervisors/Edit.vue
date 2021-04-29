@@ -1,15 +1,15 @@
 <template>
-	<breeze-authenticated-layout>
+	<main-layout>
 		<div>Content</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout
+		MainLayout
 	}
 }
 </script>

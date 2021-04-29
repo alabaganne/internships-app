@@ -7,6 +7,7 @@ use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\InternshipResource;
 use App\Models\Application;
 use App\Models\Internship;
+use App\Notifications\ApplicationReviewed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -43,7 +44,10 @@ class ApplicationController extends Controller
             // TODO: handle attachments upload and store the path to them.
         ]);
 
-        return Redirect::route('applications.index');
+        return Redirect::route('applications.index')->with('toast', [
+            'action' => 'store',
+            'message' => 'Your application has been sent.'
+        ]);
     }
 
     public function show(Application $application)
@@ -67,12 +71,30 @@ class ApplicationController extends Controller
     {
         $application->update($request->validated());
 
-        return Redirect::route('applications.show', $application);
+        return Redirect::route('applications.show', $application)->with('toast', [
+            'action' => 'update',
+            'message' => 'Application updated successfully.'
+        ]);
     }
 
     public function destroy(Application $application) {
         $application->delete();
 
-        return Redirect::route('applications.index');
+        return Redirect::route('applications.index')->with('toast', [
+            'action' => 'destroy',
+            'message' => 'Your applications has been deleted.'
+        ]);
+    }
+
+    public function reply(Application $application, Request $request) { // only companies are authorized to access this route
+        $application->update(
+            $request->validate([
+                'status' => 'required|boolean'
+            ])
+        );
+
+        $application->student->user->notify(new ApplicationReviewed($application));
+
+        return Redirect::back();
     }
 }

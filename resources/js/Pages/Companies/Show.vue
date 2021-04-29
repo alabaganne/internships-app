@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout title="Company" subtitle="View">
+	<main-layout title="Company" subtitle="View">
 		<div class="2xl:grid 2xl:grid-cols-3 gap-4">
 			<div class="">
 				<card class="p-6 w-full">
@@ -58,11 +58,11 @@
 				<card v-else class="p-6 text-gray-600">This company has no internships.</card>
 			</div>
 		</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import InternshipCard from "@/Components/Internship/Card";
 import DeleteModal from "@/Components/Modals/Delete";
 import Pagination from "@/Components/Pagination";
@@ -70,7 +70,7 @@ import Card from "@/Components/Card"
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		InternshipCard,
 		DeleteModal,
 		Pagination,

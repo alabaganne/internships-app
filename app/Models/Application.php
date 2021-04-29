@@ -19,6 +19,10 @@ class Application extends Model
         'company_id'
     ];
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
     public function student() {
         return $this->belongsTo(Student::class);
     }

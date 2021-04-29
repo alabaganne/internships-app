@@ -1,5 +1,5 @@
 <template>
-    <breeze-authenticated-layout title="Students" subtitle="Profiles">
+    <main-layout title="Students" subtitle="Profiles">
         <template v-slot:header-right>
             <inertia-link :href="route('students.create')" class="btn btn-lg btn-primary">Add Student -></inertia-link>
         </template>
@@ -37,17 +37,17 @@
         <card v-else class="p-6">
             There's no students in the database.
         </card>
-    </breeze-authenticated-layout>
+    </main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import Pagination from "@/Components/Pagination";
 import Card from "@/Components/Card";
 
 export default {
     components: {
-        BreezeAuthenticatedLayout,
+        MainLayout,
         Pagination,
         Card
     },

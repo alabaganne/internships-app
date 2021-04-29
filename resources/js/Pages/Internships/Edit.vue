@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout>
+	<main-layout>
 		<div class="max-w-3xl mx-auto mt-6">
 			<app-form
 				:form="form"
@@ -57,18 +57,18 @@
 				</div>
 			</app-form>
 		</div>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import AppForm from "@/Components/Form";
 import FilesUpload from "@/Components/FilesUpload";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		BreezeValidationErrors,
 		AppForm,
 		FilesUpload

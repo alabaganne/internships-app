@@ -60,7 +60,10 @@ class StudentController extends Controller
             User::create($request->only('name', 'email', 'phone_number'))
         );
 
-        return Redirect::route('students.index');
+        return Redirect::route('students.index')->with('toast', [
+            'action' => 'store',
+            'message' => 'Student created successfully.'
+        ]);
     }
 
     /**
@@ -104,7 +107,10 @@ class StudentController extends Controller
 
         $student->user()->update($request->only('name', 'email', 'phone_number'));
 
-        return Redirect::route('students.show', $student);
+        return Redirect::route('students.show', $student)->with('toast', [
+            'action' => 'update',
+            'message' => 'Student updated successfully.'
+        ]);
     }
 
     /**
@@ -118,6 +124,9 @@ class StudentController extends Controller
         $student->user()->delete();
         $student->delete();
 
-        return Redirect::route('students.index');
+        return Redirect::route('students.index')->with('toast', [
+            'action' => 'destroy',
+            'message' => 'Student deleted successfully.'
+        ]);
     }
 }

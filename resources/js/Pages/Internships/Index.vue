@@ -1,5 +1,5 @@
 <template>
-    <breeze-authenticated-layout title="Internships" subtitle="View">
+    <main-layout title="Internships" subtitle="View">
         <template v-slot:header-right>
             <inertia-link v-if="user.userable_type === 'company'" :href="route('internships.create')" class="btn btn-lg btn-primary">Add Internship -></inertia-link>
         </template>
@@ -54,11 +54,11 @@
             </div>
         </div>
         <card v-else class="p-6">No records found.</card>
-    </breeze-authenticated-layout>
+    </main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import InternshipCard from "@/Components/Internship/Card";
 import Pagination from "@/Components/Pagination";
 import Skills from "@/Components/Skills";
@@ -66,7 +66,7 @@ import Card from "@/Components/Card";
 
 export default {
     components: {
-        BreezeAuthenticatedLayout,
+        MainLayout,
         InternshipCard,
         Pagination,
         Skills,

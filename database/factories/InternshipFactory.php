@@ -26,7 +26,7 @@ class InternshipFactory extends Factory
             'description' => $this->faker->text(2400),
             'company_id' => rand(1, 5),
             'company_supervisor_id' => rand(1, 10),
-            'field_id' => rand(1, 10),
+            'field_id' => rand(1, 5),
             'remote' => rand(0, 1),
             'closing_at' => $this->faker->dateTimeBetween('now', '+4 months')
         ];

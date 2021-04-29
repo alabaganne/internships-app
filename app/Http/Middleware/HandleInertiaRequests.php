@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\NotificationResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
@@ -40,12 +42,25 @@ class HandleInertiaRequests extends Middleware
             ]
         ];
 
-        $student = auth()->user() && auth()->user()->isStudent() ? auth()->user()->userable : NULL;
-        if($student) {
-            $shared['likes_count'] = $student->likes->count();
+        $user = auth()->user();
+        if($user) {
+            if($user->isStudent()) {
+                $shared['likes_count'] = $user->userable->likes->count();
+            }
+
+            if($user->isStudent() || $user->isCompany()) {
+                $shared['notifications'] = NotificationResource::collection(
+                    $request->user()->notifications()
+                        ->latest()
+                        ->take(8)
+                        ->get()
+                );
+            }
         }
 
-        $shared['session'] = Session::get('session');
+        if(Session::has('toast')) {
+            $shared['toast'] = Session::get('toast');
+        }
 
         return array_merge(parent::share($request), $shared);
     }

@@ -175,7 +175,11 @@
 </style>
 
 <script>
+    import EmptyLayout from "@/Layouts/Empty";
+
     export default {
+        layout: EmptyLayout,
+        
         props: {
             canLogin: Boolean,
             canRegister: Boolean,

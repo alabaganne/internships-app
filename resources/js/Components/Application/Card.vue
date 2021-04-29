@@ -21,32 +21,22 @@
 			<div class="text-blue-500">{{ application.internship.title }}</div>
 			<div class="mt-2 text-sm text-gray-500 flex items-center space-x-4">
 				<div class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
-					</svg>
+					<icon name="office-building" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
 					{{ application.company.name }}
 				</div>
 				<div class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-					</svg>
+					<icon name="location-marker" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
 					{{ application.company.city }}
 				</div>
 			</div>
 		</div>
 		<div class="flex-1 text-sm">
 			<div>Applied on {{ application.created_at }}</div>
-			<div class="mt-2 text-gray-500 flex items-center capitalize">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor"
-					:class="{
-						'text-gray-400': application.status === 'pending',
-						'text-green-400': application.status === 'accepted',
-						'text-red-400': application.status === 'rejected',
-					}"
-				>
-					<path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-				</svg>
-				{{ application.status }}
+			<div class="mt-2 text-gray-500 flex items-center">
+				<icon v-if="application.status === null" name="clock" solid class="flex-shrink-0 mr-1.5 h-5 w-5" />
+				<icon v-else-if="application.status === true" name="check-circle" solid class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-500" />
+				<icon v-else name="x-circle" solid class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-500" />
+				{{ application.status === null ? 'Still pending...' : application.status === true ? 'We\'ll call you soon.' : 'This application has been rejected.' }}
 			</div>
 		</div>
 		<div class="text-lg transform group-hover:translate-x-1 transition duration-150">

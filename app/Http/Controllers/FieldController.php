@@ -42,7 +42,7 @@ class FieldController extends Controller
     {
         Field::create($request->validated());
 
-        return Redirect::route('fields.index')->with('session', [
+        return Redirect::route('fields.index')->with('toast', [
             'action' => 'store',
             'message' => 'Field created successfully.'
         ]);
@@ -83,7 +83,7 @@ class FieldController extends Controller
     {
         $field->update($request->validated());
 
-        return Redirect::route('fields.index')->with('session', [
+        return Redirect::route('fields.index')->with('toast', [
             'action' => 'update',
             'message' => 'Field updated successfully.'
         ]);
@@ -99,7 +99,7 @@ class FieldController extends Controller
     {
         $field->delete();
 
-        return Redirect::route('fields.index')->with('session', [
+        return Redirect::route('fields.index')->with('toast', [
             'action' => 'destroy',
             'message' => 'Field deleted successfully.'
         ]);

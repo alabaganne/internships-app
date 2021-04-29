@@ -1053,33 +1053,6 @@ input[type="checkbox"] {
   color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
 
-@media (min-width: 1280px) {
-  #sidebar {
-    display: block !important;
-  }
-}
-
-.sidebar-link:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgba(51, 65, 85, var(--tw-bg-opacity));
-}
-
-.sidebar-link {
-  border-radius: 0.5rem;
-  display: flex;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-}
-
-.sidebar-link.active {
-  --tw-bg-opacity: 1;
-  background-color: rgba(15, 23, 42, var(--tw-bg-opacity));
-}
-
 svg {
   height: 1.5rem;
   width: 1.5rem;
@@ -14617,6 +14590,10 @@ table td {
 
 .min-w-0 {
   min-width: 0px;
+}
+
+.min-w-4 {
+  min-width: 1rem;
 }
 
 .min-w-96 {
@@ -45984,6 +45961,10 @@ table td {
     min-width: 0px;
   }
 
+  .sm\:min-w-4 {
+    min-width: 1rem;
+  }
+
   .sm\:min-w-96 {
     min-width: 24rem;
   }
@@ -77269,6 +77250,10 @@ table td {
 
   .md\:min-w-0 {
     min-width: 0px;
+  }
+
+  .md\:min-w-4 {
+    min-width: 1rem;
   }
 
   .md\:min-w-96 {
@@ -108558,6 +108543,10 @@ table td {
     min-width: 0px;
   }
 
+  .lg\:min-w-4 {
+    min-width: 1rem;
+  }
+
   .lg\:min-w-96 {
     min-width: 24rem;
   }
@@ -139845,6 +139834,10 @@ table td {
     min-width: 0px;
   }
 
+  .xl\:min-w-4 {
+    min-width: 1rem;
+  }
+
   .xl\:min-w-96 {
     min-width: 24rem;
   }
@@ -171130,6 +171123,10 @@ table td {
 
   .\32xl\:min-w-0 {
     min-width: 0px;
+  }
+
+  .\32xl\:min-w-4 {
+    min-width: 1rem;
   }
 
   .\32xl\:min-w-96 {

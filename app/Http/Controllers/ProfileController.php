@@ -18,7 +18,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'cities' => City::all(),
             'fields' => Field::all(),
-            'user' => auth()->user()
+            // 'user' => auth()->user()
         ]);
     }
 

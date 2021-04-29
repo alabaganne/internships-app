@@ -1,5 +1,5 @@
 <template>
-	<breeze-authenticated-layout title="Applications" subtitle="View" maxWidthClass="max-w-6xl">
+	<main-layout title="Applications" subtitle="View" maxWidthClass="max-w-6xl">
 		<card v-if="applications.data.length > 0" class="divide-y">
 			<template v-for="application in applications.data" :key="application.id">
 				<application-card :application="application" />
@@ -11,18 +11,18 @@
 		<card v-else class="p-6">
 			No records found.
 		</card>
-	</breeze-authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import ApplicationCard from "@/Components/Application/Card";
 import Pagination from '@/Components/Pagination';
 import Card from "@/Components/Card";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		ApplicationCard,
 		Pagination,
 		Card,

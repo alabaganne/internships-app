@@ -50,7 +50,7 @@
 
 								<div class="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
 									<div class="px-4 sm:px-6 py-8 bg-blue-600">
-										<h2 class="text-2xl sm:text-3xl font-medium text-white" id="SlideOver-title">
+										<h2 class="text-2xl font-medium text-white" id="SlideOver-title">
 											{{ title }}
 										</h2>
 										<p class="mt-2 text-blue-200 text-sm font-light">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>

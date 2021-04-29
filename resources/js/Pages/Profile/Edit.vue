@@ -7,8 +7,8 @@
 		>
 			<section class="p-6">
 				<div>
-					<h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-					<p class="mt-1 text-sm text-gray-600">
+					<h3 class="text-lg font-medium leading-6">Personal Information</h3>
+					<p class="mt-1 text-sm text-gray-500">
 						Use a permanent address where you can receive mail.
 					</p>
 				</div>
@@ -42,8 +42,8 @@
 			</section>
 			<section class="border-t p-6">
 				<div>
-					<h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
-					<p class="mt-1 text-sm text-gray-600">
+					<h3 class="text-lg font-medium leading-6">Profile</h3>
+					<p class="mt-1 text-sm text-gray-500">
 						This information will be displayed publicly so be careful what you share.
 					</p>
 				</div>
@@ -72,21 +72,6 @@
 						</div>
 					</div>
 				</div>
-			</section>
-			<section class="border-t p-6">
-				<div>
-					<h3 class="text-lg font-medium leading-6 text-gray-900">Delete Account</h3>
-					<p class="mt-1 text-sm text-gray-600">
-						Permanently delete your account.
-					</p>
-				</div>
-				<delete-modal
-					title="Delete Account"
-					message="Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted."
-					:url="route('profile.destroy')"
-				>
-					<button type="button" class="mt-4 btn btn-danger tracking-widest font-semibold">Delete Account</button>
-				</delete-modal>
 			</section>
 		</app-form>
 	</authenticated-layout>

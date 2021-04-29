@@ -16,7 +16,7 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        Company::factory(5)->create()->each(function($company) {
+        Company::factory(6)->create()->each(function($company) {
             $company->user()->save(
                 User::factory()->create()
             );

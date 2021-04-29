@@ -24,7 +24,7 @@ class CompanyFactory extends Factory
         return [
             'website' => $this->faker->url(),
             'about' => $this->faker->paragraph(4),
-            'city_id' => rand(1, 10)
+            'city_id' => rand(1, 5)
         ];
     }
 }

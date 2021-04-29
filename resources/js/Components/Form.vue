@@ -2,7 +2,7 @@
 	<form spellcheck="false" autocomplete="off" @submit.prevent="submit">
 		<card :title="title" :subtitle="subtitle">
 			<div>
-				<breeze-validation-errors class="mb-4" />
+				<breeze-validation-errors class="px-6 pt-4" />
 				<slot />
 			</div>
 			<template v-slot:footer>
@@ -14,12 +14,12 @@
 							:message="`Are you sure you want to perform this ${modelName.toLowerCase()}? All data related to it will be permanently deleted. This action cannot be undone.`"
 							:url="route(`${routeName}.destroy`, routeParams)"
 						>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<button type="button" class="btn btn-danger rounded">Delete</button>
 						</delete-modal>
 					</div>
 					<div>
-						<button type="button" @click="reset" class="btn btn-dark">Reset</button>
-						<button type="submit" class="ml-1.5 btn btn-primary">Save</button>
+						<button type="button" @click="reset" class="btn btn-dark rounded">Reset</button>
+						<button type="submit" class="ml-1 btn btn-primary rounded">{{ editing ? 'Update' : 'Create' }}</button>
 					</div>
 				</div>
 			</template>
@@ -28,14 +28,14 @@
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import DeleteModal from "@/Components/Modals/Delete";
 import Card from "@/Components/Card";
 
 export default {
 	components: {
-		BreezeAuthenticatedLayout,
+		MainLayout,
 		BreezeValidationErrors,
 		DeleteModal,
 		Card,
