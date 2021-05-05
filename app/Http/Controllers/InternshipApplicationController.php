@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ApplicationResource;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Application;
 use App\Models\Internship;
 use Inertia\Inertia;
@@ -17,9 +18,13 @@ class InternshipApplicationController extends Controller
      */
     public function __invoke(Internship $internship)
     {
+        Gate::authorize('update', $internship);
+
         return Inertia::render('Internships/Applications', [
             'applications' => ApplicationResource::collection(
-                Application::where('internship_id', $internship->id)->latest()->paginate()
+                Application::where('internship_id', $internship->id)
+                    ->latest()
+                    ->paginate(8)
             ),
             'internship' => $internship
         ]);

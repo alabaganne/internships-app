@@ -3,36 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InternshipRequest; // validations
-use App\Http\Resources\InternshipResource; // formatting the response
-use App\Models\Application;
+use App\Http\Resources\InternshipResource; // response
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
-use App\Models\City;
 use App\Models\Field;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\Internship;
 use Illuminate\Support\Facades\Redirect;
 
 class InternshipController extends Controller
 {
-    public function index()
+    public function __construct()
+    {
+        $this->authorizeResource(Internship::class);
+    }
+
+    public function index(Request $request)
     {
         return Inertia::render('Internships/Index', [
-            'internships' => InternshipResource::collection(
-                Internship::with('company', 'company.user', 'company.city', 'field')
-                    ->latest()
-                    ->paginate(10)
-            ),
-            'cities' => City::all(),
-            'fields' => Field::select('id', 'name')->get(),
-            'companies' => Company::all()->transform(function($company) {
-                return [
-                    'id' => $company->id,
-                    'name' => $company->user->name
-                ];
-            })
-        ]);
+			'filters' => $request->only('fields', 'cities', 'companies', 'search'),
+			'internships' => InternshipResource::collection(
+				Internship::with('company', 'field', 'city', 'skills')
+					->withFilters(
+						$request->input('fields', []),
+						$request->input('companies', []),
+						$request->input('cities', []),
+						$request->input('search', '')
+					)
+					->latest()
+					->paginate(10)
+			),
+			'fields' => Field::withCount(['internships' => function ($query) use ($request) {
+					$query->withFilters(
+						$request->input('fields', []),
+						$request->input('companies', []),
+						$request->input('cities', []),
+						$request->input('search', '')
+					);
+				}])
+				->get(),
+			'cities' => City::withCount(['internships' => function ($query) use ($request) {
+					$query->withFilters(
+						$request->input('fields', []),
+						$request->input('companies', []),
+						$request->input('cities', []),
+						$request->input('search', '')
+					);
+				}])
+				->get(),
+			'companies' => Company::withCount(['internships' => function ($query) use ($request) {
+					$query->withFilters(
+						$request->input('fields', []),
+						$request->input('companies', []),
+						$request->input('cities', []),
+						$request->input('search', '')
+					);
+				}])
+				->get()
+				->transform(function ($company) {
+					return [
+						'id' => $company->id,
+						'name' => $company->user->name,
+						'internships_count' => $company->internships_count,
+					];
+				})
+		]);
     }
 
     public function getCompanySupervisors() // Authenticated user must be a Company
@@ -57,7 +93,7 @@ class InternshipController extends Controller
             'company_supervisors' => $this->getCompanySupervisors()
         ]);
     }
-    
+
     public function store(InternshipRequest $request)
     {
         $data = $request->validated();
@@ -71,21 +107,38 @@ class InternshipController extends Controller
         ]);
     }
 
-    public function getStudentApplication($internship) {
-        return Application::where('student_id', auth()->user()->userable->id)
-            ->where('internship_id', $internship->id)
-            ->first();
-    }
-
     public function show(Internship $internship) {
-        $props = [
-            'internship' => new InternshipResource($internship)
-        ];
-
-        if(auth()->user()->isStudent())
-            $props['application'] = $this->getStudentApplication($internship);
-
-        return Inertia::render('Internships/Show', $props);
+        return Inertia::render('Internships/Show', [
+            'internship' => [
+				'id' => $internship->id,
+				'title' => $internship->title,
+				'description' => $internship->description,
+				'closing_at' => $internship->closing_at->format('F d, Y'),
+				'created_at' => $internship->created_at->diffForHumans(),
+				'field' => [
+					'name' => $internship->field->name,
+				],
+				'city' => [
+					'name' => $internship->city->name
+				],
+				'company' => [
+					'id' => $internship->company->id,
+					'name' => $internship->company->user->name,
+					'email' => $internship->company->user->email,
+					'phone_number' => $internship->company->user->phone_number,
+					'linkedin_profile_url' => $internship->company->user->linkedin_profile_url,
+					'city' => [
+						'name' => $internship->company->city->name,
+					]
+				],
+				'company_supervisor' => [
+					'name' => $internship->company->user->name,
+					'email' => $internship->company->user->email,
+					'phone_number' => $internship->company->user->phone_number,
+					'linkedin_profile_url' => $internship->company->user->linkedin_profile_url
+				]
+			]
+        ]);
     }
 
     public function edit(Internship $internship)

@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UniversitySupervisorRequest;
-use App\Http\Resources\UserResource;
-
 use App\Models\UniversitySupervisor;
 use App\Models\User;
 use App\Models\Field;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -23,7 +19,18 @@ class UniversitySupervisorController extends Controller
     public function index()
     {
         return Inertia::render('UniversitySupervisors/Index', [
-            'university_supervisors' => UserResource::collection(UniversitySupervisor::with('field')->paginate(12)),
+            'university_supervisors' => UniversitySupervisor::with('field')
+															->paginate(12)
+															->through(function ($supervisor) {
+																return [
+																	'id' => $supervisor->id,
+																	'name' => $supervisor->user->name,
+																	'photo' => $supervisor->user->photo,
+																	'field' => [
+																		'name' => $supervisor->field->name,
+																	]
+																	];
+															}),
         ]);
     }
 

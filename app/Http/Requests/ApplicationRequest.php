@@ -26,7 +26,7 @@ class ApplicationRequest extends FormRequest
         return [
             'cover_letter' => 'required',
             'message' => 'nullable',
-            'attachments' => 'nullable'
+            'attachments' => 'nullable',
         ];
     }
 }

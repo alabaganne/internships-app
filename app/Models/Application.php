@@ -16,6 +16,8 @@ class Application extends Model
         'message',
         'attachments',
         'status',
+        'student_id',
+        'internship_id',
         'company_id'
     ];
 

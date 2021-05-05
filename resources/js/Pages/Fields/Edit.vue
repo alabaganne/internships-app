@@ -13,7 +13,7 @@
 			>
 				<div class="p-6">
 					<label for="name" class="required">Name</label>
-					<input v-model="form.name" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 form-control" placeholder="e.g. Computer Science" />
+					<input v-model="form.name" type="text" name="field" id="field" class="mt-1 form-control" placeholder="e.g. Computer Science" />
 				</div>
 			</app-form>
 		</div>

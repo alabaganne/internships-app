@@ -23,8 +23,8 @@ class StudentFactory extends Factory
     {
         return [
             'about' => $this->faker->paragraph(18),
-            'field_id' => rand(1, 5),
-            'city_id' => rand(1, 5)
+            'field_id' => rand(1, 8),
+            'city_id' => rand(1, 8)
         ];
     }
 }

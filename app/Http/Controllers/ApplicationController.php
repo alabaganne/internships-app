@@ -8,6 +8,7 @@ use App\Http\Resources\InternshipResource;
 use App\Models\Application;
 use App\Models\Internship;
 use App\Notifications\ApplicationReviewed;
+use App\Notifications\ApplicationSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -15,15 +16,21 @@ use Inertia\Inertia;
 
 class ApplicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Application::class);
+    }
+
     public function index() // TODO: only students are authorized to access this route
     {
         $field_name = Auth::user()->isStudent() ? 'student_id' : 'company_id';
 
         return Inertia::render('Applications/Index', [
             'applications' => ApplicationResource::collection(
-                Application::with('internship', 'internship.company', 'internship.company.user', 'internship.company.city', 'internship.field')
+                Application::with('internship', 'internship.company', 'internship.city', 'internship.field')
                     ->where($field_name, Auth::user()->userable->id)
-                    ->paginate(10)
+                    ->latest()
+                    ->paginate(8)
             )
         ]);
     }
@@ -37,16 +44,20 @@ class ApplicationController extends Controller
 
     public function store(Internship $internship, ApplicationRequest $request)
     {
-        auth()->user()->userable->internshipApplications()->attach($internship, [
-            'cover_letter' => $request->input('cover_letter'),
-            'message' => $request->input('message'),
+        $application = Application::create([
+            'student_id' => $request->user()->userable->id,
+            'internship_id' => $internship->id,
+            'cover_letter' => $request->cover_letter,
+            'message' => $request->message,
             'company_id' => $internship->company_id,
-            // TODO: handle attachments upload and store the path to them.
+			'city_id' => auth()->user()->id
         ]);
+
+        $application->company->user->notify(new ApplicationSubmitted($application));
 
         return Redirect::route('applications.index')->with('toast', [
             'action' => 'store',
-            'message' => 'Your application has been sent.'
+            'message' => 'Your application has been submitted.'
         ]);
     }
 
@@ -95,6 +106,9 @@ class ApplicationController extends Controller
 
         $application->student->user->notify(new ApplicationReviewed($application));
 
-        return Redirect::back();
+        return Redirect::back()->with('toast', [
+            'action' => 'notification',
+            'message' => 'A notification has been sent to the student.'
+        ]);
     }
 }

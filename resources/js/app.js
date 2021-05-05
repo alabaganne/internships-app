@@ -3,52 +3,57 @@ require("./bootstrap");
 // Import modules...
 import { createApp, h } from "vue";
 import {
-    App as InertiaApp,
-    plugin as InertiaPlugin,
+	App as InertiaApp,
+	plugin as InertiaPlugin,
 } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
-import AuthenticatedLayout from "./Layouts/Authenticated";
+import store from "./store";
 
 const el = document.getElementById("app");
 
-import store from "./store";
-
+import AuthenticatedLayout from "./Layouts/Authenticated";
 const app = createApp({
-    render: () =>
-        h(InertiaApp, {
-            initialPage: JSON.parse(el.dataset.page),
-            resolveComponent: (name) => {
-                const module = require(`./Pages/${name}`);
+	render: () =>
+		h(InertiaApp, {
+			initialPage: JSON.parse(el.dataset.page),
+			resolveComponent: (name) => {
+				const module = require(`./Pages/${name}`);
 
-                if(!module.default.layout) {
-                    module.default.layout = AuthenticatedLayout;
-                }
+				if(!module.default.layout) {
+					module.default.layout = AuthenticatedLayout;
+				}
 
-                return module.default;
-            },
-            resolveErrors: page => (page.props.errors || {}),
-        }),
+				return module.default;
+			},
+			resolveErrors: page => (page.props.errors || {}),
+		}),
 })
-    .mixin({ methods: { route } })
-    .use(InertiaPlugin)
-    .use(store);
+	.mixin({ methods: {
+	route,
+	truncate(value, numChars) {
+		if(!value) return "";
 
-app.config.globalProperties.$filters = {
-    truncate(value, numChars) {
-        if(!value) return "";
-
-        let str = value.substring(0, numChars).trim();
-        if(numChars > value.length) {
-            return str;
-        } else {
-            return str + "...";
-        }
-    }
-}
+		let str = value.substring(0, numChars).trim();
+		if(numChars > value.length) {
+			return str;
+		} else {
+			return str + "...";
+		}
+	},
+		url() {
+			return location.pathname.substr(1)
+		},
+} })
+	.use(InertiaPlugin)
+	.use(store);
 
 import Icon from "./Shared/Icon";
+import Card from "./Shared/Card";
+import Table from "./Shared/Table";
 app.component('Icon', Icon);
+app.component('Card', Card);
+app.component('AppTable', Table);
 
 app.mount(el);
 

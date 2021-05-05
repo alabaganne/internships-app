@@ -14,35 +14,35 @@ class ApplicationResource extends JsonResource
      */
     public function toArray($request)
     {
+		$user = auth()->user();
+		$isCompany = $user->isCompany();
+		$isStudent = $user->isStudent();
+
         $data = [
             'id' => $this->id,
-            'cover_letter' => $this->cover_letter,
-            'message' => $this->message,
-            'attachments' => $this->attachments,
             'status' => $this->status,
             'internship' => [
                 'id' => $this->internship->id,
                 'title' => $this->internship->title,
-                'field' => $this->internship->field->name,
+                'field' => [
+					'name' => $this->internship->field->name,
+				],
+				'city' => [
+					'name' => $this->internship->city->name,
+				],
                 'closing_at' => $this->internship->closing_at->format('F d, Y'),
             ],
-            'student' => [
-                'id' => $this->student->id,
-                'user_id' => $this->student->user->id,
+            'student' => $isCompany ? [
                 'name' => $this->student->user->name,
                 'email' => $this->student->user->email,
-                'phone_number' => $this->student->user->phone_number,
                 'image' => $this->student->user->image,
-                'about' => $this->student->about,
-            ],
-            'company' => [
-                'id' => $this->company->id,
+            ] : null,
+            'company' => $isStudent ? [
                 'name' => $this->company->user->name,
-                'city' => $this->company->city->name
-            ],
+            ] : null,
             'created_at' => $this->created_at->format('F d, Y'),
         ];
-        
+
         return $data;
     }
 }

@@ -6,7 +6,7 @@
 				<slot />
 			</div>
 			<template v-slot:footer>
-				<div class="flex justify-between">
+				<div class="flex justify-between items-center">
 					<div>
 						<delete-modal
 							v-if="withDelete && editing"
@@ -14,7 +14,7 @@
 							:message="`Are you sure you want to perform this ${modelName.toLowerCase()}? All data related to it will be permanently deleted. This action cannot be undone.`"
 							:url="route(`${routeName}.destroy`, routeParams)"
 						>
-							<button type="button" class="btn btn-danger rounded">Delete</button>
+							<button class="btn btn-danger" type="button">Delete</button>
 						</delete-modal>
 					</div>
 					<div>
@@ -31,14 +31,12 @@
 import MainLayout from "@/Layouts/Main";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import DeleteModal from "@/Components/Modals/Delete";
-import Card from "@/Components/Card";
 
 export default {
 	components: {
 		MainLayout,
 		BreezeValidationErrors,
 		DeleteModal,
-		Card,
 	},
 	props: {
 		title: String,

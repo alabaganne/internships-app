@@ -8,6 +8,7 @@
 				:route-params="{ internship }"
 				title="Internship Information"
 				subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+				modelName="Internship"
 			>
 				<div class="grid gap-x-3 gap-y-6 p-6">
 					<div class="col-span-6 sm:col-span-6">
@@ -35,17 +36,6 @@
 					<div class="col-span-6">
 						<label for="description" class="required">Description</label>
 						<textarea v-model="form.description" name="description" id="description" rows="12" class="mt-1 form-control"></textarea>
-					</div>
-					<div class="col-span-6">
-						<div class="flex items-start">
-							<div class="flex items-center h-5">
-								<input id="remote" name="remote" type="checkbox" v-model="form.remote" />
-							</div>
-							<div class="ml-3 text-sm">
-								<label for="remote" class="font-medium text-gray-700">Remote</label>
-								<p class="text-gray-500">Interns will be doing most of the internship work from home.</p>
-							</div>
-						</div>
 					</div>
 					<div class="col-span-6">
 						<label class="block text-sm font-medium text-gray-700">
@@ -92,7 +82,6 @@ export default {
 			form: this.$inertia.form({
 				title: "",
 				description: "",
-				remote: false,
 				attachments: "",
 				closing_at: "",
 				field_id: null,

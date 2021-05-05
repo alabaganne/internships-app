@@ -1,7 +1,8 @@
 <template>
-	<authenticated-layout title="Profile" maxWidthClass="max-w-4xl">
+	<main-layout title="Profile" maxWidthClass="max-w-4xl">
 		<app-form
 			:form="form"
+			:originalData="$page.props.auth.user"
 			routeName="profile"
 			modelName="Account"
 		>
@@ -15,25 +16,25 @@
 				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
 					<div class="col-span-3">
 						<label for="name" class="required">Full name</label>
-						<input type="text" class="form-control" id="name" v-model="form.name">
+						<input type="text" class="mt-1 form-control" id="name" v-model="form.name">
 					</div>
 					<div class="col-span-3">
 						<label for="email" class="required">Email address</label>
-						<input type="email" class="form-control" id="email" v-model="form.email" placeholder="johndoe@example.com">
+						<input type="email" class="mt-1 form-control" id="email" v-model="form.email" placeholder="johndoe@example.com">
 					</div>
 					<div class="col-span-4">
 						<label for="phone_number">Phone number</label>
-						<input type="text" class="form-control" id="phone_number" v-model="form.phone_number">
+						<input type="text" class="mt-1 form-control" id="phone_number" v-model="form.phone_number">
 					</div>
-					<div class="col-span-3">
+					<div class="col-span-5">
 						<label for="linkedin_profile_url">
 							Linkedin Profile URL
 						</label>
-						<input type="text" name="linkedin_profile_url" id="linkedin_profile_url" class="mt-1 form-control" placeholder="www.example.com" />
+						<input type="text" name="linkedin_profile_url" id="linkedin_profile_url" class="mt-1 form-control"  />
 					</div>
 					<div class="col-span-3">
-						<label for="field">City</label>
-						<select name="city" id="city" class="form-control" v-model="form.city">
+						<label class="required" for="field">City</label>
+						<select name="city" id="city" class="mt-1 form-control" v-model="form.city">
 							<option selected value=""></option>
 							<option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
 						</select>
@@ -50,13 +51,13 @@
 				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
 					<div v-if="user.userable_type === 'company'" class="col-span-4">
 						<label for="website">
-							Website
+							Website URL
 						</label>
 						<input type="text" name="website" id="website" class="mt-1 form-control" placeholder="www.example.com" />
 					</div>
 					<div class="col-span-6">
 						<label for="about">About</label>
-						<textarea id="about" class="form-control" rows="7" v-model="form.about" placeholder="Brief description for your profile."></textarea>
+						<textarea id="about" class="mt-1 form-control" rows="7" v-model="form.about" placeholder="Brief description for your profile."></textarea>
 					</div>
 					<div class="col-span-6">
 						<label for="image">Photo</label>
@@ -74,31 +75,33 @@
 				</div>
 			</section>
 		</app-form>
-	</authenticated-layout>
+	</main-layout>
 </template>
 
 <script>
-import AuthenticatedLayout from "@/Layouts/Authenticated";
+import MainLayout from "@/Layouts/Main";
 import DeleteModal from "@/Components/Modals/Delete";
 import AppForm from "@/Components/Form";
-import Card from "@/Components/Card";
 
 export default {
 	components: {
-		AuthenticatedLayout,
+		MainLayout,
 		DeleteModal,
 		AppForm,
-		Card,
 	},
 	props: {
-		user: {
-			type: Object,
-			required: true
-		},
 		cities: {
 			type: Array,
 			required: true
 		},
+		fields: {
+			type: Array,
+			required: false,
+		},
+		profile_info: {
+			type: Object,
+			required: true,
+		}
 	},
 	computed: {
 		user() {
@@ -112,8 +115,8 @@ export default {
 				email: '',
 				phone_number: '',
 				city: null
-			})
+			}),
 		}
-	}
+	},
 }
 </script>

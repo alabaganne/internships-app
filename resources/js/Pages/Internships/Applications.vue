@@ -16,13 +16,12 @@
 <script>
 import MainLayout from "@/Layouts/Main";
 import ApplicationCard from "@/Components/Application/Card";
-import Card from "@/Components/Card";
+
 
 export default {
 	components: {
 		MainLayout,
 		ApplicationCard,
-		Card
 	},
 	props: {
 		applications: {

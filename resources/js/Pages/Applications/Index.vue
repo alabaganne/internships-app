@@ -5,7 +5,7 @@
 				<application-card :application="application" />
 			</template>
 			<template v-slot:footer>
-				<pagination :data="applications" />
+				<pagination :links="applications.meta.links" :meta="applications.meta" />
 			</template>
 		</card>
 		<card v-else class="p-6">
@@ -18,14 +18,12 @@
 import MainLayout from "@/Layouts/Main";
 import ApplicationCard from "@/Components/Application/Card";
 import Pagination from '@/Components/Pagination';
-import Card from "@/Components/Card";
 
 export default {
 	components: {
 		MainLayout,
 		ApplicationCard,
 		Pagination,
-		Card,
 	},
 	props: {
 		applications: Object,

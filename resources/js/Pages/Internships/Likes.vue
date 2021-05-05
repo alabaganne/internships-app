@@ -1,12 +1,12 @@
 <template>
 	<main-layout title="Likes" subtitle="Internships" maxWidthClass="max-w-6xl">
-		<div v-if="localInternships.length > 0" class="space-y-4">
-			<template v-for="internship in localInternships" :key="internship.id">
-				<internship-card :internship="internship" @dislike="onDislike(internship.id)" />
+		<div v-if="localLikes.length > 0" class="space-y-4">
+			<template v-for="internship in localLikes" :key="internship.id">
+				<internship-card :internship="internship" @dislike="onDislike" />
 			</template>
 		</div>
 		<card v-else class="p-6">
-			You do not have any liked internship.
+			No records found.
 		</card>
 	</main-layout>
 </template>
@@ -14,31 +14,29 @@
 <script>
 import MainLayout from "@/Layouts/Main";
 import InternshipCard from "@/Components/Internship/Card";
-import Card from "@/Components/Card";
 
 export default {
 	components: {
 		MainLayout,
 		InternshipCard,
-		Card
 	},
 	props: {
-		internships: {
+		likes: {
 			type: Array,
-			required: true
+			required: true,
 		}
 	},
 	data() {
 		return {
-			localInternships: [],
+			localLikes: []
 		}
 	},
 	mounted() {
-		this.localInternships = [...this.internships];
+		this.localLikes = JSON.parse(JSON.stringify(this.likes));
 	},
 	methods: {
-		onDislike(id) {
-			this.localInternships = this.localInternships.filter(internship => internship.id !== id)
+		onDislike(internship) {
+			this.localLikes = this.localLikes.filter(localInternship => localInternship.id !== internship.id)
 		}
 	}
 }

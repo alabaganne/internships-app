@@ -4,16 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\InternshipResource;
-use App\Http\Resources\UserResource;
-
 use App\Models\City;
 use App\Models\Company;
 use App\Models\User;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
 class CompanyController extends Controller
 {
     /**
@@ -24,7 +19,21 @@ class CompanyController extends Controller
     public function index()
     {
         return Inertia::render('Companies/Index', [
-            'companies' => UserResource::collection(Company::paginate(12))
+            'companies' => Company::withCount('internships')
+				->with('city')
+				->paginate(12)
+				->through(function ($company) {
+					return [
+						'id' => $company->user->id,
+						'name' => $company->user->name,
+						'email' => $company->user->email,
+						'phone_number' => $company->user->phone_number,
+						'internships_count' => $company->internships_count,
+						'city' => [
+							'name' => $company->city->name,
+						]
+					];
+				}),
         ]);
     }
 
@@ -52,7 +61,10 @@ class CompanyController extends Controller
             User::create($request->only('name', 'email', 'phone_number'))
         );
 
-        return Redirect::route('companies.index');
+        return Redirect::route('companies.index')->with('toast', [
+            'action' => 'store',
+            'message' => 'Company created successfully.'
+        ]);
     }
 
     /**
@@ -64,8 +76,18 @@ class CompanyController extends Controller
     public function show(Company $company)
     {
         return Inertia::render('Companies/Show', [
-            'company' => new UserResource($company),
-            'internships' => InternshipResource::collection($company->internships()->latest()->paginate(10))
+            'company' => [
+				'id' => $company->user->id,
+				'name' => $company->user->name,
+				'email' => $company->user->email,
+				'phone_number' => $company->user->phone_number,
+				'about' => $company->about,
+				'website' => $company->website,
+				'city' => [
+					'name' => $company->city->name,
+				],
+				'internships' => InternshipResource::collection($company->internships()->latest()->paginate(10))
+			]
         ]);
     }
 
@@ -96,7 +118,10 @@ class CompanyController extends Controller
 
         $company->user()->update($request->only('name', 'email', 'phone_number'));
 
-        return Redirect::route('companies.show', $company);
+        return Redirect::route('companies.show', $company)->with('toast', [
+            'action' => 'update',
+            'message' => 'Company updated successfully.'
+        ]);
     }
 
     /**
@@ -110,6 +135,9 @@ class CompanyController extends Controller
         $company->user()->delete();
         $company->delete();
 
-        return Redirect::route('companies.index');
+        return Redirect::route('companies.index')->with('toast', [
+            'action' => 'destroy',
+            'message' => 'Company deleted successfully.'
+        ]);
     }
 }

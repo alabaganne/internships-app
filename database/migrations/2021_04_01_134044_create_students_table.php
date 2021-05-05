@@ -16,8 +16,9 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->text('about')->nullable();
-            $table->foreignId('field_id')->constrained()->onDelete('cascade');
+            $table->foreignId('field_id')->constrained()->onDelete('cascade'); // onDelete('set null)
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
+			$table->foreignId('company_supervisor_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

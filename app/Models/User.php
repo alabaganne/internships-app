@@ -70,4 +70,12 @@ class User extends Authenticatable
     public function isAdmin() {
         return $this->is_admin;
     }
+
+    public function sentMessages() {
+        return $this->hasMany(Message::class, 'from_id');
+    }
+
+    public function receivedMessages() {
+        return $this->hasMany(Message::class, 'to_id');
+    }
 }

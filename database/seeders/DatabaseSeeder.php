@@ -22,25 +22,25 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             InternshipSeeder::class,
             UniversitySupervisorSeeder::class,
+            MessageSeeder::class,
+            ApplicationSeeder::class,
         ]);
 
         $password = bcrypt('password');
         \App\Models\Student::factory()->create()
             ->user()
             ->save(User::create([
-                'name' => 'John Doe',
+                'name' => 'Ala Bagannea',
                 'email' => 'student@example.com',
                 'password' => $password,
-                'phone_number' => '+216 50 101 959',
                 'is_admin' => true
             ]));
-        
+
         $company = \App\Models\Company::factory()->create();
         $company->user()->save(User::create([
             'name' => 'Realinflo',
             'email' => 'company@example.com',
             'password' => $password,
-            'phone_number' => '+216 50 101 959',
             'is_admin' => true
         ]));
         $company->companySupervisors()->saveMany(

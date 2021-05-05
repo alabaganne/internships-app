@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
+
 class Internship extends Model
 {
     use HasFactory;
@@ -15,9 +17,7 @@ class Internship extends Model
         'company_id',
         'company_supervisor_id',
         'field_id',
-        'remote',
-        'open',
-        'student_id',
+		'city_id',
         'attachments',
         'closing_at'
     ];
@@ -25,7 +25,6 @@ class Internship extends Model
     protected $dates = ['created_at', 'updated_at', 'closing_at'];
 
     protected $casts = [
-        'remote' => 'boolean',
         'closing_at' => 'datetime:Y-m-d'
     ];
 
@@ -37,6 +36,10 @@ class Internship extends Model
         return $this->belongsTo(Field::class);
     }
 
+	public function city() {
+		return $this->belongsTo(City::class);
+	}
+
     public function companySupervisor() {
         return $this->belongsTo(CompanySupervisor::class);
     }
@@ -45,13 +48,24 @@ class Internship extends Model
         return $this->morphToMany(Skill::class, 'skillable');
     }
 
-    public function city() {
-        return $this->company()->city();
-    }
-
     public function applications() { // students who applied for this internship
         return $this->belongsToMany(Student::class, 'applications')
-            ->withPivot(['cover_letter', 'message', 'attachments'])
+            ->withPivot(['cover_letter', 'message', 'attachments', 'created_at'])
             ->withTimestamps();
     }
+
+	public function scopeWithFilters($query, $fields, $companies, $cities, $search) {
+		return $query->when(count($fields), function ($query) use ($fields) {
+				$query->whereIn('field_id', $fields);
+			})
+			->when(count($companies), function ($query) use ($companies) {
+				$query->whereIn('company_id', $companies);
+			})
+			->when(count($cities), function ($query) use ($cities) {
+				$query->whereIn('city_id', $cities);
+			})
+			->when(Str::length($search) > 0, function ($query) use ($search) {
+				$query->where('title', 'like', "%{$search}%");
+			});
+	}
 }

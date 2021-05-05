@@ -7,7 +7,9 @@
 						<internship-header :internship="internship" />
 					</div>
 					<div class="p-6 border-t">
-						<p class="text-lg leading-8" v-html="internship.description"></p>
+						<p class="text-lg text-gray-700 leading-8">
+							{{ internship.description }}
+						</p>
 					</div>
 					<div class="p-6 border-t">
 						<div class="font-semibold">Attachments</div>
@@ -16,64 +18,65 @@
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
 								</svg>
-								<span class="link">{{ attachment }}</span>
+								<span class="link text-sm">{{ attachment }}</span>
 							</div>
 						</div>
 					</div>
 					<div class="p-6 border-t">
 						<div class="font-semibold">Skills and expertise</div>
-						<skills class="mt-3" />
+						<skills class="mt-3" :small="false" />
 					</div>
 				</div>
 				<div class="w-80 2xl:w-96 flex-shrink-0">
-					<div v-if="! user.userable_type.includes('supervisor')" class="p-6 border-b"> <!-- hide for supervisors -->
+					<div v-if="(user.userable_type === 'company' && user.userable_id === internship.company.id) || user.userable_type === 'student'" class="p-6 border-b"> <!-- hide for supervisors -->
 						<template v-if="user.userable_type === 'student'"> <!-- show for students -->
-							<inertia-link v-if="application" :href="route('applications.show', application)" class="btn btn-lg btn-primary w-full">Application details -></inertia-link>
-							<inertia-link v-else :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
-							<button @click="like(internship)" class="mt-1 btn btn-lg btn-dark focus:ring-0 w-full">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-								</svg>
+							<inertia-link
+								v-if="internship.application && user.userable_id === internship.application.student_id"
+								:href="route('applications.show', internship.application)"
+								class="btn btn-lg btn-primary w-full"
+							>
+								Application details ->
+							</inertia-link>
+							<inertia-link v-if="!internship.application" :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
+							<button @click="toggleLike(internship)" class="mt-1.5 btn btn-lg btn-dark focus:ring-0 w-full">
+								<icon name="heart" solid class="flex-shrink-0 mr-1.5 h-5 w-5" />
 								{{ internship.liked ? 'Dislike' : 'Like' }}
 							</button>
 						</template>
-						<template v-if="user.userable_type === 'company'" > <!-- show for companies -->
-							<inertia-link :href="route('internships.applications.index', internship)" class="btn btn-lg btn-primary block w-full">View Applications -></inertia-link>
-							<inertia-link :href="route('internships.edit', internship)" class="mt-1 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
+						<template v-else> <!-- show for companies -->
+							<inertia-link
+								:href="route('internships.applications.index', internship)"
+								class="btn btn-lg btn-primary block w-full"
+							>
+								View Applications ->
+							</inertia-link>
+							<inertia-link :href="route('internships.edit', internship)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
 							<delete-modal
 								title="Delete Internship"
 								message="Are you sure you want to delete this internship? All the data related to this record will be removed permanently removed. This action cannot be undone."
 								:url="route('internships.destroy', internship)"
 							>
-								<button class="mt-1 btn btn-lg btn-danger block w-full">Delete</button>
+								<button class="mt-1.5 btn btn-lg btn-danger block w-full">Delete</button>
 							</delete-modal>
 						</template>
 					</div>
 					<div v-if="internship.company_supervisor" class="p-6 border-b">
-						<div class="font-semibold">Supervisor</div>
+						<div class="font-semibold">Company Supervisor</div>
 						<div class="mt-4 space-y-4">
 							<div class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-								</svg>
+								<icon name="user-circle" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company_supervisor.name }}
 							</div>
 							<div class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-								</svg>
+								<icon name="mail" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company_supervisor.email }}
 							</div>
 							<div v-if="internship.company_supervisor.phone_number" class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /> 
-								</svg>
+								<icon name="phone" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company_supervisor.phone_number }}
 							</div>
 							<div v-if="internship.company_supervisor.linkedin_profile_url" class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-								</svg>
+								<icon name="cursor-click" class="h-5 w-5 text-blue-400 mr-3" />
 								<a :href="internship.company_supervisor.linkedin_profile_url" target="_blank" class="link text-base">Linkedin profile -></a>
 							</div>
 						</div>
@@ -82,34 +85,23 @@
 						<div class="font-semibold">Company</div>
 						<div class="mt-4 space-y-4">
 							<div class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-								</svg>
+								<icon name="user-circle" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company.name }}
 							</div>
 							<div class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-								</svg>
+								<icon name="mail" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company.email }}
 							</div>
 							<div v-if="internship.company.phone_number" class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /> 
-								</svg>
+								<icon name="phone" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company.phone_number }}
 							</div>
 							<div v-if="internship.company.phone_number" class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-								</svg>
+								<icon name="location-marker" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ internship.company.city.name }}
 							</div>
 							<div class="flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-								</svg>
+								<icon name="cursor-click" class="h-5 w-5 text-blue-400 mr-3" />
 								<a :href="internship.company.website" target="_blank" class="link text-base">Visit website -></a>
 							</div>
 						</div>
@@ -121,11 +113,11 @@
 </template>
 
 <script>
-import MainLayout from "@/Layouts/Main";
-import InternshipHeader from "@/Components/Internship/Header"
-import DeleteModal from "@/Components/Modals/Delete";
-import skills from "@/Components/Skills"
-import Like from "@/mixins/like"
+import MainLayout from '@/Layouts/Main';
+import InternshipHeader from '@/Components/Internship/Header'
+import DeleteModal from '@/Components/Modals/Delete';
+import skills from '@/Components/Skills';
+import Like from '@/Mixins/Like';
 
 export default {
 	mixins: [Like],
@@ -140,7 +132,6 @@ export default {
 			type: Object,
 			required: true
 		},
-		application: Object
 	},
 	computed: {
 		user() {

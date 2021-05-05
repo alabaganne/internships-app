@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Requests\FieldRequest;
 use App\Http\Resources\FieldResource;
 use App\Models\Field;
@@ -10,6 +11,10 @@ use Inertia\Inertia;
 
 class FieldController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(EnsureUserIsAdmin::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class FieldController extends Controller
     public function index()
     {
         return Inertia::render('Fields/Index', [
-            'fields' => FieldResource::collection(Field::latest()->paginate(12)),
+            'fields' => Field::withCount(['internships', 'students'])->latest()->paginate(12),
         ]);
     }
 

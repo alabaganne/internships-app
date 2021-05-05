@@ -27,21 +27,22 @@ svg {
 .tag-warning {
 	@apply bg-yellow-100 text-yellow-900;
 }
-.tag-indigo {
-	@apply bg-indigo-100 text-indigo-600;
-}
 
 .c-grid-col-sm {
 	grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
 }
 
 .link {
-	@apply text-blue-600 hover:text-blue-900 text-sm font-medium cursor-pointer;
+	@apply text-blue-600 hover:text-blue-900 cursor-pointer;
 }
 .link-gray {
-	@apply link text-sm text-gray-500 hover:text-gray-800;
+	@apply link text-gray-500 hover:text-gray-800;
 }
 
 table td {
-	@apply px-6 py-4 whitespace-nowrap;
+	@apply px-6 py-4 whitespace-nowrap !important;
+}
+
+p {
+	white-space: pre-wrap;
 }

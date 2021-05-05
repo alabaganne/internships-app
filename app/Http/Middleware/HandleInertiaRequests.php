@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\NotificationResource;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -36,31 +35,29 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $shared = [
-            'auth' => [
-                'user' => $request->user(),
-            ]
-        ];
-
         $user = auth()->user();
-        if($user) {
-            if($user->isStudent()) {
-                $shared['likes_count'] = $user->userable->likes->count();
-            }
 
-            if($user->isStudent() || $user->isCompany()) {
-                $shared['notifications'] = NotificationResource::collection(
-                    $request->user()->notifications()
-                        ->latest()
-                        ->take(8)
-                        ->get()
-                );
-            }
-        }
+        $shared = $user ? [
+            'auth' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone_number' => $user->phone_number,
+                    'image' => $user->image,
+					'is_admin' => $user->is_admin,
+                    'userable_id' => $user->userable_id,
+                    'userable_type' => $user->userable_type,
+                    'likes_count' => $user->isStudent() ? $user->userable->likes->count() : null,
+                    'notifications' => ($user->isStudent() || $user->isCompany()) ? [
+                        'data' => NotificationResource::collection($user->notifications),
+                        'unread_count' => $user->unreadNotifications->count(),
+                    ] : null
+                ],
+            ],
 
-        if(Session::has('toast')) {
-            $shared['toast'] = Session::get('toast');
-        }
+            'toast' => Session::has('toast') ? Session::get('toast') : null
+        ] : [];
 
         return array_merge(parent::share($request), $shared);
     }

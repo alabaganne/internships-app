@@ -37,7 +37,6 @@ class InternshipRequest extends FormRequest
             'field_id' => 'required',
             'company_supervisor_id' => 'nullable',
             'closing_at' => 'required|date',
-            'remote' => 'boolean',
             'attachments' => 'nullable',
         ];
     }

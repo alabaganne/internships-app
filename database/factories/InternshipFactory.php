@@ -21,14 +21,16 @@ class InternshipFactory extends Factory
      */
     public function definition()
     {
+		$city_id = rand(1, 8);
+
         return [
             'title' => ucfirst($this->faker->words(5, true)),
             'description' => $this->faker->text(2400),
-            'company_id' => rand(1, 5),
-            'company_supervisor_id' => rand(1, 10),
-            'field_id' => rand(1, 5),
-            'remote' => rand(0, 1),
-            'closing_at' => $this->faker->dateTimeBetween('now', '+4 months')
+            'field_id' => rand(1, 8),
+            'company_id' => $city_id,
+			'city_id' => $city_id,
+            'company_supervisor_id' => rand(1, 8),
+            'closing_at' => $this->faker->dateTimeBetween('now', '+6 months')
         ];
     }
 }

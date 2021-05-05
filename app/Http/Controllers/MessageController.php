@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class ContactController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Messages/Index');
     }
 
     /**
@@ -44,7 +46,7 @@ class ContactController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show(User $user)
     {
         //
     }

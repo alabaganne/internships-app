@@ -5,9 +5,12 @@
 		</template>
 		<app-table :fields="['Name', 'Email', 'City', 'Number of Internships', 'Actions']">
 			<tr v-for="company in companies.data" :key="company.id">
-				<td class="font-medium">{{ company.name }}</td>
+				<td class="font-medium flex items-center">
+					<icon name="office-building" class="text-gray-400 mr-4" />
+					{{ company.name }}
+				</td>
 				<td>{{ company.email }}</td>
-				<td>{{ company.city }}</td>
+				<td>{{ company.city.name }}</td>
 				<td>{{ company.internships_count }}</td>
 				<td class="text-right">
 					<div class="flex items-center justify-end space-x-1">
@@ -17,20 +20,18 @@
 				</td>
 			</tr>
 		</app-table>
-		<pagination class="mt-4" :data="companies" />
+		<pagination class="mt-4" :links="companies.links" :meta="companies" />
 	</main-layout>
 </template>
 
 <script>
 import MainLayout from "@/Layouts/Main";
 import Pagination from "@/Components/Pagination";
-import AppTable from "@/Components/Table";
 
 export default {
 	components: {
 		MainLayout,
 		Pagination,
-		AppTable,
 	},
 	props: {
 		companies: Object

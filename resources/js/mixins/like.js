@@ -1,16 +1,15 @@
 export default {
-	emits: ['like', 'dislike'],
+	emits: ['dislike'],
 	methods: {
-		like(internship) {
-			axios.post(route('likes.store', internship)).then(res => {
+		toggleLike(internship) {
+			axios.post(route('likes.store', internship)).then(() => {
 				if(internship.liked) {
 					internship.liked = false;
-					this.$page.props.likes_count--;
-
-					this.$emit('dislike');
+					this.$page.props.auth.user.likes_count--;
+					this.$emit('dislike', internship);
 				} else {
 					internship.liked = true;
-					this.$page.props.likes_count++;
+					this.$page.props.auth.user.likes_count++;
 				}
 			}).catch(err => console.log(err));
 		}

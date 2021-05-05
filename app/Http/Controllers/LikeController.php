@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\InternshipResource;
 use App\Models\Internship;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class LikeController extends Controller // only students are authorized to access this controller
@@ -13,16 +12,14 @@ class LikeController extends Controller // only students are authorized to acces
     public function index()
     {
         return Inertia::render('Internships/Likes', [
-            'internships' => InternshipResource::collection(
-                auth()->user()->userable->likes
-            )
+            'likes' => InternshipResource::collection(Auth::user()->userable->likes)
         ]);
     }
 
     public function store(Internship $internship)
     {
-        $response = auth()->user()->userable->likes()->toggle($internship);
+        auth()->user()->userable->likes()->toggle($internship);
 
-        return $response;
+        return response()->json();
     }
 }

@@ -58,9 +58,9 @@ class ApplicationReviewed extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->application->company->user->name,
-            'body' => '<span class="text-gray-900 font-medium">' . $this->application->company->user->name . '</span> has reviewed your application for <span class="text-gray-900 font-medium">' . $this->application->internship->title . '</span>',
-            'action' => '/applications/' . $this->application->id,
+            'title' => "{$this->application->company->user->name}'s Reply",
+            'body' => "<span class='text-gray-900 font-medium'>{$this->application->company->user->name}</span> has reviewed your application for <span class='text-gray-900 font-medium'>{$this->application->internship->title}",
+            'action' => "/applications/{$this->application->id}",
         ];
     }
 }

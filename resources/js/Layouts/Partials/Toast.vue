@@ -2,35 +2,29 @@
 	<transition name="slide-fade">
 		<card
 			v-if="toast && show"
-			class="absolute right-12 top-24 z-50 py-4 px-6 flex items-center"
+			class="fixed right-8 top-24 z-50 pl-5 pr-3 py-4 flex items-center max-w-lg"
 		>
-			<icon
-				:name="toast.action === 'store' ? 'save-as' : toast.action === 'update' ? 'pencil-alt' : 'trash'"
-				:class="{
-					'text-green-500': toast.action === 'store',
-					'text-blue-500': toast.action === 'update',
-					'text-red-500': toast.action === 'destroy',
-				}" />
-			<div class="ml-2.5 text-sm text-gray-500 font-medium">
+			<icon v-if="toast.action === 'store'" name="save-as" class="text-green-500" />
+			<icon v-else-if="toast.action === 'update'" name="pencil-alt" class="text-blue-500" />
+			<icon v-if="toast.action === 'destroy'" name="trash" class="text-red-500" />
+			<icon v-if="toast.action === 'notification'" name="bell" class="text-red-500" />
+			<div class="ml-2.5 text-sm font-medium text-gray-600">
 				{{ toast.message }}
 			</div>
 			<button
 				type="button"
 				@click="close"
-				class="ml-6 text-gray-800 hover:bg-gray-100 p-1 rounded-lg transition-colors duration-200"
+				class="ml-4 text-gray-500 hover:bg-gray-100 p-2 rounded-lg transition-colors duration-200"
 			>
-				<icon name="x" class="h-5 w-5" />
+				<icon name="x" solid class="h-4 w-4" />
 			</button>
 		</card>
 	</transition>
 </template>
 
 <script>
-import Card from "@/Components/Card";
-
 export default {
 	props: ['toast'],
-	components: { Card },
 	data() {
 		return {
 			show: false,
@@ -42,7 +36,7 @@ export default {
 
 			setTimeout(() => {
 				this.show = false;
-			}, 3500);
+			}, 5000);
 		}
 	},
 	methods: {

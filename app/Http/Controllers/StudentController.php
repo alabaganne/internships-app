@@ -22,8 +22,7 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('Students/Index', [
-            'students' => UserResource::collection(
-                Student::with('city', 'field', 'user')
+            'students' => Student::with('field')
                     ->latest()
                     ->where(function ($query) {
                         if (auth()->user()->isStudent()) {
@@ -31,7 +30,16 @@ class StudentController extends Controller
                         }
                     })
                     ->paginate(12)
-            )
+					->through(function ($student) {
+						return [
+							'id' => $student->id,
+							'name' => $student->user->name,
+							'image' => $student->user->image,
+							'field' => [
+								'name' => $student->field->name
+							]
+						];
+					}),
         ]);
     }
 
@@ -75,7 +83,21 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         return Inertia::render('Students/Show', [
-            'student' => new UserResource($student)
+            'student' => [
+				'id' => $student->id,
+				'about' => $student->about,
+				'linkedin_profile_url' => $student->linkedin_profile_url,
+				'name' => $student->user->name,
+				'email' => $student->user->email,
+				'phone_number' => $student->user->phone_number,
+				'image' => $student->user->image,
+				'field' => [
+					'name' => $student->field->name,
+				],
+				'city' => [
+					'name' => $student->city->name
+				]
+			]
         ]);
     }
 

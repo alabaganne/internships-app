@@ -11,15 +11,15 @@
 				<div class="flex justify-between items-center">
 					<div class="flex items-center">
 						<div class="h-44 w-44 -mt-20 border-4 border-white rounded-full overflow-hidden">
-							<img 
-								src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" 
-								alt="" 
+							<img
+								src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+								alt=""
 								class="w-full"
 							>
 						</div>
 						<div class="ml-6">
 							<div class="text-2xl 2xl:text-3xl text-gray-800 font-extrabold">{{ student.name }}</div>
-							<div class="text-sm 2xl:text-base text-gray-500">{{ student.field }} Student</div>
+							<div class="text-sm 2xl:text-base text-gray-500">{{ student.field.name }} Student</div>
 						</div>
 					</div>
 					<div class="flex items-center space-x-1">
@@ -42,34 +42,25 @@
 				<div class="mt-16 grid grid-cols-7 gap-10" :class="{ 'text-center': !student.about }">
 					<div v-if="student.about" class="col-span-5">
 						<div class="text-xl font-bold text-gray-800">About</div>
-						<p class="mt-3 text-lg text-gray-600 leading-8" v-html="student.about" />
+						<p class="mt-3 text-lg text-gray-700 leading-8" v-html="student.about" />
 					</div>
 					<div class="col-span-2" :class="{ 'col-span-full': !student.about }">
 						<div class="text-xl font-bold text-gray-800">Contact details</div>
 						<div class="mt-3 space-y-3">
 							<div class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-								</svg>
+								<icon name="mail" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ student.email }}
 							</div>
 							<div v-if="student.phone_number" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /> 
-								</svg>
+								<icon name="phone" class="h-5 w-5 text-blue-400 mr-3" />
 								{{ student.phone_number }}
 							</div>
 							<div v-if="student.city" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-								</svg>
-								{{ student.city }}
+								<icon name="location-marker" class="h-5 w-5 text-blue-400 mr-3" />
+								{{ student.city.name }}
 							</div>
 							<div v-if="student.linkedin_profile_url" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-								</svg>
+								<icon name="cursor-click" class="h-5 w-5 text-blue-400 mr-3" />
 								<a :href="student.linkedin_profile_url" target="_blank" class="link text-base text-blue-500">Linkedin profile -></a>
 							</div>
 						</div>

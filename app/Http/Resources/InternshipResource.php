@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Application;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class InternshipResource extends JsonResource
 {
@@ -15,43 +17,32 @@ class InternshipResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'company' => [
-                'id' => $this->company->id,
-                'name' => $this->company->user->name,
-                'email' => $this->company->user->email,
-                'phone_number' => $this->company->user->phone_number,
-                'website' => $this->company->website,
-                'about' => $this->company->about,
-                'city' => $this->company->city
-            ],
-            'field' => [
-                'id' => $this->field->id,
-                'name' => $this->field->name,
-            ],
-            'remote' => $this->remote,
-            'attachments' => $this->attachments,
-            'closing_at' => $this->closing_at->format('F d, Y'),
-            'created_at' => $this->created_at->diffForHumans(),
-        ];
+		$user = auth()->user();
+		$student = $user->isStudent() ? $user->userable : null;
 
-        if($this->companySupervisor)
-            $data['company_supervisor'] = [
-                'id' => $this->companySupervisor->id,
-                'name' => $this->companySupervisor->user->name,
-                'email' => $this->companySupervisor->user->email,
-                'phone_number' => $this->companySupervisor->user->phone_number,
-                'linkedin_profile_url' => $this->companySupervisor->user->linkedin_profile_url,
-            ];
+		$application = $student ? Application::where('student_id', $student->id)
+									->where('internship_id', $this->id)
+									->first() : null;
 
-        $user = Auth::user();
-        if($user->isStudent()) {
-            $data['liked'] = $user->userable->likes->contains($this->id);
-        }
-
-        return $data;
+        return [
+			'id' => $this->id,
+			'title' => $this->title,
+			'description' => $this->description,
+			'closing_at' => $this->closing_at->format('F d, Y'),
+			'created_at' => $this->created_at->diffForHumans(),
+			'company' => [
+				'name' => $this->company->user->name
+			],
+			'city' => [
+				'name' => $this->city->name,
+			],
+			'field' => [
+				'name' => $this->field->name,
+			],
+			'application' => $application ? [
+				'created_at' => $application->created_at->format('F d, Y')
+			] : null,
+			'liked' => $student ? $student->likes->contains($this->id) : null,
+		];
     }
 }

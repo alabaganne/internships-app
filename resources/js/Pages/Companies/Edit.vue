@@ -30,7 +30,7 @@
 					</div>
 					<div class="col-span-4">
 						<label for="company_website" class="block text-sm font-medium text-gray-700">
-							Website
+							Website URL
 						</label>
 						<input v-model="form.website" name="website" id="website" type="text" class="mt-1 form-control" placeholder="www.example.com" />
 					</div>
