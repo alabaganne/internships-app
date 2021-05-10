@@ -23,7 +23,7 @@ class CompanySupervisorFactory extends Factory
     {
         // 10 Companies must be seeder before running this factory
         return [
-            'company_id' => rand(1, 8)
+            'company_id' => rand(1, 15)
         ];
     }
 }

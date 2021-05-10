@@ -3,10 +3,12 @@
 		<div class="max-w-3xl mx-auto mt-6">
 			<app-form
 				:form="form"
-				:originalData="company"
+				:original-data="company"
 				route-name="companies"
 				:route-params="{ company }"
 				title="Company Information"
+				withDelete
+				model-name="Company"
 			>
 				<div class="grid grid-cols-6 gap-x-4 gap-y-6 p-6">
 					<div class="col-span-2">

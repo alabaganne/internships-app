@@ -5,11 +5,11 @@
 				title="Field of Studies"
 				subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 				:form="form"
-				:originalData="field"
+				:original-data="field"
 				route-name="fields"
 				:route-params="{ field }"
 				withDelete
-				modelName="Field"
+				model-name="Field"
 			>
 				<div class="p-6">
 					<label for="name" class="required">Name</label>

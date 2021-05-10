@@ -15,7 +15,7 @@ class CreateSkillablesTable extends Migration
     {
         Schema::create('skillables', function (Blueprint $table) {
             $table->foreignId('skill_id')->constrained()->onDelete('cascade');
-            $table->morphs('skillable');
+            $table->morphs('skillable'); // user or internship
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSkillablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('internship_skill');
+        Schema::dropIfExists('skillables');
     }
 }

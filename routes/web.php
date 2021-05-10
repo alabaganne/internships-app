@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Resources
     Route::resource('internships', InternshipController::class);
     Route::resource('companies', CompanyController::class);
-    Route::resource('company_supervisors', CompanySupervisorController::class);
+    Route::resource('companies.company_supervisors', CompanySupervisorController::class);
     Route::resource('students', StudentController::class);
     Route::resource('university_supervisors', UniversitySupervisorController::class);
     Route::resource('fields', FieldController::class);

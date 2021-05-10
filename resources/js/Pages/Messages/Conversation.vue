@@ -1,40 +1,48 @@
 <template>
 	<div class="flex-1 max-h-full flex flex-col">
-		<div class="h-20 px-6 bg-white flex items-center border-b">
-			<div class="flex items-center">
-				<img
-					class="h-12 w-12 object-cover rounded-full"
-					src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
-					alt=""
-				>
-				<div class="ml-3">
-					<div class="leading-5 text-lg font-medium">Devon Webb</div>
-					<div class="text-gray-500 text-sm">devon.webb@gmail.com</div>
+		<div class="h-20 px-6 bg-white flex justify-between items-center border-b">
+			<template v-if="contact">
+				<div class="flex items-center">
+					<img
+						class="h-12 w-12 object-cover rounded-full"
+						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
+						alt=""
+					>
+					<div class="ml-3">
+						<div class="leading-5 text-lg font-medium">{{ contact.name }}</div>
+						<div class="text-gray-500 text-sm">{{ contact.email }}</div>
+					</div>
 				</div>
-			</div>
+				<div>
+					<button
+						v-if="currentUser.userable_type === 'student' && !currentUser.supervisor_id && contact.userable_type === 'university_supervisor'"
+						class="btn btn-sm btn-secondary p-3">Request supervison ->
+					</button>
+				</div>
+			</template>
+			<div v-else>No contact selected</div>
 		</div>
-		<div class="flex-1 p-6 space-y-4 overflow-auto">
-			<div class="flex" v-for="message in 8" :key="message">
-				<div class="flex flex-col" :class="{ 'ml-auto text-right': message % 2 === 0 }">
+		<div v-if="contact" class="flex-1 p-6 space-y-4 overflow-auto">
+			<div class="flex" v-for="message in contact.messages" :key="message.id">
+				<div class="flex flex-col" :class="{ 'ml-auto text-right': sentMessage(message	) }">
 					<div class="px-1 mb-0.5 text-gray-900 text-xs font-medium">
-						{{ message % 2 === 0 ? 'You' : 'Devon Webb' }}
+						{{ sentMessage(message) ? 'You' : contact.name }}
 					</div>
 					<card class="p-4 max-w-lg shadow-none border">
 						<div class="text-sm text-left">
-							It's not his fault. I know you're going to want to, but you can't blame him.
+							{{ message.text }}
 						</div>
-						<div class="mt-1 text-xs text-blue-500 font-medium">Yesterday at 7:24pm</div>
+						<div class="mt-1 text-xs text-blue-500 font-medium">{{ message.created_at }}</div>
 					</card>
 				</div>
 			</div>
 		</div>
-		<form @submit.prevent="sendMessage" class="border-t border-gray-100 bg-white mt-auto pl-2 pr-6 py-3 mb-0 flex items-center">
-			<textarea
-				v-model="message"
+		<form @submit.prevent="sendMessage" class="border-t bg-white mt-auto pl-2 pr-6 py-3 mb-0 flex items-center">
+			<input
+				v-model="newMessage"
 				type="text"
-				class="text-sm bg-transparent border-none focus:ring-0 w-full resize-none"
+				class="text-sm bg-transparent border-none focus:placeholder-transparent focus:ring-0 w-full"
 				placeholder="Aa"
-				rows="1"
 			/>
 			<button type="submit" class="ml-4 flex-shrink-0 btn btn-primary">Send -></button>
 		</form>
@@ -43,19 +51,45 @@
 
 <script>
 export default {
+	props: {
+		contact: {
+			type: Object,
+			required: false,
+		}
+	},
 	data() {
 		return {
-			message: ''
+			newMessage: ''
 		}
 	},
 	methods: {
 		sendMessage() {
-			if(this.message === '') {
+			if(this.newMessage === '') {
 				return;
 			}
 
-			console.log(this.message);
-			this.message = '';
+			this.$inertia.post(
+				this.route('messages.store'),
+				{ to_id: this.contact.id, text: this.newMessage },
+				{ onSuccess: () => {
+					this.contact.messages.push({
+						from_id: this.currentUser.id,
+						to_id: this.contact.id,
+						text: this.newMessage,
+						created_at: this.formatDate(new Date())
+					});
+
+					this.newMessage = '';
+				} }
+			);
+		},
+
+		sentMessage(message) {
+			return this.currentUser.id === message.from_id;
+		},
+
+		formatDate(date) {
+			return `Today at ${date.toLocaleString('en-US', { timeZone: 'UTC', hour12: true, hour: 'numeric', minute: 'numeric' })}`;
 		}
 	}
 }

@@ -36,7 +36,8 @@ class InternshipController extends Controller
 			),
 			'fields' => Field::withCount(['internships' => function ($query) use ($request) {
 					$query->withFilters(
-						$request->input('fields', []),
+						// [$request->input('fields', [])],
+						[],
 						$request->input('companies', []),
 						$request->input('cities', []),
 						$request->input('search', '')
@@ -47,7 +48,8 @@ class InternshipController extends Controller
 					$query->withFilters(
 						$request->input('fields', []),
 						$request->input('companies', []),
-						$request->input('cities', []),
+						// $request->input('cities', []),
+						[],
 						$request->input('search', '')
 					);
 				}])
@@ -55,7 +57,8 @@ class InternshipController extends Controller
 			'companies' => Company::withCount(['internships' => function ($query) use ($request) {
 					$query->withFilters(
 						$request->input('fields', []),
-						$request->input('companies', []),
+						// $request->input('companies', []),
+						[],
 						$request->input('cities', []),
 						$request->input('search', '')
 					);
@@ -82,14 +85,14 @@ class InternshipController extends Controller
             });
     }
 
-    public function get_fields() {
+    public function getFields() {
         return Field::select('id', 'name')->get();
     }
 
     public function create()
     {
         return Inertia::render('Internships/Edit', [
-            'fields' => $this->get_fields(),
+            'fields' => $this->getFields(),
             'company_supervisors' => $this->getCompanySupervisors()
         ]);
     }
@@ -97,7 +100,9 @@ class InternshipController extends Controller
     public function store(InternshipRequest $request)
     {
         $data = $request->validated();
-        $data['company_id'] = auth()->user()->userable->id;
+		$company = auth()->user()->userable;
+        $data['company_id'] = $company->id;
+		$data['city_id'] = $company->city_id;
 
         Internship::create($data);
 
@@ -108,6 +113,14 @@ class InternshipController extends Controller
     }
 
     public function show(Internship $internship) {
+		$user = auth()->user();
+		$application = null;
+		if($user->isStudent()) {
+			$application = \App\Models\Application::where('internship_id', $internship->id)
+							->where('student_id', $user->userable->id)
+							->first();
+		}
+
         return Inertia::render('Internships/Show', [
             'internship' => [
 				'id' => $internship->id,
@@ -131,12 +144,17 @@ class InternshipController extends Controller
 						'name' => $internship->company->city->name,
 					]
 				],
-				'company_supervisor' => [
-					'name' => $internship->company->user->name,
-					'email' => $internship->company->user->email,
-					'phone_number' => $internship->company->user->phone_number,
-					'linkedin_profile_url' => $internship->company->user->linkedin_profile_url
-				]
+				'company_supervisor' => $internship->companySupervisor ? [
+					'name' => $internship->companySupervisor->user->name,
+					'email' => $internship->companySupervisor->user->email,
+					'phone_number' => $internship->companySupervisor->user->phone_number,
+					'linkedin_profile_url' => $internship->companySupervisor->user->linkedin_profile_url
+				] : null,
+				'application' => $application ? [
+					'id' => $application->id,
+					'student_id' => $application->student_id,
+					'created_at' => $application->created_at->format('F d, Y')
+				] : null
 			]
         ]);
     }
@@ -145,7 +163,7 @@ class InternshipController extends Controller
     {
         return Inertia::render('Internships/Edit', [
             'internship' => $internship,
-            'fields' => $this->get_fields(),
+            'fields' => $this->getFields(),
             'company_supervisors' => $this->getCompanySupervisors()
         ]);
     }

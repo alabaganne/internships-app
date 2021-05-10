@@ -2,7 +2,7 @@
 	<div class="flex min-h-screen bg-gray-100">
 		<toast :toast="$page.props.toast" />
 
-		<sidebar :key="url()" />
+		<sidebar :key="routeUrl()" />
 		<div class="flex-1 flex flex-col text-gray-900">
 			<navbar />
 			<slot />

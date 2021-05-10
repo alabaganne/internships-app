@@ -1,15 +1,15 @@
 <template>
 	<main-layout title="Applications" subtitle="View" maxWidthClass="max-w-6xl">
-		<card v-if="applications.data.length > 0" class="divide-y">
-			<template v-for="application in applications.data" :key="application.id">
-				<application-card :application="application" />
-			</template>
-			<template v-slot:footer>
-				<pagination :links="applications.meta.links" :meta="applications.meta" />
-			</template>
-		</card>
+		<div v-if="applications.data.length > 0">
+			<card class="divide-y">
+				<template v-for="application in applications.data" :key="application.id">
+					<application-card :application="application" />
+				</template>
+			</card>
+			<pagination :links="applications.meta.links" :meta="applications.meta" class="mt-4" />
+		</div>
 		<card v-else class="p-6">
-			No records found.
+			No applications found.
 		</card>
 	</main-layout>
 </template>

@@ -53,7 +53,7 @@ export default {
 	},
 	computed: {
 		isStudent() {
-			return this.$page.props.auth.user.userable_type === 'student';
+			return this.currentUser.userable_type === 'student';
 		}
 	},
 

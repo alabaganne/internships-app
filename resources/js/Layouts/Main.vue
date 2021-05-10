@@ -10,10 +10,10 @@
 			</div>
 		</header>
 		<main class="flex-1">
-			<slot :key="url()" />
+			<slot :key="routeUrl()" />
 		</main>
-		<footer class="mt-8 text-gray-500 text-sm text-center">
-			-> Designed and developped by <a href="https://www.linkedin.com/in/alabaganne/" target="_blank" class="link hover:underline">Ala Baganne</a>
+		<footer class="mt-6 text-gray-600 text-sm font-medium text-center">
+			Designed and developped by <a href="https://www.linkedin.com/in/alabaganne/" target="_blank" class="link hover:underline">Ala Baganne</a>
 		</footer>
 	</div>
 </template>

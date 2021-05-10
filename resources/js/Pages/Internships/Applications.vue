@@ -7,7 +7,7 @@
 						<application-card :application="application" />
 					</template>
 				</div>
-				<div v-else class="p-6">No records found.</div>
+				<div v-else class="p-6">No applications found.</div>
 			</card>
 		</div>
 	</main-layout>

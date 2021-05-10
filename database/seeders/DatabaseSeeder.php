@@ -30,9 +30,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Student::factory()->create()
             ->user()
             ->save(User::create([
-                'name' => 'Ala Bagannea',
+                'name' => 'Ala Baganne',
                 'email' => 'student@example.com',
                 'password' => $password,
+				'phone_number' => '50101959',
                 'is_admin' => true
             ]));
 
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Realinflo',
             'email' => 'company@example.com',
             'password' => $password,
+			'phone_number' => '22652543',
             'is_admin' => true
         ]));
         $company->companySupervisors()->saveMany(
@@ -51,7 +53,9 @@ class DatabaseSeeder extends Seeder
             })
         );
         $company->internships()->saveMany(
-            \App\Models\Internship::factory(5)->create()
+            \App\Models\Internship::factory(5)->create([
+				'city_id' => $company->city_id,
+			])
         );
     }
 }

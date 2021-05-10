@@ -28,14 +28,14 @@
 					</div>
 				</div>
 				<div class="w-80 2xl:w-96 flex-shrink-0">
-					<div v-if="(user.userable_type === 'company' && user.userable_id === internship.company.id) || user.userable_type === 'student'" class="p-6 border-b"> <!-- hide for supervisors -->
-						<template v-if="user.userable_type === 'student'"> <!-- show for students -->
+					<div v-if="(currentUser.userable_type === 'company' && currentUser.userable_id === internship.company.id) || currentUser.userable_type === 'student'" class="p-6 border-b"> <!-- hide for supervisors -->
+						<template v-if="currentUser.userable_type === 'student'"> <!-- show for students -->
 							<inertia-link
-								v-if="internship.application && user.userable_id === internship.application.student_id"
+								v-if="internship.application && currentUser.userable_id === internship.application.student_id"
 								:href="route('applications.show', internship.application)"
 								class="btn btn-lg btn-primary w-full"
 							>
-								Application details ->
+								Applied on {{ internship.application.created_at }} ->
 							</inertia-link>
 							<inertia-link v-if="!internship.application" :href="route('applications.create', internship)" class="btn btn-lg btn-primary w-full">Apply -></inertia-link>
 							<button @click="toggleLike(internship)" class="mt-1.5 btn btn-lg btn-dark focus:ring-0 w-full">
@@ -115,7 +115,7 @@
 <script>
 import MainLayout from '@/Layouts/Main';
 import InternshipHeader from '@/Components/Internship/Header'
-import DeleteModal from '@/Components/Modals/Delete';
+import DeleteModal from '@/Components/Modal/Delete';
 import skills from '@/Components/Skills';
 import Like from '@/Mixins/Like';
 
@@ -133,10 +133,5 @@ export default {
 			required: true
 		},
 	},
-	computed: {
-		user() {
-			return this.$page.props.auth.user
-		}
-	}
 }
 </script>

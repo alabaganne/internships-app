@@ -3,7 +3,7 @@
 		<div class="max-w-3xl mx-auto mt-6">
 			<app-form
 				:form="form"
-				:originalData="student"
+				:original-data="student"
 				route-name="students"
 				:route-params="{ student }"
 				title="Student Information"

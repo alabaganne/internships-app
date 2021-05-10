@@ -9,9 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
-    public $dates = ['created_at', 'read_at'];
+    public $dates = ['created_at', 'updated_at', 'read_at'];
 
     protected $fillable = [
         'from_id',

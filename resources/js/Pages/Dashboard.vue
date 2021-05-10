@@ -18,7 +18,7 @@
 				</card>
 			</template>
 		</div>
-		<div v-if="!$page.props.auth.user.userable_type.includes('supervisor')" class="mt-5 max-w-5xl">
+		<div v-if="!currentUser.userable_type.includes('supervisor')" class="mt-5 max-w-5xl">
 			<card v-if="applications" title="Recent Applications" subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry.">
 				<div v-if="applications.length > 0" class="divide-y">
 					<application-card v-for="application in applications" :key="application.id" :application="application" />
@@ -79,7 +79,7 @@ export default {
 					value: this.applications_count,
 					icon: 'folder',
 					link: route('applications.index'),
-					show: this.$page.props.auth.user.userable_type === 'student' || this.$page.props.auth.user.userable_type === 'company'
+					show: this.currentUser.userable_type === 'student' || this.currentUser.userable_type === 'company'
 				},
 			],
 		};

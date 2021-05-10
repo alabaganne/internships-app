@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->text('about')->nullable();
             $table->foreignId('field_id')->constrained()->onDelete('cascade'); // onDelete('set null)
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
-			$table->foreignId('company_supervisor_id')->nullable()->constrained()->onDelete('set null');
+			$table->foreignId('university_supervisor_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

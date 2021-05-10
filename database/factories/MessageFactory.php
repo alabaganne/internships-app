@@ -21,9 +21,10 @@ class MessageFactory extends Factory
      */
     public function definition()
     {
+		// Seeded 45 Internships
         do {
-            $from = rand(1, 32);
-            $to = rand(1, 32);
+            $from = rand(1, 60);
+            $to = rand(1, 60);
         } while ($from === $to);
 
         return [

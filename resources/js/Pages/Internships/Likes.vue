@@ -6,7 +6,7 @@
 			</template>
 		</div>
 		<card v-else class="p-6">
-			No records found.
+			No likes found.
 		</card>
 	</main-layout>
 </template>

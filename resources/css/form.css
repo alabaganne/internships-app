@@ -14,6 +14,10 @@ input[type="checkbox"] {
 	@apply h-4 w-4 focus:ring-2 focus:ring-blue-500 text-blue-600 border-gray-300 rounded;
 }
 
+textarea {
+	resize: none;
+}
+
 .required::after {
 	content: "*";
 	@apply text-red-500 font-medium text-sm ml-0.5;

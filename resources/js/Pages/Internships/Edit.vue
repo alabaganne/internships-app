@@ -3,12 +3,12 @@
 		<div class="max-w-3xl mx-auto mt-6">
 			<app-form
 				:form="form"
-				:originalData="internship"
+				:original-data="internship"
 				route-name="internships"
 				:route-params="{ internship }"
 				title="Internship Information"
 				subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-				modelName="Internship"
+				model-name="Internship"
 			>
 				<div class="grid gap-x-3 gap-y-6 p-6">
 					<div class="col-span-6 sm:col-span-6">
@@ -61,7 +61,7 @@ export default {
 		MainLayout,
 		BreezeValidationErrors,
 		AppForm,
-		FilesUpload
+		FilesUpload,
 	},
 	props: {
 		fields: {
@@ -86,7 +86,10 @@ export default {
 				closing_at: "",
 				field_id: null,
 				company_supervisor_id: null,
-			})
+			}),
+
+			value: null,
+			options: ['list', 'of', 'options']
 		}
 	},
 }

@@ -32,15 +32,15 @@
 						class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full"
 						:class="widthClasses"
 					>
-						<div class="bg-white" :title="title" :subtitle="subtitle">
+						<card class="bg-white" :title="title" :subtitle="subtitle">
 							<slot name="content" />
-							<div class="flex justify-end bg-gray-50">
-								<div class="space-x-1.5 px-4 py-3">
-									<button type="button" @click="toggle" class="btn btn-secondary">Close</button>
+							<template v-slot:footer>
+								<div class="space-x-1.5 flex justify-end">
+									<button type="button" @click="toggle(); $emit('close')" class="btn btn-secondary">Close</button>
 									<slot name="action-button" />
 								</div>
-							</div>
-						</div>
+							</template>
+						</card>
 					</div>
 				</transition>
 			</div>
@@ -58,6 +58,7 @@ export default {
 			default: "sm:max-w-lg"
 		}
 	},
+	emits: ['close'],
 	data() {
 		return {
 			open: false

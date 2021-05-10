@@ -14,6 +14,6 @@ class InternshipSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Internship::factory(42)->create();
+        \App\Models\Internship::factory(45)->create();
     }
 }

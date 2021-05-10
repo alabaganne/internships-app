@@ -16,7 +16,7 @@
 						<div class="text-sm text-gray-500">{{ supervisor.field.name }} Teacher</div>
 						<div class="mt-4 flex items-center space-x-1">
 							<inertia-link
-								v-if="$page.props.auth.user.is_admin"
+								v-if="currentUser.is_admin"
 								:href="route('university_supervisors.edit', supervisor)"
 								class="btn btn-sm btn-dark"
 							>
@@ -26,13 +26,13 @@
 					</div>
 					<div class="border-t flex divide-x">
 						<!-- <inertia-link class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center" href="#">
-							<icon name="user-circle" solid class="h-5 w-5 mr-2 text-gray-400" />
+							<icon name="user-circle" solid class="h-5 w-5 mr-1 text-gray-400" />
 							Students
 						</inertia-link> -->
-						<inertia-link class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center" href="#">
-							<icon name="mail" solid class="h-5 w-5 mr-2 text-gray-400" />
+						<button @click="selectedUser = supervisor" class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center">
+							<icon name="mail" solid class="h-5 w-5 mr-1 text-gray-400" />
 							Contact
-						</inertia-link>
+						</button>
 					</div>
 				</card>
 			</div>
@@ -41,20 +41,31 @@
 		<card v-else class="p-6">
 			There's no university supervisors in the database.
 		</card>
+		<contact-modal :user="selectedUser" @close="selectedUser = null" />
 	</main-layout>
 </template>
 
 <script>
 import MainLayout from "@/Layouts/Main";
-import Pagination from '@/Components/Pagination';
+import Pagination from "@/Components/Pagination";
+import ContactModal from "@/Components/Modal/Contact";
 
 export default {
 	components: {
 		MainLayout,
 		Pagination,
+		ContactModal,
 	},
 	props: {
-		university_supervisors: Object
+		university_supervisors: {
+			type: Object,
+			required: true,
+		}
+	},
+	data() {
+		return {
+			selectedUser: null,
+		}
 	}
 };
 </script>

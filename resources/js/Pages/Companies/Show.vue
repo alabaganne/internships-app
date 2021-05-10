@@ -44,9 +44,9 @@
 					<div v-for="internship in company.internships.data" :key="internship.id">
 						<internship-card :internship="internship" :full="false" />
 					</div>
-					<pagination :links="company.internships.meta.links" :meta="company.internships" />
+					<pagination :links="company.internships.meta.links" :meta="company.internships.meta" />
 				</div>
-				<card v-else class="p-6 text-gray-600">This company has no internships.</card>
+				<card v-else class="p-6">No internships found.</card>
 			</div>
 		</div>
 	</main-layout>
@@ -55,7 +55,7 @@
 <script>
 import MainLayout from "@/Layouts/Main";
 import InternshipCard from "@/Components/Internship/Card";
-import DeleteModal from "@/Components/Modals/Delete";
+import DeleteModal from "@/Components/Modal/Delete";
 import Pagination from "@/Components/Pagination";
 
 export default {

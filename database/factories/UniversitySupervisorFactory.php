@@ -22,7 +22,7 @@ class UniversitySupervisorFactory extends Factory
     public function definition()
     {
         return [
-            'field_id' => rand(1, 8)
+            'field_id' => rand(1, 10)
         ];
     }
 }

@@ -30,7 +30,7 @@
 <script>
 import MainLayout from "@/Layouts/Main";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
-import DeleteModal from "@/Components/Modals/Delete";
+import DeleteModal from "@/Components/Modal/Delete";
 
 export default {
 	components: {

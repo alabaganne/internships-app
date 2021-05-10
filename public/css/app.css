@@ -809,8 +809,8 @@ button:focus {
 .btn {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
   text-align: center;
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
@@ -894,10 +894,6 @@ button:focus {
   background-color: rgba(4, 120, 87, var(--tw-bg-opacity));
 }
 
-.btn-success {
-  font-weight: 500;
-}
-
 .btn-success:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgba(16, 185, 129, var(--tw-ring-opacity));
@@ -913,13 +909,24 @@ button:focus {
   background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
 }
 
-.btn-danger {
-  font-weight: 500;
-}
-
 .btn-danger:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgba(239, 68, 68, var(--tw-ring-opacity));
+}
+
+.btn-gray {
+  --tw-bg-opacity: 1;
+  background-color: rgba(71, 85, 105, var(--tw-bg-opacity));
+}
+
+.btn-gray:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(100, 116, 139, var(--tw-bg-opacity));
+}
+
+.btn-gray:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgba(100, 116, 139, var(--tw-ring-opacity));
 }
 
 /* Sizes */
@@ -1019,6 +1026,10 @@ input[type="checkbox"] {
   --tw-text-opacity: 1;
   color: rgba(37, 99, 235, var(--tw-text-opacity));
   width: 1rem;
+}
+
+textarea {
+  resize: none;
 }
 
 .required::after {
@@ -188930,3 +188941,4 @@ p {
             animation: bounce 1s infinite;
   }
 }
+

@@ -64,7 +64,25 @@ class ApplicationController extends Controller
     public function show(Application $application)
     {
         return Inertia::render('Applications/Show', [
-            'application' => new ApplicationResource($application)
+            'application' => [
+				'id' => $application->id,
+				'name' => $application->name,
+				'cover_letter' => $application->cover_letter,
+				'message' => $application->message,
+				'attachments' => $application->attachments,
+				'status' => $application->status,
+				'student' => [
+					'id' => $application->student->id,
+					'name' => $application->student->user->name,
+					'email' => $application->student->user->email,
+					'phone_number' => $application->student->user->phone_number,
+					'image' => $application->student->user->image,
+				],
+				'internship' => [
+					'id' => $application->internship->id,
+					'title' => $application->internship->title,
+				]
+			]
         ]);
     }
 

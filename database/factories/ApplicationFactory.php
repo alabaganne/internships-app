@@ -22,9 +22,9 @@ class ApplicationFactory extends Factory
     public function definition()
     {
         return [
-            'internship_id' => rand(1, 42),
-            'student_id' => rand(1, 8),
-            'company_id' => rand(1, 8),
+            'internship_id' => rand(1, 15),
+            'student_id' => rand(1, 15),
+            'company_id' => rand(1, 15),
             'cover_letter' => $this->faker->paragraph(),
             'message' => $this->faker->paragraph(),
         ];

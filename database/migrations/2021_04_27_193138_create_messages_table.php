@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->foreignId('to_id')->constrained('users', 'id')->onDelete('cascade');
             $table->text('text');
             $table->timestamp('read_at')->nullable();
-            $table->timestamp('created_at')->default(now());
+            $table->timestamps();
         });
     }
 

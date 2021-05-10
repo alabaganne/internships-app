@@ -31,17 +31,18 @@
       <div v-if="links.length > 3">
         <nav class="relative z-0 inline-flex rounded-md shadow-sm border border-gray-300 divide-x divide-gray-300 overflow-hidden -space-x-px" aria-label="Pagination">
           <template v-for="(link, i) in links" :key="i">
-            <span
-							v-if="link.active || !link.url"
-							class="relative inline-flex items-center px-4 py-2 bg-gray-100 text-sm font-medium text-gray-700"
+            <inertia-link
+							v-if="link.url && !link.active"
+							:href="link.url"
+							:data="routeParams"
+							class="relative inline-flex items-center px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+							preserve-state
 							v-html="link.label"
 						/>
-            <inertia-link
-							v-else :href="link.url"
-							class="relative inline-flex items-center px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            <span
+							v-else
+							class="relative inline-flex items-center px-4 py-2 bg-gray-100 text-sm font-medium text-gray-700"
 							v-html="link.label"
-							preserve-state
-							:data="routeParams"
 						/>
           </template>
         </nav>

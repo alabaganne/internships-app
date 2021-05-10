@@ -12,10 +12,10 @@
 					<div class="text-sm font-medium text-gray-500">Applied for <inertia-link :href="route('internships.show', application.internship)" class="link">{{ application.internship.title }}</inertia-link> on {{ application.created_at }}</div>
 				</div>
 			</div>
-			<template v-if="user.userable_type === 'company'">
+			<template v-if="currentUser.userable_type === 'company'">
 				<div v-if="application.status === null" class="flex items-center">
-					<button type="button" @click="reply(false)" class="btn btn-dark">Disqualify</button>
-					<button type="button" @click="reply(true)" class="ml-1 btn btn-primary">Interview</button> <!-- Schedule an interview -->
+					<button type="button" @click="reply(false)" class="btn btn-dark">Reject -></button>
+					<button type="button" @click="reply(true)" class="ml-1 btn btn-primary">Accept -></button> <!-- Schedule an interview -->
 				</div>
 				<div v-else class="text-xs uppercase text-gray-400 font-medium">
 					Already replied
@@ -90,7 +90,7 @@
 
 <script>
 import MainLayout from "@/Layouts/Main";
-import DeleteModal from "@/Components/Modals/Delete";
+import DeleteModal from "@/Components/Modal/Delete";
 
 export default {
 	components: {
@@ -101,11 +101,6 @@ export default {
 		application: {
 			type: Object,
 			required: true
-		}
-	},
-	computed: {
-		user() {
-			return this.$page.props.auth.user;
 		}
 	},
 	methods: {

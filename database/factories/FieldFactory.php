@@ -22,7 +22,7 @@ class FieldFactory extends Factory
     public function definition()
     {
         return [
-            'name' => ucfirst($this->faker->words(3, true)),
+            'name' => ucfirst($this->faker->words(2, true)),
         ];
     }
 }

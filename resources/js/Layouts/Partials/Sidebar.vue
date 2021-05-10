@@ -50,7 +50,7 @@ export default {
 					name: 'applications.index',
 					label: 'Applications',
 					icon: 'folder',
-					show: !this.$page.props.auth.user.userable_type.includes('supervisor')
+					show: !this.currentUser.userable_type.includes('supervisor')
 				},
 				{
 					name: 'internships.index',
@@ -72,15 +72,15 @@ export default {
 				},
 				{
 					name: 'university_supervisors.index',
-					label: 'University supervisors',
+					label: 'University Supervisors',
 					icon: 'identification',
 					show: true,
 				},
 				{
 					name: 'fields.index',
-					label: 'Fields of studies',
+					label: 'Fields of Studies',
 					icon: 'light-bulb',
-					show: true,
+					show: this.currentUser.is_admin,
 				},
 			],
 			secondaryLinks: [
@@ -99,20 +99,25 @@ export default {
 					label: "Contact us",
 					icon: 'mail',
 				},
-		],
+			],
 		};
 	},
-
 	computed: {
 		...mapGetters(["sidebarActive"]),
 	},
-
 	methods: {
 		...mapActions(["toggleSidebar"]),
 	},
-
 	mounted() {
 		if(window.innerWidth < 1024) this.toggleSidebar();
 	}
 };
 </script>
+
+<style scoped>
+	/* @media screen and (min-width: 1280px) {
+		#sidebar {
+			display: block !important;
+		}
+	} */
+</style>

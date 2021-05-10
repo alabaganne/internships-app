@@ -6,7 +6,7 @@
 			title="Introduce yourself"
 			subtitle="What makes you a strong candidate for this internship?"
 			:form="form"
-			:originalData="application"
+			:original-data="application"
 			route-name="applications"
 			:route-params="{
 				'internship': internship,

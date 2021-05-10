@@ -3,13 +3,13 @@
 		<div class="max-w-3xl mx-auto mt-6">
 			<app-form
 				:form="form"
-				:originalData="university_supervisor"
+				:original-data="university_supervisor"
 				route-name="university_supervisors"
 				:route-params="{ university_supervisor }"
 				title="University Supervisor Information"
 				subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 				withDelete
-				modelName="University Supervisor"
+				model-name="University Supervisor"
 			>
 				<div class="grid grid-cols-6 gap-x-4 gap-y-6 p-6">
 					<div class="col-span-6 sm:col-span-6">

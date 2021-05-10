@@ -1,21 +1,21 @@
 <template>
-	<nav class="bg-white text-gray-700 h-20 flex justify-between items-center px-4 md:px-6 border-b">
+	<nav class="bg-white text-gray-700 h-20 flex justify-between items-center px-4 md:px-6 border-b"> <!-- xl:hidden -->
 		<button @click="toggleSidebar" class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100">
 			<icon name="menu" solid />
 		</button>
 		<div class="flex items-center space-x-2">
 			<inertia-link
-				v-if="user.userable_type === 'student'"
+				v-if="currentUser.userable_type === 'student'"
 				:href="route('likes.index')"
 				class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100 block"
-				:class="{ 'text-red-600 hover:bg-red-50': user.likes_count > 0 }"
+				:class="{ 'text-red-600 hover:bg-red-50': currentUser.likes_count > 0 }"
 			>
 				<icon name="heart" solid />
 			</inertia-link>
 
 			<messages-slide-over />
 
-			<notifications-slide-over :key="url()" />
+			<notifications-slide-over :key="routeUrl" />
 
 			<breeze-dropdown width="w-80">
 				<template v-slot:trigger>
@@ -37,12 +37,12 @@
 								/>
 							</div>
 							<div class="ml-3">
-								<div class="font-medium">{{ user.name }}</div>
-								<div class="text-sm leading-none text-gray-500">{{ user.email }}</div>
+								<div class="font-medium">{{ currentUser.name }}</div>
+								<div class="text-sm leading-none text-gray-500">{{ currentUser.email }}</div>
 							</div>
 						</div>
-						<breeze-dropdown-link v-if="user.is_admin" href="#">Manage users</breeze-dropdown-link>
-						<breeze-dropdown-link :href="route('profile.edit')">My account</breeze-dropdown-link>
+						<breeze-dropdown-link v-if="currentUser.is_admin" href="#">Manage Users</breeze-dropdown-link>
+						<breeze-dropdown-link :href="route('profile.edit')">My Account</breeze-dropdown-link>
 						<breeze-dropdown-link :href="route('logout')" as="button" method="POST">Logout</breeze-dropdown-link>
 				</template>
 			</breeze-dropdown>
@@ -59,20 +59,17 @@ import MessagesSlideOver from "./MessagesSlideOver";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-    components: {
-        BreezeDropdown,
-        BreezeDropdownLink,
-        NotificationsSlideOver,
-		MessagesSlideOver
-    },
-    computed: {
-        ...mapGetters(["sidebarActive"]),
-        user() {
-            return this.$page.props.auth.user;
-        }
-    },
-    methods: {
-        ...mapActions(["toggleSidebar"]),
-    },
+	components: {
+		BreezeDropdown,
+		BreezeDropdownLink,
+		NotificationsSlideOver,
+	MessagesSlideOver
+	},
+	computed: {
+		...mapGetters(["sidebarActive"]),
+	},
+	methods: {
+		...mapActions(["toggleSidebar"]),
+	},
 };
 </script>

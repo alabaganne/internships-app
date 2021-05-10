@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Field;
@@ -33,7 +32,9 @@ class StudentController extends Controller
 					->through(function ($student) {
 						return [
 							'id' => $student->id,
+							'user_id' => $student->user->id,
 							'name' => $student->user->name,
+							'email' => $student->user->email,
 							'image' => $student->user->image,
 							'field' => [
 								'name' => $student->field->name
@@ -87,6 +88,7 @@ class StudentController extends Controller
 				'id' => $student->id,
 				'about' => $student->about,
 				'linkedin_profile_url' => $student->linkedin_profile_url,
+				'user_id' => $student->user->id,
 				'name' => $student->user->name,
 				'email' => $student->user->email,
 				'phone_number' => $student->user->phone_number,
@@ -110,7 +112,15 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         return Inertia::render('Students/Edit', [
-            'student' => new UserResource($student),
+            'student' => [
+				'id' => $student->id,
+				'name' => $student->user->name,
+				'email' => $student->user->email,
+				'phone_number' => $student->user->phone_number,
+				'about' => $student->about,
+				'field_id' => $student->field_id,
+				'city_id' => $student->city_id,
+			],
             'fields' => Field::select('id', 'name')->get(),
             'cities' => City::all()
         ]);

@@ -4,7 +4,7 @@ button {
 
 /* Base */
 .btn {
-	@apply inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-semibold text-sm text-center text-white uppercase focus:outline-none transition ease-in-out duration-150 ;
+	@apply inline-flex justify-center items-center px-3.5 py-2 border border-transparent rounded-md uppercase font-semibold text-sm text-center text-white focus:outline-none transition ease-in-out duration-150 ;
 }
 /* Colors */
 .btn-primary {
@@ -17,10 +17,13 @@ button {
 	@apply bg-gray-800 hover:bg-gray-700 focus:border-gray-900 focus:ring-gray-500;
 }
 .btn-success {
-	@apply bg-green-600 font-medium hover:bg-green-700 focus:ring-green-500;
+	@apply bg-green-600 hover:bg-green-700 focus:ring-green-500;
 }
 .btn-danger {
-	@apply bg-red-600 font-medium hover:bg-red-700 focus:ring-red-500;
+	@apply bg-red-600 hover:bg-red-700 focus:ring-red-500;
+}
+.btn-gray {
+	@apply bg-gray-600 hover:bg-gray-500 focus:ring-gray-500;
 }
 /* Sizes */
 .btn-lg {

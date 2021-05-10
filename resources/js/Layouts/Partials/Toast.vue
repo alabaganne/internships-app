@@ -1,22 +1,28 @@
 <template>
 	<transition name="slide-fade">
 		<card
-			v-if="toast && show"
-			class="fixed right-8 top-24 z-50 pl-5 pr-3 py-4 flex items-center max-w-lg"
+			v-if="show && toast"
+			class="fixed right-8 top-24 z-50 pl-4 pr-3 py-2.5 flex items-center max-w-lg"
 		>
-			<icon v-if="toast.action === 'store'" name="save-as" class="text-green-500" />
-			<icon v-else-if="toast.action === 'update'" name="pencil-alt" class="text-blue-500" />
-			<icon v-if="toast.action === 'destroy'" name="trash" class="text-red-500" />
-			<icon v-if="toast.action === 'notification'" name="bell" class="text-red-500" />
-			<div class="ml-2.5 text-sm font-medium text-gray-600">
+			<div class="h-11 w-11 flex-center rounded-full" :class="{
+				'bg-green-100': toast.action === 'store',
+				'bg-blue-100': toast.action === 'update',
+				'bg-red-100': toast.action === 'destroy' || toast.action === 'notification',
+			}">
+				<icon v-if="toast.action === 'store'" name="save-as" class="text-green-600" />
+				<icon v-else-if="toast.action === 'update'" name="pencil-alt" class="text-blue-600" />
+				<icon v-if="toast.action === 'destroy'" name="trash" class="text-red-600" />
+				<icon v-if="toast.action === 'notification'" name="bell" class="text-red-600" />
+			</div>
+			<div class="ml-4 text-sm font-semibold text-gray-800">
 				{{ toast.message }}
 			</div>
 			<button
 				type="button"
 				@click="close"
-				class="ml-4 text-gray-500 hover:bg-gray-100 p-2 rounded-lg transition-colors duration-200"
+				class="ml-4 text-gray-500 hover:bg-gray-100 hover:text-gray-800 p-2 rounded-lg transition-colors duration-200"
 			>
-				<icon name="x" solid class="h-4 w-4" />
+				<icon name="x" solid class="h-5 w-5" />
 			</button>
 		</card>
 	</transition>
@@ -24,7 +30,9 @@
 
 <script>
 export default {
-	props: ['toast'],
+	props: {
+		toast: Object,
+	},
 	data() {
 		return {
 			show: false,
@@ -43,7 +51,7 @@ export default {
 		close() {
 			this.show = false;
 		}
-	}
+	},
 }
 </script>
 

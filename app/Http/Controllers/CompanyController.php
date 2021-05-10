@@ -19,16 +19,17 @@ class CompanyController extends Controller
     public function index()
     {
         return Inertia::render('Companies/Index', [
-            'companies' => Company::withCount('internships')
+            'companies' => Company::withCount('internships', 'companySupervisors')
 				->with('city')
 				->paginate(12)
 				->through(function ($company) {
 					return [
-						'id' => $company->user->id,
+						'id' => $company->id,
 						'name' => $company->user->name,
 						'email' => $company->user->email,
 						'phone_number' => $company->user->phone_number,
 						'internships_count' => $company->internships_count,
+						'company_supervisors_count' => $company->company_supervisors_count,
 						'city' => [
 							'name' => $company->city->name,
 						]
@@ -58,8 +59,8 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         Company::create($request->only('about', 'website', 'city_id'))->user()->save(
-            User::create($request->only('name', 'email', 'phone_number'))
-        );
+			User::create($request->only('name', 'email', 'phone_number'))
+		);
 
         return Redirect::route('companies.index')->with('toast', [
             'action' => 'store',
@@ -77,7 +78,7 @@ class CompanyController extends Controller
     {
         return Inertia::render('Companies/Show', [
             'company' => [
-				'id' => $company->user->id,
+				'id' => $company->id,
 				'name' => $company->user->name,
 				'email' => $company->user->email,
 				'phone_number' => $company->user->phone_number,
@@ -100,7 +101,15 @@ class CompanyController extends Controller
     public function edit(Company $company)
     {
         return Inertia::render('Companies/Edit', [
-            'company' => new UserResource($company),
+            'company' => [
+				'id' => $company->user->id,
+				'name' => $company->user->name,
+				'email' => $company->user->email,
+				'phone_number' => $company->user->phone_number,
+				'website' => $company->website,
+				'about' => $company->about,
+				'city_id' => $company->city_id,
+			],
             'cities' => City::all(),
         ]);
     }

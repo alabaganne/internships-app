@@ -2,9 +2,9 @@
 	<main-layout title="Profile" maxWidthClass="max-w-4xl">
 		<app-form
 			:form="form"
-			:originalData="$page.props.auth.user"
-			routeName="profile"
-			modelName="Account"
+			:original-data="currentUser"
+			route-name="profile"
+			model-name="Account"
 		>
 			<section class="p-6">
 				<div>
@@ -49,7 +49,7 @@
 					</p>
 				</div>
 				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
-					<div v-if="user.userable_type === 'company'" class="col-span-4">
+					<div v-if="currentUser.userable_type === 'company'" class="col-span-4">
 						<label for="website">
 							Website URL
 						</label>
@@ -80,7 +80,7 @@
 
 <script>
 import MainLayout from "@/Layouts/Main";
-import DeleteModal from "@/Components/Modals/Delete";
+import DeleteModal from "@/Components/Modal/Delete";
 import AppForm from "@/Components/Form";
 
 export default {
@@ -101,11 +101,6 @@ export default {
 		profile_info: {
 			type: Object,
 			required: true,
-		}
-	},
-	computed: {
-		user() {
-			return this.$page.props.auth.user;
 		}
 	},
 	data() {

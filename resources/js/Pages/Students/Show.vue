@@ -23,9 +23,9 @@
 						</div>
 					</div>
 					<div class="flex items-center space-x-1">
-						<inertia-link href="#" class="btn btn-secondary">
+						<button @click="selectedUser = student" class="btn btn-secondary">
 							Contact ->
-						</inertia-link>
+						</button>
 						<inertia-link :href="route('students.edit', student.id)" class="btn btn-dark">
 							Edit ->
 						</inertia-link>
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<!-- about -->
-				<div class="mt-16 grid grid-cols-7 gap-10" :class="{ 'text-center': !student.about }">
+				<div class="mt-16 grid grid-cols-7 gap-10" :class="{ 'text-left': !student.about }">
 					<div v-if="student.about" class="col-span-5">
 						<div class="text-xl font-bold text-gray-800">About</div>
 						<p class="mt-3 text-lg text-gray-700 leading-8" v-html="student.about" />
@@ -47,20 +47,20 @@
 					<div class="col-span-2" :class="{ 'col-span-full': !student.about }">
 						<div class="text-xl font-bold text-gray-800">Contact details</div>
 						<div class="mt-3 space-y-3">
-							<div class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<icon name="mail" class="h-5 w-5 text-blue-400 mr-3" />
+							<div class="flex items-center">
+								<icon name="mail" class="flex-shrink-0 h-5 w-5 text-blue-400 mr-3" />
 								{{ student.email }}
 							</div>
-							<div v-if="student.phone_number" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<icon name="phone" class="h-5 w-5 text-blue-400 mr-3" />
+							<div v-if="student.phone_number" class="flex items-center">
+								<icon name="phone" class="flex-shrink-0 h-5 w-5 text-blue-400 mr-3" />
 								{{ student.phone_number }}
 							</div>
-							<div v-if="student.city" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<icon name="location-marker" class="h-5 w-5 text-blue-400 mr-3" />
+							<div v-if="student.city" class="flex items-center">
+								<icon name="location-marker" class="flex-shrink-0 h-5 w-5 text-blue-400 mr-3" />
 								{{ student.city.name }}
 							</div>
-							<div v-if="student.linkedin_profile_url" class="flex items-center" :class="{ 'justify-center': !student.about }">
-								<icon name="cursor-click" class="h-5 w-5 text-blue-400 mr-3" />
+							<div v-if="student.linkedin_profile_url" class="flex items-center">
+								<icon name="cursor-click" class="flex-shrink-0 h-5 w-5 text-blue-400 mr-3" />
 								<a :href="student.linkedin_profile_url" target="_blank" class="link text-base text-blue-500">Linkedin profile -></a>
 							</div>
 						</div>
@@ -72,24 +72,32 @@
 				</div>
 			</div>
 		</div>
+		<contact-modal :user="selectedUser" @close="selectedUser = null" />
 	</main-layout>
 </template>
 
 <script>
 import MainLayout from "@/Layouts/Main";
 import Skills from "@/Components/Skills";
-import DeleteModal from "@/Components/Modals/Delete"
+import DeleteModal from "@/Components/Modal/Delete"
+import ContactModal from "@/Components/Modal/Contact";
 
 export default {
 	components: {
 		MainLayout,
 		Skills,
-		DeleteModal
+		DeleteModal,
+		ContactModal,
 	},
 	props: {
 		student: {
 			type: Object,
 			required: true
+		}
+	},
+	data() {
+		return {
+			selectedUser: null,
 		}
 	}
 }

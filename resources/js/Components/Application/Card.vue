@@ -1,6 +1,6 @@
 <template>
 	<inertia-link :href="route('applications.show', application)" class="px-6 py-4 flex justify-between items-center group hover:bg-gray-50">
-		<div v-if="$page.props.auth.user.userable_type === 'company'" class="w-5/12 flex items-center">
+		<div v-if="currentUser.userable_type === 'company'" class="w-5/12 flex items-center">
 			<img
 				class="h-14 w-14 rounded-full object-cover"
 				src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"

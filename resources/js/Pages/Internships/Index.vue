@@ -2,7 +2,7 @@
 	<main-layout title="Internships" subtitle="View">
 		<template v-slot:header-right>
 			<inertia-link
-				v-if="$page.props.auth.user.userable_type === 'company'"
+				v-if="currentUser.userable_type === 'company'"
 				:href="route('internships.create')"
 				class="btn btn-lg btn-primary"
 			>

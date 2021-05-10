@@ -17,38 +17,46 @@
 					</div>
 					<div class="border-t flex divide-x">
 						<inertia-link class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center" :href="route('students.show', student.id)">
-							<icon name="user-circle" solid class="h-5 w-5 text-gray-400 mr-2" />
+							<icon name="user-circle" solid class="h-5 w-5 text-gray-400 mr-1" />
 							Profile
 						</inertia-link>
-						<inertia-link class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center" href="#">
-							<icon name="mail" solid class="h-5 w-5 text-gray-400 mr-2" />
+						<button @click="selectedUser = student" class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center">
+							<icon name="mail" solid class="h-5 w-5 text-gray-400 mr-1" />
 							Contact
-						</inertia-link>
+						</button>
 					</div>
 				</card>
 			</div>
 			<pagination :links="students.links" :meta="students" class="mt-4" />
 		</div>
 		<card v-else class="p-6">
-			There's no students in the database.
+			No students found
 		</card>
+		<contact-modal :user="selectedUser" @close="selectedUser = null" />
 	</main-layout>
 </template>
 
 <script>
 import MainLayout from "@/Layouts/Main";
 import Pagination from "@/Components/Pagination";
+import ContactModal from "@/Components/Modal/Contact";
 
 export default {
-    components: {
-        MainLayout,
-        Pagination,
-    },
-    props: {
-        students: {
-            type: Object,
-            required: true
-        }
-    },
+	components: {
+		MainLayout,
+		Pagination,
+		ContactModal,
+	},
+	props: {
+		students: {
+			type: Object,
+			required: true
+		}
+	},
+	data() {
+		return {
+			selectedUser: null,
+		}
+	}
 };
 </script>

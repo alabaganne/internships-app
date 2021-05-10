@@ -20,17 +20,19 @@ class UniversitySupervisorController extends Controller
     {
         return Inertia::render('UniversitySupervisors/Index', [
             'university_supervisors' => UniversitySupervisor::with('field')
-															->paginate(12)
-															->through(function ($supervisor) {
-																return [
-																	'id' => $supervisor->id,
-																	'name' => $supervisor->user->name,
-																	'photo' => $supervisor->user->photo,
-																	'field' => [
-																		'name' => $supervisor->field->name,
-																	]
-																	];
-															}),
+				->paginate(12)
+				->through(function ($supervisor) {
+					return [
+						'id' => $supervisor->id,
+						'user_id' => $supervisor->user->id,
+						'name' => $supervisor->user->name,
+						'email' => $supervisor->user->email,
+						'photo' => $supervisor->user->photo,
+						'field' => [
+							'name' => $supervisor->field->name,
+						]
+						];
+				}),
         ]);
     }
 
@@ -61,7 +63,7 @@ class UniversitySupervisorController extends Controller
 
         return Redirect::route('university_supervisors.index')->with('toast', [
             'action' => 'store',
-            'message' => 'A new university supervisor has been added.'
+            'message' => 'A new university Supervisor has been added.'
         ]);
     }
 
@@ -85,7 +87,13 @@ class UniversitySupervisorController extends Controller
     public function edit(UniversitySupervisor $universitySupervisor)
     {
         return Inertia::render('UniversitySupervisors/Edit', [
-            'university_supervisor' => new UserResource($universitySupervisor),
+            'university_supervisor' => [
+				'id' => $universitySupervisor->id,
+				'name' => $universitySupervisor->user->name,
+				'email' => $universitySupervisor->user->email,
+				'phone_number' => $universitySupervisor->user->phone_number,
+				'field_id' => $universitySupervisor->field_id,
+			],
             'fields' => Field::all(),
         ]);
     }
@@ -107,7 +115,7 @@ class UniversitySupervisorController extends Controller
 
         return Redirect::route('university_supervisors.index')->with('toast', [
             'action' => 'update',
-            'message' => 'University supervisor updated successfully.'
+            'message' => 'University Supervisor updated successfully.'
         ]);
     }
 
@@ -124,7 +132,7 @@ class UniversitySupervisorController extends Controller
 
         return Redirect::route('university_supervisors.index')->with('toast', [
             'action' => 'destroy',
-            'message' => 'University supervisor deleted successfully.'
+            'message' => 'University Supervisor deleted successfully.'
         ]);
     }
 }

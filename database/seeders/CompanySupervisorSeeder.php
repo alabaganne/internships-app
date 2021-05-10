@@ -14,7 +14,7 @@ class CompanySupervisorSeeder extends Seeder
     public function run()
     {
         // Seeding 10 company supervisors
-        \App\Models\CompanySupervisor::factory(8)->create()->each(function($supervisor) {
+        \App\Models\CompanySupervisor::factory(15)->create()->each(function($supervisor) {
             $supervisor->user()->save(
                 \App\Models\User::factory()->create()
             );

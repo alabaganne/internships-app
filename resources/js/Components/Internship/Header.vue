@@ -6,7 +6,7 @@
 				<icon name="office-building" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
 				{{ internship.company.name }}
 			</div>
-			<div v-if="!route().current('internships.show')" class="sm:mr-6 mt-2 flex items-center">
+			<div class="sm:mr-6 mt-2 flex items-center">
 				<icon name="location-marker" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
 				{{ internship.city.name }}
 			</div>

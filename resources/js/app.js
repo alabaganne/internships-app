@@ -29,22 +29,29 @@ const app = createApp({
 			resolveErrors: page => (page.props.errors || {}),
 		}),
 })
-	.mixin({ methods: {
-	route,
-	truncate(value, numChars) {
-		if(!value) return "";
-
-		let str = value.substring(0, numChars).trim();
-		if(numChars > value.length) {
-			return str;
-		} else {
-			return str + "...";
-		}
-	},
-		url() {
-			return location.pathname.substr(1)
+	.mixin({
+		computed: {
+			currentUser() {
+				return this.$page.props.auth?.user;
+			}
 		},
-} })
+		methods: {
+			route,
+			truncate(value, numChars) {
+				if(!value) return "";
+
+				let str = value.substring(0, numChars).trim();
+				if(numChars > value.length) {
+					return str;
+				} else {
+					return str + "...";
+				}
+			},
+			routeUrl() {
+				return location.pathname.substr(1)
+			},
+		}
+	})
 	.use(InertiaPlugin)
 	.use(store);
 
