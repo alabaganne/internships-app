@@ -28,6 +28,11 @@ const app = createApp({
 			},
 			resolveErrors: page => (page.props.errors || {}),
 		}),
+	mounted() {
+		window.addEventListener('popstate', () => {
+			this.$page.props.popstate = true;
+		})
+	}
 })
 	.mixin({
 		computed: {

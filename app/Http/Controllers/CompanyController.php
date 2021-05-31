@@ -63,7 +63,7 @@ class CompanyController extends Controller
 		);
 
         return Redirect::route('companies.index')->with('toast', [
-            'action' => 'store',
+            'type' => 'store',
             'message' => 'Company created successfully.'
         ]);
     }
@@ -79,6 +79,7 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Show', [
             'company' => [
 				'id' => $company->id,
+				'user_id' => $company->user->id,
 				'name' => $company->user->name,
 				'email' => $company->user->email,
 				'phone_number' => $company->user->phone_number,
@@ -87,7 +88,17 @@ class CompanyController extends Controller
 				'city' => [
 					'name' => $company->city->name,
 				],
-				'internships' => InternshipResource::collection($company->internships()->latest()->paginate(10))
+				'internships' => InternshipResource::collection($company->internships()->latest()->paginate(10)),
+				'supervisors' => $company->companySupervisors->transform(function ($companySupervisor) {
+					return [
+						'id' => $companySupervisor->id,
+						'user_id' => $companySupervisor->user->id,
+						'name' => $companySupervisor->user->name,
+						'email' => $companySupervisor->user->email,
+						'image' => $companySupervisor->user->image,
+						'phone_number' => $companySupervisor->user->phone_number,
+					];
+				})
 			]
         ]);
     }
@@ -128,7 +139,7 @@ class CompanyController extends Controller
         $company->user()->update($request->only('name', 'email', 'phone_number'));
 
         return Redirect::route('companies.show', $company)->with('toast', [
-            'action' => 'update',
+            'type' => 'update',
             'message' => 'Company updated successfully.'
         ]);
     }
@@ -145,7 +156,7 @@ class CompanyController extends Controller
         $company->delete();
 
         return Redirect::route('companies.index')->with('toast', [
-            'action' => 'destroy',
+            'type' => 'destroy',
             'message' => 'Company deleted successfully.'
         ]);
     }

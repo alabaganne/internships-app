@@ -16,8 +16,8 @@
 					<td class="">{{ company.company_supervisors_count }}</td>
 					<td class="text-right">
 						<div class="flex items-center justify-end space-x-1">
-							<inertia-link :href="route('companies.show', company)" class="btn btn-sm btn-primary">View -></inertia-link>
-							<inertia-link :href="route('companies.edit', company)" class="btn btn-sm btn-dark">Edit -></inertia-link>
+							<inertia-link :href="route('companies.show', company)" class="btn btn-sm btn-primary">View</inertia-link>
+							<inertia-link :href="route('companies.edit', company)" class="btn btn-sm btn-dark">Edit</inertia-link>
 						</div>
 					</td>
 				</tr>

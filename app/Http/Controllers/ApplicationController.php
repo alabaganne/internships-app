@@ -53,10 +53,10 @@ class ApplicationController extends Controller
 			'city_id' => auth()->user()->id
         ]);
 
-        $application->company->user->notify(new ApplicationSubmitted($application));
+   		$application->company->user->notify(new ApplicationSubmitted($application));
 
         return Redirect::route('applications.index')->with('toast', [
-            'action' => 'store',
+            'type' => 'store',
             'message' => 'Your application has been submitted.'
         ]);
     }
@@ -101,7 +101,7 @@ class ApplicationController extends Controller
         $application->update($request->validated());
 
         return Redirect::route('applications.show', $application)->with('toast', [
-            'action' => 'update',
+            'type' => 'update',
             'message' => 'Application updated successfully.'
         ]);
     }
@@ -110,8 +110,8 @@ class ApplicationController extends Controller
         $application->delete();
 
         return Redirect::route('applications.index')->with('toast', [
-            'action' => 'destroy',
-            'message' => 'Your applications has been deleted.'
+            'type' => 'destroy',
+            'message' => 'Applications deleted successfully.'
         ]);
     }
 
@@ -125,8 +125,8 @@ class ApplicationController extends Controller
         $application->student->user->notify(new ApplicationReviewed($application));
 
         return Redirect::back()->with('toast', [
-            'action' => 'notification',
-            'message' => 'A notification has been sent to the student.'
+            'type' => 'notification',
+            'message' => 'Reply sent to the applicant.'
         ]);
     }
 }

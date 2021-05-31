@@ -19,7 +19,12 @@
 					</div>
 					<div>
 						<button type="button" @click="reset" class="btn btn-dark rounded">Reset</button>
-						<button type="submit" class="ml-1 btn btn-primary rounded">{{ editing ? 'Update' : 'Create' }}</button>
+						<button
+							type="submit"
+							class="ml-1 btn btn-primary rounded"
+							:class="{ 'disabled': !changed }"
+							:disabled="!changed"
+						>{{ editing ? 'Update' : 'Create' }}</button>
 					</div>
 				</div>
 			</template>
@@ -31,6 +36,7 @@
 import MainLayout from "@/Layouts/Main";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import DeleteModal from "@/Components/Modal/Delete";
+import { nextTick } from 'vue';
 
 export default {
 	components: {
@@ -62,6 +68,19 @@ export default {
 			return this.route().current(`${this.routeName}.edit`);
 		}
 	},
+	data() {
+		return {
+			changed: false,
+		}
+	},
+	watch: {
+		form: {
+			handler: function() {
+				this.changed = true;
+			},
+			deep: true,
+		}
+	},
 	methods: {
 		submit() {
 			let submitUrl = this.editing ? this.route(`${this.routeName}.update`, { ...this.routeParams }) : this.route(`${this.routeName}.store`, { ...this.routeParams });
@@ -71,17 +90,20 @@ export default {
 				preserveScroll: true
 			});
 		},
-		reset() {
+		async reset() {
 			if(this.originalData) {
 				Object.assign(this.form, this.originalData);
 			} else {
 				this.form.reset();
 			}
+
+			await nextTick();
+			this.changed = false;
 		},
 	},
-	mounted() {
+	created() {
 		if(this.editing) {
-			Object.assign(this.form, this.originalData)
+			this.reset();
 		}
 	}
 }

@@ -27,7 +27,7 @@
 						<skills class="mt-3" :small="false" />
 					</div>
 				</div>
-				<div class="w-80 2xl:w-96 flex-shrink-0">
+				<div class="w-96 flex-shrink-0">
 					<div v-if="(currentUser.userable_type === 'company' && currentUser.userable_id === internship.company.id) || currentUser.userable_type === 'student'" class="p-6 border-b"> <!-- hide for supervisors -->
 						<template v-if="currentUser.userable_type === 'student'"> <!-- show for students -->
 							<inertia-link
@@ -50,7 +50,7 @@
 							>
 								View Applications ->
 							</inertia-link>
-							<inertia-link :href="route('internships.edit', internship)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit -></inertia-link>
+							<inertia-link :href="route('internships.edit', internship)" class="mt-1.5 btn btn-lg btn-dark block w-full">Edit</inertia-link>
 							<delete-modal
 								title="Delete Internship"
 								message="Are you sure you want to delete this internship? All the data related to this record will be removed permanently removed. This action cannot be undone."

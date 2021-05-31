@@ -60,7 +60,7 @@
 			</div>
 			<template v-slot:footer>
 				<div>
-					<button @click="reset" class="btn btn-md btn-primary w-full">
+					<button @click="reset" class="btn btn-lg btn-primary w-full">
 						Reset Filters
 					</button>
 				</div>

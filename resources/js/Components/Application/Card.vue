@@ -33,7 +33,7 @@
 				<icon v-if="application.status === null" name="clock" solid class="flex-shrink-0 mr-1 h-5 w-5 text-gray-400" />
 				<icon v-else-if="application.status === true" solid name="check-circle"  class="flex-shrink-0 mr-1 h-5 w-5 text-green-500" />
 				<icon v-else name="x-circle" solid class="flex-shrink-0 mr-1 h-5 w-5 text-red-500" />
-				{{ application.status === null ? "This application is pending." : application.status === true ? "You'll receive a phone call soon." : "This application has been rejected." }}
+				{{ application.status === null ? "This application isn't reviewed yet." : "The company has reviewed this application." }}
 			</div>
 		</div>
 		<div class="text-lg text-gray-600 font-medium transform group-hover:translate-x-1.5 transition duration-150">

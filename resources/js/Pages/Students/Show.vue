@@ -1,6 +1,18 @@
 <template>
-	<main-layout>
-		<div class="bg-white rounded-lg shadow overflow-hidden max-w-7xl mx-auto mt-4">
+	<main-layout title="Profile" subtitle="Student" maxWidthClass="max-w-7xl">
+		<template v-slot:header-right>
+			<inertia-link :href="route('students.edit', student.id)" class="btn btn-dark">
+				Edit ->
+			</inertia-link>
+			<delete-modal
+				title="Delete Student"
+				message="Are you sure you want to delete this student? All the data related to him will be permanently deleted. This action cannot be undone."
+				:url="route('students.destroy', student.id)"
+			>
+				<button class="ml-1.5 btn btn-danger">Delete</button>
+			</delete-modal>
+		</template>
+		<card>
 			<img
 				class="h-60 w-full object-cover"
 				src="https://images.unsplash.com/photo-1588392382834-a891154bca4d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
@@ -24,18 +36,8 @@
 					</div>
 					<div class="flex items-center space-x-1">
 						<button @click="selectedUser = student" class="btn btn-secondary">
-							Contact ->
+							Contact
 						</button>
-						<inertia-link :href="route('students.edit', student.id)" class="btn btn-dark">
-							Edit ->
-						</inertia-link>
-						<delete-modal
-							title="Delete Student"
-							message="Are you sure you want to delete this student? All the data related to him will be permanently deleted. This action cannot be undone."
-							:url="route('students.destroy', student.id)"
-						>
-							<button class="btn btn-danger">Delete</button>
-						</delete-modal>
 					</div>
 				</div>
 				<!-- about -->
@@ -71,7 +73,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</card>
 		<contact-modal :user="selectedUser" @close="selectedUser = null" />
 	</main-layout>
 </template>

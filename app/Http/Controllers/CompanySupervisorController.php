@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\CompanySupervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -9,21 +10,6 @@ use Inertia\Inertia;
 
 class CompanySupervisorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return Inertia::render('CompanySupervisors/Index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -57,7 +43,7 @@ class CompanySupervisorController extends Controller
      * @param  \App\Models\CompanySupervisor  $companySupervisor
      * @return \Illuminate\Http\Response
      */
-    public function edit(CompanySupervisor $companySupervisor)
+    public function edit(Company $company, CompanySupervisor $companySupervisor)
     {
         //
     }

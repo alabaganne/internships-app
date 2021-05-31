@@ -1,22 +1,22 @@
 <template>
 	<transition name="slide-fade">
 		<card
-			v-if="show && toast"
+			v-if="show && toast && !popstate"
 			class="fixed right-8 top-24 z-50 pl-4 pr-3 py-2.5 flex items-center max-w-lg"
 		>
 			<div class="h-11 w-11 flex-center rounded-full" :class="{
-				'bg-green-100': toast.action === 'store',
-				'bg-blue-100': toast.action === 'update',
-				'bg-red-100': toast.action === 'destroy' || toast.action === 'notification',
+				'bg-green-100': toast.type === 'store',
+				'bg-blue-100': toast.type === 'update' || toast.type === 'message',
+				'bg-red-100': toast.type === 'destroy',
+				'bg-yellow-100': toast.type === 'notification',
 			}">
-				<icon v-if="toast.action === 'store'" name="save-as" class="text-green-600" />
-				<icon v-else-if="toast.action === 'update'" name="pencil-alt" class="text-blue-600" />
-				<icon v-if="toast.action === 'destroy'" name="trash" class="text-red-600" />
-				<icon v-if="toast.action === 'notification'" name="bell" class="text-red-600" />
+				<icon v-if="toast.type === 'store'" name="save-as" class="text-green-600 h-5 w-5" />
+				<icon v-else-if="toast.type === 'update'" name="document-duplicate" class="text-blue-600 h-5 w-5" />
+				<icon v-if="toast.type === 'destroy'" name="trash" class="text-red-600 h-5 w-5" />
+				<icon v-if="toast.type === 'notification'" name="bell" class="text-yellow-600 h-5 w-5" />
+				<icon v-if="toast.type === 'message'" name="inbox-in" class="text-blue-600 h-5 w-5" />
 			</div>
-			<div class="ml-4 text-sm font-semibold text-gray-800">
-				{{ toast.message }}
-			</div>
+			<div class="ml-3 text-sm font-semibold text-gray-800" v-html="toast.message" />
 			<button
 				type="button"
 				@click="close"
@@ -32,17 +32,23 @@
 export default {
 	props: {
 		toast: Object,
+		popstate: Boolean,
 	},
 	data() {
 		return {
 			show: false,
+			timeout: null,
 		}
 	},
 	watch: {
 		toast: function() {
 			this.show = true;
 
-			setTimeout(() => {
+			if(this.timeout) {
+				clearTimeout(this.timeout)
+			}
+
+			this.timeout = setTimeout(() => {
 				this.show = false;
 			}, 5000);
 		}
@@ -54,19 +60,3 @@ export default {
 	},
 }
 </script>
-
-<style>
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.2s ease-in;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-</style>

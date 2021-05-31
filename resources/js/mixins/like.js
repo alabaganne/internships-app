@@ -2,8 +2,8 @@ export default {
 	emits: ['dislike'],
 	methods: {
 		toggleLike(internship) {
-			this.$inertia.post(route('likes.store', internship), {}, {
-				onSuccess: () => {
+			axios.post(route('likes.store', internship))
+				.then(() => {
 					if(internship.liked) {
 						internship.liked = false;
 						this.currentUser.likes_count--;
@@ -12,11 +12,8 @@ export default {
 						internship.liked = true;
 						this.currentUser.likes_count++;
 					}
-				},
-				onError: (errors) => console.log(errors),
-				preserveState: true,
-				preserveScroll: true,
-			});
+				})
+				.catch(error => console.log(error));
 		}
 	}
 }

@@ -3,8 +3,6 @@
 		<contacts-list
 			:contacts="contacts"
 			:selectedContactId="selectedContact?.id"
-			@select-contact="onSelectContact"
-			:key="contacts"
 		/>
 		<conversation :contact="selectedContact" />
 	</div>
@@ -18,25 +16,23 @@ export default {
 	components: { Conversation, ContactsList },
 	props: {
 		contacts: Array,
-	},
-	data() {
-		return {
-			selectedContact: null,
-		}
-	},
-	methods: {
-		onSelectContact(contact) {
-			this.selectedContact = contact;
-			window.history.pushState(null, null, route('messages.index', { id: contact.id }));
-		}
+		selectedContact: Object,
 	},
 	mounted() {
-		const id = this.route().params.id;
-		if(id) {
-			this.selectedContact = this.contacts.filter(contact => contact.id == id)[0];
-			return;
+		for(let i = 0; i < this.contacts.length; i++) {
+			if(this.contacts[i].id === this.route().params.user_id) {
+				this.selectedContact = this.contacts[i];
+				break;
+			}
 		}
-		this.selectedContact = this.contacts[0] || null;
-	}
+
+		window.Echo.private('user.' + this.currentUser.id)
+			.listen('.messages', message => {
+				console.log(message);
+				if(route().current('messages.index')) {
+					this.$inertia.reload();
+				}
+			});
+	},
 }
 </script>

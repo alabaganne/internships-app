@@ -1,19 +1,26 @@
 <template>
 	<nav class="bg-white text-gray-700 h-20 flex justify-between items-center px-4 md:px-6 border-b"> <!-- xl:hidden -->
-		<button @click="toggleSidebar" class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100">
+		<button @click="toggleSidebar" class="p-2 hover:text-gray-900 hover:bg-gray-100 rounded-full">
 			<icon name="menu" solid />
 		</button>
 		<div class="flex items-center space-x-2">
 			<inertia-link
 				v-if="currentUser.userable_type === 'student'"
 				:href="route('likes.index')"
-				class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-100 block"
-				:class="{ 'text-red-600 hover:bg-red-50': currentUser.likes_count > 0 }"
+				class="p-2 hover:bg-gray-100 rounded-full block"
+				:class="{
+					'text-red-600 hover:bg-red-50': currentUser.likes_count > 0,
+				}"
 			>
 				<icon name="heart" solid />
 			</inertia-link>
 
-			<messages-slide-over />
+			<inertia-link
+				:href="route('messages.index')"
+				class="p-2 hover:bg-gray-100 rounded-full"
+			>
+				<icon name="chat-alt-2" solid />
+			</inertia-link>
 
 			<notifications-slide-over :key="routeUrl" />
 
@@ -51,25 +58,23 @@
 </template>
 
 <script>
-import BreezeDropdown from "@/Components/Breeze/Dropdown";
-import BreezeDropdownLink from "@/Components/Breeze/DropdownLink";
-import NotificationsSlideOver from "./NotificationsSlideOver";
-import MessagesSlideOver from "./MessagesSlideOver";
+import BreezeDropdown from '@/Components/Breeze/Dropdown';
+import BreezeDropdownLink from '@/Components/Breeze/DropdownLink';
+import NotificationsSlideOver from './NotificationsSlideOver';
 
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
 	components: {
 		BreezeDropdown,
 		BreezeDropdownLink,
 		NotificationsSlideOver,
-	MessagesSlideOver
 	},
 	computed: {
-		...mapGetters(["sidebarActive"]),
+		...mapGetters(['sidebarActive']),
 	},
 	methods: {
-		...mapActions(["toggleSidebar"]),
+		...mapActions(['toggleSidebar']),
 	},
 };
 </script>

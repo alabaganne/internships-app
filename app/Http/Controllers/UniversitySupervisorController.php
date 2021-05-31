@@ -62,7 +62,7 @@ class UniversitySupervisorController extends Controller
             );
 
         return Redirect::route('university_supervisors.index')->with('toast', [
-            'action' => 'store',
+            'type' => 'store',
             'message' => 'A new university Supervisor has been added.'
         ]);
     }
@@ -114,7 +114,7 @@ class UniversitySupervisorController extends Controller
         $universitySupervisor->update($request->only('field_id'));
 
         return Redirect::route('university_supervisors.index')->with('toast', [
-            'action' => 'update',
+            'type' => 'update',
             'message' => 'University Supervisor updated successfully.'
         ]);
     }
@@ -127,12 +127,13 @@ class UniversitySupervisorController extends Controller
      */
     public function destroy(UniversitySupervisor $universitySupervisor)
     {
+		$name = $universitySupervisor->user->name;
         $universitySupervisor->user()->delete();
         $universitySupervisor->delete();
 
         return Redirect::route('university_supervisors.index')->with('toast', [
-            'action' => 'destroy',
-            'message' => 'University Supervisor deleted successfully.'
+            'type' => 'destroy',
+            'message' => "$name deleted successfully."
         ]);
     }
 }

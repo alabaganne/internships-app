@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewMessage;
+use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,47 +17,63 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		$auth_id = auth()->user()->id;
+		$contacts = User::whereHas('sentMessages', function ($query) use ($auth_id) {
+			$query->where('to_id', $auth_id);
+		})
+		->orWhereHas('receivedMessages', function ($query) use ($auth_id) {
+			$query->where('from_id', $auth_id);
+		})
+		->orderBy('name')
+		->get()
+		->transform(function ($contact) use ($auth_id) {
+			$latest_message = new MessageResource(
+				Message::where(function ($query) use ($contact, $auth_id) {
+					$query->where('from_id', $contact->id)->where('to_id', $auth_id);
+				})
+				->orWhere(function ($query) use ($contact, $auth_id) {
+					$query->where('from_id', $auth_id)->where('to_id', $contact->id);
+				})->latest()
+				->first()
+			);
+
+			return [
+				'id' => $contact->id,
+				'name' => $contact->name,
+				'email' => $contact->email,
+				'image' => $contact->image,
+				'userable_type' => $contact->userable_type,
+				'latest_message' => $latest_message
+			];
+		});
+
+		$selectedContact = $request->user_id ? User::find($request->user_id) : (sizeof($contacts) > 0 ? $contacts[0] : null);
+
+		if($selectedContact) {
+			$messages = MessageResource::collection(
+				Message::where(function($query) use ($selectedContact) {
+					$query->where('from_id', auth()->user()->id)
+						->where('to_id', $selectedContact['id']);
+				})->orWhere(function ($query) use ($selectedContact) {
+					$query->where('from_id', $selectedContact['id'])
+						->where('to_id', auth()->user()->id);
+				})
+				->orderBy('created_at', 'ASC')
+				->get()
+			);
+		}
 
         return Inertia::render('Messages/Index', [
-			'contacts' => User::whereHas('sentMessages', function ($query) use ($auth_id) {
-				$query->where('to_id', $auth_id);
-			})->orWhereHas('receivedMessages', function ($query) use ($auth_id) {
-				$query->where('from_id', $auth_id);
-			})
-				->orderBy('name')
-				->get()
-				->transform(function ($contact) use ($auth_id) {
-					return [
-						'id' => $contact->id,
-						'name' => $contact->name,
-						'email' => $contact->email,
-						'image' => $contact->image,
-						'userable_type' => $contact->userable_type,
-						'messages' => Message::where(function ($query) use ($contact, $auth_id) {
-								$query->where('from_id', $contact->id)
-									->where('to_id', $auth_id);
-							})
-							->orWhere(function ($query) use ($contact, $auth_id) {
-								$query->where('from_id', $auth_id)
-									->where('to_id', $contact->id);
-							})
-							->orderBy('created_at', 'asc')
-							->get()
-							->transform(function ($message) {
-								return [
-									'id' => $message->id,
-									'from_id' => $message->from_id,
-									'to_id' => $message->to_id,
-									'text' => $message->text,
-									'read_at' => $message->read_at,
-									'created_at' => $message->created_at->calendar(),
-								];
-							})
-					];
-				})
+			'contacts' => $contacts,
+			'selectedContact' => $selectedContact ? [
+				'id' => $selectedContact['id'],
+				'name' => $selectedContact['name'],
+				'email' => $selectedContact['email'],
+				'image' => $selectedContact['image'],
+				'messages' => $messages ? $messages : null,
+			] : null
 		]);
     }
 
@@ -67,13 +85,15 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-		Message::create([
+		$message = Message::create([
 			'from_id' => auth()->user()->id,
 			'to_id' => $request->to_id,
 			'text' => $request->text,
 		]);
 
-        return Redirect::route('messages.index', [ 'id' => $request->to_id ]);
+		broadcast(new NewMessage($request->to_id, $message));
+
+        return Redirect::route('messages.index', [ 'user_id' => $request->to_id ]);
     }
 
     /**

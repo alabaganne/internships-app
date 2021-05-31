@@ -19,13 +19,19 @@
 				}"
 			/>
 			<div class="flex-1">
-				<div class="flex flex-col gap-y-6">
+				<div class="space-y-6">
 					<template v-for="internship in internships.data" :key="internship.id">
 						<internship-card :internship="internship" />
 					</template>
-					<pagination v-if="internships.data.length > 0" :meta="internships.meta" :links="internships.meta.links" :routeParams="filters" />
-					<card v-else class="p-6">No internships found.</card>
 				</div>
+				<pagination
+					v-if="internships.data.length > 0"
+					:meta="internships.meta"
+					:links="internships.meta.links"
+					:routeParams="filters"
+					class="mt-4"
+				/>
+				<card v-else class="p-6">No internships found.</card>
 			</div>
 		</div>
 	</main-layout>

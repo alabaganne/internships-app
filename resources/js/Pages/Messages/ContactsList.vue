@@ -12,25 +12,24 @@
 				Sorted by date
 			</div>
 		</div>
-		<div class="border-t flex-1 overflow-y-auto">
+		<div class="border-t flex-1 overflow-y-auto" scroll-region>
 			<template v-if="contacts.length > 0">
-				<button
+				<inertia-link
+					class="text-left hover:bg-gray-50 p-4 flex items-start w-full border-b"
 					v-for="contact in contacts"
 					:key="contact.id"
-					class="text-left hover:bg-gray-50 p-4 flex items-start w-full border-b"
+					:href="route('messages.index', { user_id: contact.id })"
 					:class="{
 						'bg-gray-50': contact.id === selectedContactId
 					}"
-					@click="$emit('select-contact', contact)"
+					preserve-scroll
 				>
 					<div>
 						<div class="font-medium">{{ contact.name }}</div>
-						<!-- <p class="text-gray-500 text-sm">{{ contact.messages[0].text }}</p> -->
-						<p class="text-gray-500 text-sm">{{ truncate(contact.messages[contact.messages.length - 1].text, 85) }}</p>
-						<!-- <span class="mt-1 text-xs text-blue-500 font-medium">{{ contact.messages[0].created_at }}</span> -->
-						<span class="mt-1 text-xs text-blue-500 font-medium">{{ contact.messages[contact.messages.length - 1].created_at }}</span>
+						<p class="text-gray-500 text-sm">{{ truncate(contact.latest_message.text, 85) }}</p>
+						<span class="mt-1 text-xs text-blue-500 font-medium">{{ contact.latest_message.created_at }}</span>
 					</div>
-				</button>
+				</inertia-link>
 			</template>
 			<div v-else class="p-4 text-sm text-gray-700">No messages found</div>
 		</div>

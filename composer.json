@@ -13,9 +13,11 @@
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
+        "pusher/pusher-php-server": "^5.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.1",

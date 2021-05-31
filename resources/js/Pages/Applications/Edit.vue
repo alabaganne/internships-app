@@ -19,14 +19,20 @@
 						<div class="required">Cover letter</div>
 						<p class="mt-1 text-gray-500 font-light">Tell the company a little bit about yourself and any work you’ve done that’s relevant to this internship.</p>
 					</label>
-					<textarea v-model="form.cover_letter" id="cover_letter" class="mt-1 form-control" rows="6"></textarea>
+					<textarea v-model="form.cover_letter" id="cover_letter" class="mt-1.5 form-control" rows="10"></textarea>
+					<div class="p-1.5 pb-0 flex justify-end text-xs text-gray-500">
+						{{ form.cover_letter.length }} / 200
+					</div>
 				</div>
 				<div>
 					<label for="message">
 						<div>Message</div>
 						<p class="mt-1 text-gray-500 font-light">You can include any questions you may have about this internship or the company, even request a video call.</p>
 					</label>
-					<textarea v-model="form.message" id="message" class="mt-1 form-control" rows="4"></textarea>
+					<textarea v-model="form.message" id="message" class="mt-1.5 form-control" rows="6"></textarea>
+					<div class="p-1.5 pb-0 flex justify-end text-xs text-gray-500">
+						{{ form.message.length }} / 100
+					</div>
 				</div>
 				<div>
 					<label class="block text-sm font-medium text-gray-700">

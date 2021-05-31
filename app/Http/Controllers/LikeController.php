@@ -20,6 +20,6 @@ class LikeController extends Controller // only students are authorized to acces
     {
         auth()->user()->userable->likes()->toggle($internship);
 
-        return Redirect::back();
+        return response()->json();
     }
 }

@@ -44,9 +44,9 @@ class MessageReceived extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->message->from->name . ' has sent you a message')
-                    ->line($this->message->text)
-                    ->action('View', url('/'))
+				->line($this->message->from->name . ' has sent you a message')
+				->line($this->message->text)
+				->action('View', url('/'))
     }
 
     /**

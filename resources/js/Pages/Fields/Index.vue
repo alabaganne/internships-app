@@ -19,7 +19,9 @@
 					<td>{{ field.internships_count }}</td>
 					<td>{{ field.students_count }}</td>
 					<td class="text-right">
-						<inertia-link :href="route('fields.edit', field.id)" class="btn btn-sm btn-dark">Edit -></inertia-link>
+						<inertia-link :href="route('fields.edit', field.id)" class="btn btn-sm btn-dark">
+							Edit
+						</inertia-link>
 					</td>
 				</tr>
 			</app-table>
@@ -42,6 +44,6 @@ export default {
 	},
 	props: {
 		fields: Object
-	}
+	},
 }
 </script>

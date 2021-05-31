@@ -17,12 +17,12 @@
 					</div>
 					<div class="border-t flex divide-x">
 						<inertia-link class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center" :href="route('students.show', student.id)">
-							<icon name="user-circle" solid class="h-5 w-5 text-gray-400 mr-1" />
+							<icon name="user-circle" solid class="h-5 w-5 text-gray-400 mr-1.5" />
 							Profile
 						</inertia-link>
 						<button @click="selectedUser = student" class="flex-1 px-2 py-4 text-sm font-medium hover:bg-gray-50 flex-center">
-							<icon name="mail" solid class="h-5 w-5 text-gray-400 mr-1" />
-							Contact
+							<icon name="mail" solid class="h-5 w-5 text-gray-400 mr-1.5" />
+							Send Message
 						</button>
 					</div>
 				</card>

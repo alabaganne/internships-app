@@ -55,38 +55,11 @@ class HandleInertiaRequests extends Middleware
                         'data' => NotificationResource::collection($user->notifications()->take(10)->get()),
                         'unread_count' => $user->unreadNotifications->count(),
                     ] : null,
-					'messages' => User::whereHas('sentMessages', function ($query) use ($user) {
-						$query->where('to_id', $user->id);
-					})->orWhereHas('receivedMessages', function ($query) use ($user) {
-						$query->where('from_id', $user->id);
-					})
-						->take(8)
-						->get()
-						->transform(function ($contact) use ($user) {
-							$message = Message::where(function ($query) use ($contact, $user) {
-								$query->where('from_id', $contact->id)
-									->where('to_id', $user->id);
-							})
-							->orWhere(function ($query) use ($contact, $user) {
-								$query->where('from_id', $user->id)
-									->where('to_id', $contact->id);
-							})
-							->latest()
-							->first();
-
-							return [
-								'id' => $message->id,
-								'user_id' => $contact->id,
-								'name' => $contact->name,
-								'image' => $contact->image,
-								'text' => $message->text,
-								'created_at' => $message->created_at->calendar()
-							];
-						})
                 ],
             ],
 
-            'toast' => Session::has('toast') ? Session::get('toast') : null
+            'toast' => Session::has('toast') ? Session::get('toast') : null,
+			'popstate' => false,
         ] : [];
 
         return array_merge(parent::share($request), $shared);

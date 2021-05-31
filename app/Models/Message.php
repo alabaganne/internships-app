@@ -18,7 +18,7 @@ class Message extends Model
         'read_at',
     ];
 
-    public function user() {
+    public function sender() {
         return $this->belongsTo(User::class, 'from_id');
     }
 }

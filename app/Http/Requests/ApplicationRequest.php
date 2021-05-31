@@ -24,8 +24,8 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'cover_letter' => 'required',
-            'message' => 'nullable',
+            'cover_letter' => 'required|min:200',
+            'message' => 'nullable|min:100',
             'attachments' => 'nullable',
         ];
     }

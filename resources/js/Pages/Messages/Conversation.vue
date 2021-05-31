@@ -13,16 +13,11 @@
 						<div class="text-gray-500 text-sm">{{ contact.email }}</div>
 					</div>
 				</div>
-				<div>
-					<button
-						v-if="currentUser.userable_type === 'student' && !currentUser.supervisor_id && contact.userable_type === 'university_supervisor'"
-						class="btn btn-sm btn-secondary p-3">Request supervison ->
-					</button>
-				</div>
+				<!-- <div></div> -->
 			</template>
 			<div v-else>No contact selected</div>
 		</div>
-		<div v-if="contact" class="flex-1 p-6 space-y-4 overflow-auto">
+		<div v-if="contact" class="flex-1 p-6 space-y-4 overflow-auto" scroll-region ref="messagesContainer">
 			<div class="flex" v-for="message in contact.messages" :key="message.id">
 				<div class="flex flex-col" :class="{ 'ml-auto text-right': sentMessage(message	) }">
 					<div class="px-1 mb-0.5 text-gray-900 text-xs font-medium">
@@ -37,7 +32,7 @@
 				</div>
 			</div>
 		</div>
-		<form @submit.prevent="sendMessage" class="border-t bg-white mt-auto pl-2 pr-6 py-3 mb-0 flex items-center">
+		<form v-if="contact" @submit.prevent="sendMessage" class="border-t bg-white mt-auto pl-2 pr-6 py-3 mb-0 flex items-center">
 			<input
 				v-model="newMessage"
 				type="text"
@@ -50,6 +45,8 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
+
 export default {
 	props: {
 		contact: {
@@ -62,32 +59,34 @@ export default {
 			newMessage: ''
 		}
 	},
+	watch: {
+		contact: {
+			handler() {
+				this.scrollToBottom();
+			},
+			deep: true
+		}
+	},
+	mounted() {
+		this.scrollToBottom();
+	},
 	methods: {
 		sendMessage() {
-			if(this.newMessage === '') {
-				return;
-			}
+			if(this.newMessage === '') return;
 
 			this.$inertia.post(
 				this.route('messages.store'),
 				{ to_id: this.contact.id, text: this.newMessage },
-				{ onSuccess: () => {
-					this.contact.messages.push({
-						from_id: this.currentUser.id,
-						to_id: this.contact.id,
-						text: this.newMessage,
-						created_at: this.formatDate(new Date())
-					});
-
-					this.newMessage = '';
-				} }
+				{ preserveScroll: true, onSuccess: () => { this.newMessage = '' } },
 			);
 		},
-
+		async scrollToBottom() {
+			await nextTick();
+			this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight - this.$refs.messagesContainer.clientHeight;
+		},
 		sentMessage(message) {
 			return this.currentUser.id === message.from_id;
 		},
-
 		formatDate(date) {
 			return `Today at ${date.toLocaleString('en-US', { timeZone: 'UTC', hour12: true, hour: 'numeric', minute: 'numeric' })}`;
 		}

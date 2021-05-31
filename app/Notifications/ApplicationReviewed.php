@@ -2,9 +2,12 @@
 
 namespace App\Notifications;
 
+use App\Http\Resources\NotificationResource;
 use App\Models\Application;
+use App\Models\Notification as NotificationModel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -32,7 +35,7 @@ class ApplicationReviewed extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -63,4 +66,15 @@ class ApplicationReviewed extends Notification
             'action' => "/applications/{$this->application->id}",
         ];
     }
+
+	public function toBroadcast($notifiable)
+	{
+		return new BroadcastMessage([
+			'toast' => [
+				'message' => "{$this->application->company->user->name} has reviewed your application.",
+				'type' => 'notification',
+			],
+			'data' => new NotificationResource(NotificationModel::find($this->id))
+		]);
+	}
 }
