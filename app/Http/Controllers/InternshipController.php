@@ -32,7 +32,7 @@ class InternshipController extends Controller
 						$request->input('search', '')
 					)
 					->latest()
-					->paginate(10)
+					->paginate(7)
 			),
 			'fields' => Field::withCount(['internships' => function ($query) use ($request) {
 					$query->withFilters(

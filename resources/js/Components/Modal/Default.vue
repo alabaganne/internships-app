@@ -13,7 +13,7 @@
 					leave-from-class="opacity-100"
 					leave-to-class="opacity-0"
 				>
-					<div v-show="open" @click="toggle" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+					<div v-show="open" @click="close" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 				</transition>
 
 				<!-- This element is to trick the browser into centering the modal contents. -->
@@ -36,7 +36,7 @@
 							<slot name="content" />
 							<template v-slot:footer>
 								<div class="space-x-1.5 flex justify-end">
-									<button type="button" @click="toggle(); $emit('close')" class="btn btn-secondary">Close</button>
+									<button type="button" @click="close" class="btn btn-secondary">Close</button>
 									<slot name="action-button" />
 								</div>
 							</template>
@@ -67,6 +67,10 @@ export default {
 	methods: {
 		toggle() {
 			this.open = !this.open;
+		},
+		close() {
+			this.toggle();
+			this.$emit('close');
 		}
 	},
 }

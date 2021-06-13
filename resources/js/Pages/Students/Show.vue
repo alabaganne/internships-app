@@ -36,7 +36,7 @@
 					</div>
 					<div class="flex items-center space-x-1">
 						<button @click="selectedUser = student" class="btn btn-secondary">
-							Contact
+							Send Message
 						</button>
 					</div>
 				</div>

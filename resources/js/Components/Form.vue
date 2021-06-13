@@ -22,8 +22,6 @@
 						<button
 							type="submit"
 							class="ml-1 btn btn-primary rounded"
-							:class="{ 'disabled': !changed }"
-							:disabled="!changed"
 						>{{ editing ? 'Update' : 'Create' }}</button>
 					</div>
 				</div>
@@ -68,19 +66,6 @@ export default {
 			return this.route().current(`${this.routeName}.edit`);
 		}
 	},
-	data() {
-		return {
-			changed: false,
-		}
-	},
-	watch: {
-		form: {
-			handler: function() {
-				this.changed = true;
-			},
-			deep: true,
-		}
-	},
 	methods: {
 		submit() {
 			let submitUrl = this.editing ? this.route(`${this.routeName}.update`, { ...this.routeParams }) : this.route(`${this.routeName}.store`, { ...this.routeParams });
@@ -96,9 +81,6 @@ export default {
 			} else {
 				this.form.reset();
 			}
-
-			await nextTick();
-			this.changed = false;
 		},
 	},
 	created() {

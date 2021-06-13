@@ -35,7 +35,7 @@
 						</button>
 						<div class="flex">
 							<inertia-link :href="route('companies.edit', company)" class="btn btn-dark">
-								Edit Company
+								Edit
 							</inertia-link>
 							<delete-modal
 								title="Delete Company"

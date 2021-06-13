@@ -9,9 +9,7 @@
 			<section class="p-6">
 				<div>
 					<h3 class="text-lg font-medium leading-6">Personal Information</h3>
-					<p class="mt-1 text-sm text-gray-500">
-						Use a permanent address where you can receive mail.
-					</p>
+					<p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
 				</div>
 				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
 					<div class="col-span-3">
@@ -44,9 +42,7 @@
 			<section class="border-t p-6">
 				<div>
 					<h3 class="text-lg font-medium leading-6">Profile</h3>
-					<p class="mt-1 text-sm text-gray-500">
-						This information will be displayed publicly so be careful what you share.
-					</p>
+					<p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what you share.</p>
 				</div>
 				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
 					<div v-if="currentUser.userable_type === 'company'" class="col-span-4">
@@ -71,6 +67,22 @@
 								Change
 							</button>
 						</div>
+					</div>
+				</div>
+			</section>
+			<section class="border-t p-6">
+				<div>
+					<h3 class="text-lg font-medium leading-6">Update Password</h3>
+					<p class="mt-1 text-sm text-gray-500">Ensure your account is using a long, random password to stay secure.</p>
+				</div>
+				<div class="mt-6 grid grid-cols-6 gap-x-4 gap-y-6">
+					<div class="col-span-3">
+						<label for="password">Password</label>
+						<input type="password" class="mt-1 form-control" id="password" v-model="form.password">
+					</div>
+					<div class="col-span-3">
+						<label for="password_confirmation">Confirm Password</label>
+						<input type="password" class="mt-1 form-control" id="password_confirmation" v-model="form.password_confirmation">
 					</div>
 				</div>
 			</section>
@@ -109,7 +121,9 @@ export default {
 				name: '',
 				email: '',
 				phone_number: '',
-				city: null
+				city: null,
+				password: '',
+				password_confirmation: '',
 			}),
 		}
 	},

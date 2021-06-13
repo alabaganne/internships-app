@@ -1,6 +1,6 @@
 <template>
 	<div class="flex-shrink-0 2xl:w-96 order-2 2xl:order-first mt-6 2xl:mt-0">
-		<card title="Filters" subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit.">
+		<card title="Filters" subtitle="Use the filters below to find the internships that interest you.">
 			<div class="sm:flex flex-wrap">
 				<form @submit.prevent="filter" autocomplete="off" class="p-6 w-full">
 					<label for="search-internships">Search</label>
@@ -15,7 +15,7 @@
 				</form>
 				<div class="p-6 w-full border-t">
 					<label>Fields of Study</label>
-					<div class="mt-4 space-y-2">
+					<div class="mt-3 space-y-2">
 						<template v-for="field in fields" :key="field.id">
 							<div v-if="field.internships_count > 0" class="flex justify-between items-center">
 								<div class="flex items-center">
@@ -25,12 +25,13 @@
 								<div class="tag tag-sm tag-primary rounded-full h-6 w-6 flex-center">{{ field.internships_count }}</div>
 							</div>
 						</template>
+						<div v-show="noFilters(fields)" class="text-gray-500 text-sm">No filters found.</div>
 					</div>
 				</div>
 
 				<div class="p-6 w-full border-t">
 					<label>Companies</label>
-					<div class="mt-4 space-y-2">
+					<div class="mt-3 space-y-2">
 						<template v-for="company in companies" :key="company.id">
 							<div v-if="company.internships_count > 0" class="flex justify-between items-center">
 								<div class="flex items-center">
@@ -40,12 +41,13 @@
 								<div class="tag tag-sm tag-primary rounded-full h-6 w-6 flex-center">{{ company.internships_count }}</div>
 							</div>
 						</template>
+						<div v-show="noFilters(companies)" class="text-gray-500 text-sm">No filters found.</div>
 					</div>
 				</div>
 
 				<div class="p-6 w-full border-t">
 					<label>Cities</label>
-					<div class="mt-4 space-y-2">
+					<div class="mt-3 space-y-2">
 						<template v-for="city in cities" :key="city.id">
 							<div v-if="city.internships_count > 0" class="flex justify-between items-center">
 								<div class="flex items-center">
@@ -55,6 +57,7 @@
 								<div class="tag tag-sm tag-primary rounded-full h-6 w-6 flex-center">{{ city.internships_count }}</div>
 							</div>
 						</template>
+						<div v-show="noFilters(cities)" class="text-gray-500 text-sm">No filters found.</div>
 					</div>
 				</div>
 			</div>
@@ -91,6 +94,7 @@ export default {
 			required: true
 		},
 	},
+	emits: ['filter'],
 	data() {
 		return {
 			selected: {
@@ -101,7 +105,6 @@ export default {
 			search: this.filters.search
 		}
 	},
-	emits: ['filter'],
 	watch: {
 		selected: {
 			handler: function() {
@@ -133,7 +136,10 @@ export default {
 		},
 		reset() {
 			this.$inertia.get(this.route('internships.index'))
-		}
+		},
+		noFilters(arr) {
+			return arr.filter(el => el.internships_count !== 0).length === 0;
+		},
 	},
 }
 </script>
